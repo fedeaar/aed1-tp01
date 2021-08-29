@@ -1,0 +1,277 @@
+type dato = Z
+type individuo = seq[dato]
+type hogar = seq[dato]
+type eph_i = seq[individuo]
+type eph_h = seq[hogar]
+type joinHI = seq[hogar x individuo]
+
+enum item_i {
+    INDCODUSU, COMPONENTE, INDAÑO, INDTRIMESTRE, CH4, CH6, NIVEL_ED, ESTADO, CAT_OCUP, p47T, PPO4G 
+}
+
+enum item_h {
+    HOGCODUSU, HOGAÑO, HOGTRIMESTRE, HOGLATITUD, HOGLONGITUD, II7, REGION, MAS_500, IV1, IV2, II2, II3
+}
+
+
+
+/* auxiliares @ */
+/* enums */
+
+/* ===== 1. ===== */
+
+/* preg si es sobreespecif agregar condiciones de salario, edad... , casa 0 habitaciones ?*/
+
+pred esMatriz(s: seq[seq[T]]) {
+    (forall i:Z)(0 <= i < |s| ->L 
+        |s[i]| = |s[0]|
+    )
+}
+
+aux individuosEnHogar(ti: eph_i, codigo_hogar:Z):Z =
+    /* dada una ti valida */
+    (sum from i = 0 to |ti|-1)(
+        if (ti[i][item_i.ord(INDCODUSU)] = codigo_hogar) then 
+            1 
+        else 
+            0
+        fi 
+    )
+    
+proc esEncuestaValida (in th: Eph_h, in ti: Eph_i, out res: Bool) {
+
+    pre {
+        True 
+    }
+    post {
+        res = True <-> validarEncuesta(th, ti)
+    }
+}
+
+pred estructuraValida(m: seq[seq[T]], referencia: seq[T]) {
+    |m| > 0 ∧L (|m[0]| = |referencia| ∧ esMatriz(m))
+}
+pred codigoValido_h(th: eph_h, ti: eph_i, i:Z){
+    (exists j: Z)(0 <= j < |ti| ∧L
+        th[i][@HOGCODUSU] = ti[j][@INDCODUSU]
+    ) ∧ 
+    ¬(exists k: Z)(0 <= k < |th| ∧ i != k ∧L
+        th[i][@HOGCODUSU] = th[k][@HOGCODUSU]
+    ) 
+}
+pred atributosEnRango_h(th: eph_h, i:Z){
+    0 <= th[i][@HOGCODUSU)] ∧     
+    -90  <= th[i][@HOGLATITUD]  <= 90 ∧
+    -180 <= th[i][@HOGLONGITUD] <= 180 ∧
+    1 <= th[i][@II7] <= 3 ∧
+    1 <= th[i][@REGION] <= 6 ∧
+    0 <= th[i][@MAS_500] <= 1 ∧
+    1 <= th[i][@IV1] <= 5 ∧
+    0 <  th[i][@II2] <= th[i][@IV2]  ∧       
+    1 <= th[i][@II3] <= 2 
+}
+pred añoYTrimestreCongruente_h(th, i) {
+    th[i][@HOGAÑO] = th[0][@HOGAÑO] ∧
+    th[i][@HOGTRIMESTRE] = th[0][@HOGTRIMESTRE]  
+}
+
+pred codigoValido_i(th: eph_h, ti: eph_i, i:Z){
+    (exists j: Z)(0 <= j < |ti| ∧L
+        ti[i][@INDCODUSU] = th[j][@HOGCODUSU] 
+    ) ∧ 
+    ¬(exists j: Z)(0 <= j < |ti| ∧L
+        ti[i][@INDCODUSU] = ti[j][@INDCODUSU] ∧
+        ti[i][@COMPONENTE] = ti[j][@COMPONENTE]
+    )
+}
+pred atributosEnRango_i(ti: eph_i, i:Z){
+    0 <= ti[i][item_i.ord(HOGCODUSU)] ∧
+    0 <= ti[i][item_i.ord(COMPONENTE)] < 20 ∧ 
+    1  <= ti[i][item_i.ord(CH4)] <= 2 ∧
+    0  <= ti[i][item_i.ord(CH6)] ∧
+    0  <= ti[i][item_i.ord(NIVEL_ED)] <= 1 ∧
+    -1 <= ti[i][item_i.ord(ESTADO)] <= 1 ∧
+    0  <= ti[i][item_i.ord(CAT_OCUP)] <= 4 ∧
+    -1 <= ti[i][item_i.ord(p47T)] ∧
+    1  <= ti[i][item_i.ord(PPO4G)] <= 10
+}
+pred añoYTrimestreCongruente_i(th:eph_h, ti:eph_i, i) {
+    ti[i][@INDAÑO] = th[0][@HOGAÑO] ∧
+    ti[i][@INDTRIMESTRE] = th[0][@HOGTRIMESTRE]  
+}
+
+pred validarEncuesta (th: eph_h, ti: eph_i) {
+            
+    /* tabla hogares */
+    estructuraValida(th, itemHogares) ∧_L 
+    (forall i: Z)(0 <= i < |th| ->_L 
+        codigoValido_h(th, ti, i) ∧
+        añoYTrimestreCongruente_h(th, i) ∧
+        atributosEnRango_h(th, i)
+    ) ∧
+
+    /* tabla individuos */
+    estructuraValida(ti, itemIndividuo) ∧_L 
+    (forall i: Z)(0 <= i < |ti| ->_L
+        codigoValido_i(th, ti, i) ∧
+        añoYTrimestreCongruente_i(th, ti, i) ∧
+        atributosEnRango_i(ti, i) 
+        individuosEnHogar(ti, ti[i][@INDCODUSU]) <= 20 
+    )
+}
+
+
+/* ===== 2. ===== */
+
+proc histHabitacional(in th:eph_h, in ti: eph_i, in region: Z, out res: seq[Z]){
+    /* preg scope variables globales, 0 habitaciones?, */
+    pre {
+        validarEncuesta(th, ti)
+    }
+    post {
+        (exists i:Z)(0 <= i < |th| ∧_L
+            th[i][item_h.ord(IV1)] = 1 ∧
+            th[i][item_h.ord(REGION)] = region ∧
+            (forall j:Z)(0 <= j < |th| ∧_L th[j][item_h.ord(IV1)] = 1 ∧ th[j][item_h.ord(REGION)] = region ->_L
+                th[j][item_h.ord(IV2)] <= th[i][item_h.ord(IV2)] 
+            ) ∧
+            |res| = th[i][item_h.ord(IV2)] 
+        ) ∧    
+        (forall i:Z)(0 <= i < |res| ->_L
+            (sum from j = 0 to |th|-1)(
+                if th[j][item_h.ord(IV1)] = 1 ∧ th[j][item_h.ord(REGION)] = region ∧ th[j][item_h.ord(IV2)] = i /* i + 1 si empieza en 1 */
+                    then 1
+                    else 0
+            ) = res[i]
+        )
+    }
+}
+
+
+/* ===== 3. ===== */
+
+pred condicionesHacinamiento(thr: hogar, codigo_region: Z) {
+    /* chequeo fila correcta, preguntar */
+    thr[item_h.ord(REGION)] = codigo_region ∧
+    thr[item_h.ord(IV1)] = 1 ∧
+    thr[item_h.ord(MAS_500)] = 0
+}
+
+pred hacinamientoCritico(th:eph_h, ti:eph_i, i:Z) {
+    if (0 <= i < |th| ∧ estructuraValida(th, ti)) then 
+        individuosEnHogar(ti, th[i][item_h.ord(HOGCODUSU)]) / th[i][item_i.ord(IV2)] > 3
+    else 
+        false
+    fi
+}
+
+proc laCasaEstaQuedandoChica(in th:eph_h, in ti:eph_i, out res:seq[R]){
+    
+    pre {
+        validarEncuesta(th, ti) /* habria que filtrar en la pre? */
+    }
+    post {
+        |res| = 6 ∧L
+        (forall i:Z)(0 <= i < |res| ->_L
+            ((sum from j = 0 to |th|-1)(
+                if  (condicionesHacinamiento(th[j], i + 1) ∧L hacinamientoCritico(th, ti, j)) then 
+                    1
+                else 
+                    0
+                fi
+            ) / (sum from j = 0 to |th|-1)(
+                if  condicionesHacinamiento(th[j], i + 1) then 
+                    1
+                else 
+                    0
+                fi
+            )) = res[i]
+        )
+    }
+}
+
+
+/* ===== 4. ===== */
+
+/* la dif de años puede ser mayor a 1 */
+
+pred filtro_teleworking(thr:hogar){ /* incluir estado de trabajo ? que hay de no informados? */
+    thr[item_h.ord(MAS_500)] = 1 ∧
+    (thr[item_h.ord(IV1)]) = 1 ∨ thr[item_h.ord(IV1)]) = 2)
+}
+
+aux percent_teleworking(th:eph_h, ti:eph_i):R =
+    /* si th y ti son validos */
+    (sum from j = 0 to |ti|-1)(
+        if (filtro_teleworking(th[ti[j][item_i.ord(INDCODUSU)]) ∧ ti[j][item_h.ord(II3)] = 1 ∧ 
+            ti[j][item_i.ord(PPO4G)] = 6) then          /* ∧ ti[j][item_i.ord(ESTADO) = 1 or ti[j][item_i.ord(ESTADO) = -1 (?) */ 
+            1
+        else
+            0
+        fi
+    ) / (sum from j = 0 to |ti|-1)(
+        if (filtro_teleworking(th[ti[j][item_i.ord(INDCODUSU)])) then
+            1
+        else
+            0
+        fi
+    )
+
+proc creceElTeleworkingEnCiudadesGrandes(in t1h: eph_h, in t1i: eph_i, in t2h: eph_h, in t2i: eph_i, out res: Bool){
+    pre {
+        validarEncuesta(t1h, t1i) ∧ validarEncuesta(t2h, t2i) ∧L
+        /* aceptando + de un año de diff para la comparación */
+        t1h[0][item_h.ord(HOGAÑO)] < t2h[0][item_h.ord(HOGAÑO)] ∧ /* sino año2 - año1 = 1 */
+        t1h[0][item_h.ord(HOGTRIMESTRE)] = t2h[0][item_h.ord(HOGTRIMESTRE)]
+    }
+    post {
+        /* preg si vale asi o con  = true <-> */
+        res = percent_teleworking(t1h, t1i) < percent_teleworking(t2h, t2i)
+    }
+}
+
+
+/* ===== 5 ===== */
+
+pred filtro_subsidio(ti:eph_i, thr:hogar){
+    /* dados ti, thr validos */
+    (thr[item_h.ord(II7)] = 1) ∧ 
+    individuosEnHogar(thr[item_h.ord(HOGCODUSU)]) - 2 > thr[item_h.ord(II2)]
+}
+proc costoSubsidioMejora(in th:eph_h, in ti: eph_i, in monto: Z, out res: Z){
+    
+    pre {
+        validarEncuesta(th, ti) ∧ monto >= 0
+    }
+    post {
+        (sum from j = 0 to |th|-1)(
+            if (filtro_subsidio(ti, th[j])) then
+                1
+            else
+                0
+            fi
+        ) * monto = res
+    }
+}
+
+
+pred ordenadasSinRepeticiones(s:seq(Z x Z)) {
+    (forall i:Z)(0 <= i < |s|-1 ->l
+        s[i]_0 < s[i+1]_0
+    )
+}
+proc descomposicion(in n:Z, out s:seq...){
+    pre {
+        n > 1
+    }
+    post {
+        ordenadas (s) &&
+        (productoria from i |s| - 1)(
+            if primo(s[i]_0) then
+                s[i]_0 ^ s[i]_1 
+            else
+                0
+            fi
+        ) = n
+    }
+}
