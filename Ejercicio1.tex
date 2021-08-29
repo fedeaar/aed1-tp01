@@ -1,0 +1,47 @@
+   \begin{proc}{esEncuestaValida}{\In th : eph_h, \In ti : eph_i, \Out result : Bool}{}
+    \pre{True}
+    \post{res = True \Iff validarEncuesta(th,ti)}
+    \end{proc}
+    
+    \pred{esMatriz}{s: \TLista{\TLista{T}}}{
+    (\forall i: \ent)(0 \leq i < |s| \implicaLuego |s[i]| = |s[0]|)
+    }\\
+    \pred{validarEncuesta}{th: eph_h, ti: eph_i}{
+    %tabla hogares 
+    (|th| > 0 \yLuego (|th[0]| = |ItemHogar| \y esMatriz(th)) \yLuego\\
+    (\forall i: \ent)(0 \leq i < |th| \implicaLuego 0 \leq th[i][@hogcodusu] \y\\
+    (\exists j: \ent)(0 \leq j < |ti| \yLuego \\
+    th[i][@hogcodusu] = ti[j][@indcodusu]) \y\\
+    \neg(\exists k: \ent)(0 \leq k < |th| \y k \neq i \yLuego \\
+    th[i][@hogcodusu] = th[k][@hogcodusu]) \y\\
+    th[i][@hogaño] = th[0][@hogaño] \y \\
+    th[i][@hogtrimestre] = th[0][@hogtrimestre] \y\\
+    -90 \leq th[i][@hoglatitud] \leq 90 \y\\
+    -180 \leq th[i][@hoglongitud] \leq 180 \y\\
+    1 \leq th[i][@ii7] \leq 3 \y\\
+    1 \leq th[i][@region] \leq 6 \y\\
+    0 \leq th[i][@mas\_500] \leq 1 \y\\
+    1 \leq th[i][@iv1] \leq 5 \y\\
+    0 < th[i][@ii2] \leq th[i][@iv2] \y \\      
+    1 \leq th[i][@ii3] \leq 2)\\
+    ) \y\\
+    %tabla individuos
+    (|ti| > 0 \yLuego (|ti[0]| = |ItemIndividuo| ∧ esMatriz(ti))\yLuego\\
+    (\forall i: \ent)(0 \leq i < |ti| \implicaLuego\\
+    0 \leq ti[i][@indcodusu] \y\\
+    0 \leq ti[i][@componente] < 20 \y\\
+    (\exists j: \ent)(0 \leq j < |th| \yLuego \\
+    ti[i][@indcodusu] = th[j][@hogcodusu]) \y\\
+    \neg(\exists j: \ent)(0 \leq j < |ti| \yLuego\\
+    ti[i][@indcodusu] = ti[j][@indcodusu] \y\\
+    ti[i][@componente] = ti[j][@componente]) \y\\
+    individuosEnHogar(ti, ti[i][@indcodusu]) \leq 20 \y\\
+    ti[i][@indaño] = th[0][@hogaño] \y\\
+    ti[i][@indtrimestre] = th[0][@hogtrimestre] \y\\
+    1 \leq ti[i][@ch4] \leq 2 \y\\
+    0 \leq ti[i][@ch6] \y\\
+    0 \leq ti[i][@niveles\_ed] \leq 1 \y\\
+    -1 \leq ti[i][@estado] \leq 1 \y\\
+    0 \leq ti[i][@cat\_ocup] \leq 4 \y\\
+    -1 \leq ti[i][@p47t] \y\\
+    1 \leq ti[i][@ppo4g] \leq 10))}
