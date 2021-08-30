@@ -1,5 +1,20 @@
 %Ejercicio 4
 
+\begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: eph_h, \In t1i: eph_i, \in t2h: eph_h, \in t2i: eph_i, \Out res: Bool}{}
+\pre{\\
+    validarEncuesta(t1h,tli) \y validarEncuesta(t2h, t2i) \yLuego\\
+    %Filtro de mismo trimestre y diferentes años
+    %Esto seria si se acepta mas de un año de diferencia
+    t1h[0][@hogaño] < t2h[0][@hogaño] \y \\
+    t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]\\
+    %Si quisieramos hacer con solo un año
+    %t1h[0][@hogaño] = t2h[0][@hogaño] - 1 ^  t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]
+    }
+\post{
+    res = percentTeleworking(t1h,t1i) < percentTeleworking(t2h,t2i)
+}
+\end{proc}
+
 \pred{filtroTeleworking}{thr: hogar}{
     %Si es algomerado de >500.000 habitantes
     thr[@mas\_500] = 1 \y\\ 
@@ -29,19 +44,6 @@
     (\sum_{j=0}^{|ti|-1}(\IfThenElse{hacenTeleworking(th,ti[j])}{1}{0})) /\\
     (\sum_{j=0}^{|ti|-1}(\IfThenElse{cumpleFiltroTeleworking(th,ti[j]}{1}{0})
 }
-
-\begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: eph_h, \In t1i: eph_i, \in t2h: eph_h, \in t2i: eph_i, \Out res: Bool}{}
-\pre{\\
-    validarEncuesta(t1h,tli) \y validarEncuesta(t2h, t2i) \yLuego\\
-    %Filtro de mismo trimestre y diferentes años
-    %Esto seria si se acepta mas de un año de diferencia
-    t1h[0][@hogaño] < t2h[0][@hogaño] \y \\
-    t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]\\
-    %Si quisieramos hacer con solo un año
-    %t1h[0][@hogaño] = t2h[0][@hogaño] - 1 ^  t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]
-    }
-\post{res = percentTeleworking(t1h,t1i) < percentTeleworking(t2h,t2i)}
-\end{proc}
 
 %Ejercicio5
 \begin{proc}{costoSubsidioMejora}{\In th: eph_h, \In ti: eph_i, \In monto: \ent, \Out res: \ent}{}
