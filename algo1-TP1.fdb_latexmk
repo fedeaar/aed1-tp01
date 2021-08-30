@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1630293224 "c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex" "algo1-TP1.pdf" "algo1-TP1" 1630293226
+["pdflatex"] 1630338741 "c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex" "algo1-TP1.pdf" "algo1-TP1" 1630338797
   "Algo1Macros.tex" 1630292409 18880 467459dd4dd0ce5a0c4de9f908ef9bb7 ""
   "C:/Users/faari/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1630196884 9728822 484aad7a2ef46949a2182944694363a2 ""
   "C:/Users/faari/AppData/Local/MiKTeX/pdftex/config/pdftex.map" 1630282959 81068 299f700eb05b1217173e62b88b513bd0 ""
@@ -182,10 +182,11 @@
   "C:/Users/faari/AppData/Local/Programs/MiKTeX/tex/latex/xkeyval/xkeyval.sty" 1623005690 4902 efb3d66683a2da2a232f71e3a571a899 ""
   "C:/Users/faari/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-abspage.sty" 1602241898 2275 d29aca6fd67823551cb07584e3681d5d ""
   "C:/Users/faari/AppData/Local/Programs/MiKTeX/tex/latex/zref/zref-base.sty" 1602241898 20688 beaddf14d96104d4bf016523be5395c5 ""
-  "algo1-TP1.aux" 1630293226 1859 3be06eee309b15766b028d260e7d79dd "pdflatex"
-  "algo1-TP1.tex" 1630293223 8183 f048ced9f8e693422bf5fd1dd5169ec9 ""
-  "c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex" 1630293223 8183 f048ced9f8e693422bf5fd1dd5169ec9 ""
+  "algo1-TP1.aux" 1630338743 1859 34d144718f04a7b346872354c8116cfb "pdflatex"
+  "algo1-TP1.tex" 1630338796 9336 79ceb90ca7aa081aa45e7da9631c42d1 ""
+  "c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex" 1630338796 9336 79ceb90ca7aa081aa45e7da9631c42d1 ""
+  "caratula.sty" 1630296630 11654 b7d6c7f15260a7fe039ae1559c1c577c ""
   (generated)
-  "algo1-TP1.log"
-  "algo1-TP1.pdf"
   "algo1-TP1.aux"
+  "algo1-TP1.pdf"
+  "algo1-TP1.log"

@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{caratula}
 \usepackage[utf8]{inputenc}
 \input{Algo1Macros}
 
@@ -24,6 +25,14 @@
 \begin{document}
 
     % === caratula === % 
+    %\titulo{TP1 - especificacion}
+    %\subtitulo{}
+    %\fecha{septiembre 2021}
+    %\materia{algoritmos y estructuras de datos 1}
+    %\integrante{Manuel Lakowsky}{511/21}{mlakowsky@gmail.com}
+    %\integrante{Juan Manuel Lenardi}{}{}
+    %\integrante{Federico Arienti}{316/2}{fa.arienti@gmail.com}
+    %\maketitle
     \begin{titlepage}
         \vspace*{\fill}
         \begin{center}
@@ -99,7 +108,7 @@
                     \tab True\\
                 }
                 \post{\\
-                    \tab res = True \Iff validarEncuesta(th,ti)\\
+                    \tab res = \True \Iff validarEncuesta(th,ti)\\
                 }
             \end{proc}
         
@@ -189,6 +198,19 @@
             \subsubsection{funciones auxiliares}
 
         \subsection{proc. creceElTeleworkingEnCiudadesGrandes}
+            \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: Bool}{}
+                \pre{\\
+                    \tab validarEncuesta(t1h,t1i) \y validarEncuesta(t2h, t2i) \yLuego\\
+                    \tab t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1 \y \\
+                    % Esto seria si se acepta mas de un año de diferencia:
+                    % \tab t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o] \y \\
+                    \tab t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]\\
+                }
+                \post{\\
+                    \tab res = \True \iff percentTeleworking(t1h,t1i) < percentTeleworking(t2h,t2i) \\
+                }
+            \end{proc}
+            
             \subsubsection{funciones auxiliares}
             
         \subsection{proc. costoSubsidioMejora}
