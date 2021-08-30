@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.8.28)  30 AUG 2021 00:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (MiKTeX 21.8) (preloaded format=pdflatex 2021.8.28)  30 AUG 2021 00:13
 entering extended mode
 **c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex
 (c:/Users/faari/Desktop/algo1-TP1/algo1-TP1.tex
@@ -848,13 +848,13 @@ LaTeX Info: Redefining \% on input line 10.
 Here is how much of TeX's memory you used:
  19382 strings out of 478868
  367323 string characters out of 2848809
- 691864 words of memory out of 3000000
+ 691868 words of memory out of 3000000
  36879 multiletter control sequences out of 15000+600000
  408625 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  89i,6n,97p,523b,361s stack positions out of 5000i,500n,10000p,200000b,80000s
 <C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/faari/AppData/Local/Programs/MiKTeX/fonts/type1/public/doublestroke/dsrom10.pfb>
-Output written on algo1-TP1.pdf (4 pages, 172051 bytes).
+Output written on algo1-TP1.pdf (4 pages, 172058 bytes).
 PDF statistics:
  88 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

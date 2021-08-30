@@ -121,7 +121,7 @@
                     th[i][@hogtrimestre] = th[0][@hogtrimestre]
                 }
                 $\newline$
-                \pred{attEnRango$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{
+                \pred{attEnRango$_{h}$}{th: $eph_{h}$, i: \ent}{
                     0 \leq th[i][@hogcodusu] \y\\
                     -90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
                     -180 \leq th[i][@hoglongitud] \leq 180 \y\\
@@ -139,9 +139,9 @@
                     (\exists j: \ent)(0 \leq j < |th| \yLuego \\
                     \tab ti[i][@indcodusu] = th[j][@hogcodusu]\\
                     ) \y\\
-                    \neg(\exists j: \ent)(0 \leq j < |ti| \yLuego\\
-                    \tab ti[i][@indcodusu] = ti[j][@indcodusu] \y\\
-                    \tab ti[i][@componente] = ti[j][@componente]\\
+                    \neg(\exists k: \ent)(0 \leq k < |ti| \y k \neq i \yLuego\\
+                    \tab ti[i][@indcodusu] = ti[k][@indcodusu] \y\\
+                    \tab ti[i][@componente] = ti[k][@componente]\\
                     )
                 }
                 $\newline$
