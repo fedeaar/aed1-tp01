@@ -1,15 +1,15 @@
 %Ejercicio 4
 
-\begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \in t2h: $eph_{h}$, \in t2i: $eph_{i}$, \Out res: Bool}{}
+\begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: Bool}{}
 \pre{\\
     validarEncuesta(t1h,tli) \y validarEncuesta(t2h, t2i) \yLuego\\
     %Filtro de mismo trimestre y diferentes años
     %Esto seria si se acepta mas de un año de diferencia
-    t1h[0][@hogaño] < t2h[0][@hogaño] \y \\
+    t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o] \y \\
     t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]\\
     %Si quisieramos hacer con solo un año
     %t1h[0][@hogaño] = t2h[0][@hogaño] - 1 ^  t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre]
-    }
+}
 \post{
     res = percentTeleworking(t1h,t1i) < percentTeleworking(t2h,t2i)
 }
