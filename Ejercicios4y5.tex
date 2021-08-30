@@ -7,20 +7,25 @@
     (thr[@iv1] = 1 \vee thr[@iv1] = 2)
 }
 
-\aux{indiceCasaDePersona}{th: eph_h, indcodusu: \ent}{\ent}{\\
-    \sum_{j=0}^{|th|-1}\IfThenElse{th[j][@hogcodusu] = indcodusu}{j}{0}
-}
-
 \pred{hacenTeleworking}{th: eph_h, p: individuo}{
+    %Filtro de individuos que hacen teleworking
     filtroTeleworking(th[indiceCasaDePersona(th,p[@indcodusu])]) \y th[j][@ii3] = 1 \y p[@ppo4g] = 6
 }
 
+
 \pred{cumpleFiltroTeleworking}{th: eph_h, p: individuo}{
+    %Filtro de la gente en general
     filtroTeleworking(th[indiceCasaDePersona(th,p[@indcodusu])])
+}
+
+\aux{indiceCasaDePersona}{th: eph_h, indcodusu: \ent}{\ent}{\\
+    %Busca indice de hogar de una persona en base a su codigo indcodusu
+    \sum_{j=0}^{|th|-1}\IfThenElse{th[j][@hogcodusu] = indcodusu}{j}{0}
 }
 
 \aux{percentTeleworking}{th: eph_h, ti: eph_i}{\float}{\\
     %Si th/ti son válidos
+    %Agregue varios predicados para que no me quede choclazo, pero la verdad son medio irredundantes. Fijate que te parecen y decime!
     (\sum_{j=0}^{|ti|-1}(\IfThenElse{hacenTeleworking(th,ti[j])}{1}{0})) /\\
     (\sum_{j=0}^{|ti|-1}(\IfThenElse{cumpleFiltroTeleworking(th,ti[j]}{1}{0})
 }
@@ -40,7 +45,10 @@
 
 %Ejercicio5
 \begin{proc}{costoSubsidioMejora}{\In th: eph_h, \In ti: eph_i, \In monto: \ent, \Out res: \ent}{}
-\pre{validarEncuesta(th,ti) \y monto \geq 0}
+\pre{
+    %Encuestas y montos deben ser válidos    
+    validarEncuesta(th,ti) \y monto \geq 0
+} 
 \post{ 
     res = monto * \sum_{j=0}^{|th|-1}(\IfThenElse{filtroSubsidio(ti,th[j])}{1}{0})
 }
