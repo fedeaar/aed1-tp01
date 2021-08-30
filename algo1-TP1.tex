@@ -1,0 +1,197 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\input{Algo1Macros}
+
+% === metadata === %
+\title{TP1 algo-1}
+\author{Manuel Lakowsky, Juan Manuel Lenardi, Federico Arienti}
+\date{Septiembre 2021}
+
+% === macros === %
+\newcommand{\tab}[1][1cm]{\hspace*{#1}}
+\newcommand{\type}[2]{%
+    {\normalfont\bfseries\ttfamily\noindent type\ }%
+    {\normalfont\ttfamily #1}
+    {= #2\\}%
+}
+\newcommand{\enum}[2]{%
+    {\normalfont\bfseries\ttfamily\noindent enum\ }%
+    {\normalfont\ttfamily #1}
+    {\{\\\tab#2\\\}}%
+}
+
+% === body === %
+\begin{document}
+
+    % === caratula === % 
+    \begin{titlepage}
+        \vspace*{\fill}
+        \begin{center}
+            {\Huge \@title}\\[0.5cm]
+            {\Large \@author}\\[0.4cm]
+            \@date
+        \end{center}
+        \vspace*{\fill}
+    \end{titlepage}
+
+    % === tipos y enumerados === %
+    \section{tipos y enumerados}
+    
+        \type {dato}{\ent}
+        \type {individuo}{\TLista{dato}} 
+        \type {hogar}{\TLista{dato}}
+        \type {eph$_i$}{\TLista{individuo}}
+        \type {eph$_h$}{\TLista{hogar}}
+        \type {joinHI}{\TLista{hogar \times individuo}}
+
+        \enum {ItemHogar}{hogcodusu, hogaño, hogtrimestre, hoglatitud, hoglongitud, ii7, region, mas\_500, iv1, iv2, ii2, ii3} 
+        \\\\
+        \enum {ItemIndividuo}{indcodusu, componente, indaño, indtrimestre, ch4, ch6, nivel\_ed, cat\_ocup, p47t, ppo4g}
+
+    % === funciones aux === %
+    \section{referencias}
+        
+        \aux{@hogcodusu}{}{\ent}{itemHogar.ord(hogcodusu)}
+        \aux{@hogaño}{}{\ent}{itemHogar.ord(hoga\tilde{n}o)}
+        \aux{@hogtrimestre}{}{\ent}{itemHogar.ord(hogtrimestre)}
+        \aux{@hoglatitud}{}{\ent}{itemHogar.ord(hoglatitud)}
+        \aux{@hoglongitud}{}{\ent}{itemHogar.ord(hoglongitud)}
+        \aux{@ii7}{}{\ent}{itemHogar.ord(ii7)}
+        \aux{@region}{}{\ent}{itemHogar.ord(region)}
+        \aux{@mas\_500}{}{\ent}{itemHogar.ord(mas\_500)}
+        \aux{@iv1}{}{\ent}{itemHogar.ord(iv1)}
+        \aux{@iv2}{}{\ent}{itemHogar.ord(iv2)}
+        \aux{@ii2}{}{\ent}{itemHogar.ord(ii2)}
+        \aux{@ii3}{}{\ent}{itemHogar.ord(ii3)}
+        $\newline$
+        \aux{@indcodusu}{}{\ent}{itemIndividuo.ord(indcodusu)}
+        \aux{@componente}{}{\ent}{itemIndividuo.ord(componente)}
+        \aux{@indaño}{}{\ent}{itemIndividuo.ord(inda\tilde{n}o)}
+        \aux{@indtrimestre}{}{\ent}{itemIndividuo.ord(indtrimestre)}
+        \aux{@ch4}{}{\ent}{itemIndividuo.ord(ch4)}
+        \aux{@ch6}{}{\ent}{itemIndividuo.ord(ch6)}
+        \aux{@nivel\_ed}{}{\ent}{itemIndividuo.ord(nivel\_ed)}
+        \aux{@cat\_ocup}{}{\ent}{itemIndividuo.ord(cat\_ocup)}
+        \aux{@p47t}{}{\ent}{itemIndividuo.ord(p47t)}
+        \aux{@ppo4g}{}{\ent}{itemIndividuo.ord(ppo4g)}
+
+    \section{funciones generales}
+     
+        \pred{esMatriz}{s: \TLista{\TLista{T}}}{
+            (\forall i: \ent)(0 \leq i < |s| \implicaLuego |s[i]| = |s[0]|)
+        }
+        $\newline$
+        \pred{esTabla}{m: \TLista{\TLista{T}}, columnas:\TLista{T}}{
+            |m| > 0 \yLuego (|m[0]| = |columnas| \y esMatriz(m))
+        }
+        
+        \aux{individuosEnHogar}{ti: $eph_{i}$, codusu$_{h}$: \ent}{\ent}
+            {\displaystyle\sum_{i=0}^{|ti| -  1}
+            \IfThenElse {ti[i][@indcodusu] = codusu_h}{1}{0}}
+
+    % === especificaciones === %
+    \section{especificaciones}
+
+        \subsection{proc. esEncuestaValida}
+
+            \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
+                \pre{\\
+                    \tab True\\
+                }
+                \post{\\
+                    \tab res = True \Iff validarEncuesta(th,ti)\\
+                }
+            \end{proc}
+        
+            \subsubsection{funciones auxiliares}
+
+                \noindent /* tabla hogares */\\
+
+                \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{
+                    (\exists j: \ent)(0 \leq j < |ti| \yLuego\\
+                    \tab th[i][@hogcodusu] = ti[j][@indcodusu]\\
+                    ) \y\\
+                    \neg(\exists k: \ent)(0 \leq k < |th| \y k \neq i \yLuego \\
+                    \tab th[i][@hogcodusu] = th[k][@hogcodusu]\\
+                    )
+                }
+                $\newline$
+                \pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, i: \ent}{
+                    th[i][@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o] \\
+                    th[i][@hogtrimestre] = th[0][@hogtrimestre]
+                }
+                $\newline$
+                \pred{attEnRango$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{
+                    0 \leq th[i][@hogcodusu] \y\\
+                    -90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
+                    -180 \leq th[i][@hoglongitud] \leq 180 \y\\
+                    1 \leq th[i][@ii7] \leq 3 \y\\
+                    1 \leq th[i][@region] \leq 6 \y\\
+                    0 \leq th[i][@mas\_500] \leq 1 \y\\
+                    1 \leq th[i][@iv1] \leq 5 \y\\
+                    0 < th[i][@ii2] \leq th[i][@iv2] \y \\      
+                    1 \leq th[i][@ii3] \leq 2)
+                }
+                $\newline$
+                \noindent /* tabla individuos */\\
+
+                \pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{
+                    (\exists j: \ent)(0 \leq j < |th| \yLuego \\
+                    \tab ti[i][@indcodusu] = th[j][@hogcodusu]\\
+                    ) \y\\
+                    \neg(\exists j: \ent)(0 \leq j < |ti| \yLuego\\
+                    \tab ti[i][@indcodusu] = ti[j][@indcodusu] \y\\
+                    \tab ti[i][@componente] = ti[j][@componente]\\
+                    )
+                }
+                $\newline$
+                \pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$,ti: $eph_{i}$, i: \ent}{
+                    ti[i][@ind\tilde{n}o] = th[0][@hoga\tilde{n}o] \\
+                    ti[i][@indtrimestre] = th[0][@hogtrimestre]
+                }
+                $\newline$
+                \pred{attEnRango$_{i}$}{ti: $eph_{i}$, i: \ent}{
+                    0 \leq ti[i][@indcodusu] \y\\
+                    0 \leq ti[i][@componente] < 20 \y\\
+                    1 \leq ti[i][@ch4] \leq 2 \y\\
+                    0 \leq ti[i][@ch6] \y\\
+                    0 \leq ti[i][@nivel\_ed] \leq 1 \y\\
+                    -1 \leq ti[i][@estado] \leq 1 \y\\
+                    0 \leq ti[i][@cat\_ocup] \leq 4 \y\\
+                    -1 \leq ti[i][@p47t] \y\\
+                    1 \leq ti[i][@ppo4g] \leq 10))    
+                }
+                $\newline$
+                \pred{validarEncuesta}{th: $eph_{h}$, ti: $eph_{i}$}{
+                    \\\comentario {tabla \: hogares}\\
+                    \\
+                    esTabla(th, itemHogar) \yLuego\\
+                    (\forall i: \ent)(0 \leq i < |th| \implicaLuego\\
+                        \tab codigoValido_h(th, ti, i) \y\\
+                        \tab a\tilde{n}oyTrimestreCongruente_h(th, i) \y\\
+                        \tab attEnRango_h(th, i)\\
+                    ) \y\\
+                    \\\comentario {tabla \: individuos}\\
+                    \\
+                    esTabla(ti, ItemIndividuo) \yLuego\\
+                    (\forall i: \ent)(0 \leq i < |ti| \implicaLuego\\
+                        \tab codigoValido_i(th, ti, i) \y\\
+                        \tab a\tilde{n}oyTrimestreCongruente_i(th, ti, i) \y\\
+                        \tab attEnRango_i(ti, i) \y\\
+                        \tab individuosEnHogar (ti, ti[i][@indcodusu]) \leq 20\\ 
+                    )
+                }
+        
+        \subsection{proc. histHabitacional}
+            \subsubsection{funciones auxiliares}
+
+        \subsection{proc. laCasaEstaQuedandoChica}
+            \subsubsection{funciones auxiliares}
+
+        \subsection{proc. creceElTeleworkingEnCiudadesGrandes}
+            \subsubsection{funciones auxiliares}
+            
+        \subsection{proc. costoSubsidioMejora}
+            \subsubsection{funciones auxiliares}
+
+\end{document}
