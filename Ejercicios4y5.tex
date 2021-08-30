@@ -47,6 +47,7 @@
 \end{proc}
  
 \pred{filtroSubsidio}{ti: eph_i, thr: hogar}{
-    (thr[@ii7] = 1) \y\\
-    individuosEnHogar(thr[@hogcodusu]) - 2 > thr[@ii2]
+    %Para no olvidarme, agregue que hogar tiene que ser una casa y la lista de individuos a la funcion auxiliar
+    (thr[@ii7] = 1) \y (thr[@iv1] = 1) \y\\
+    individuosEnHogar(ti,thr[@hogcodusu]) - 2 > thr[@ii2]
 }
