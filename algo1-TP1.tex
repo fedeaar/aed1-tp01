@@ -93,11 +93,11 @@
             \displaystyle\sum_{i=0}^{|ti| -  1}\IfThenElse {ti[i][@indcodusu] = codusu_h}{1}{0}
         }
         $\newline$$\newline$
+        $\comment{}{indiceHogarPorCodusu asume codusu$_{h}$ existe en la tabla}$
         \aux{indiceHogarPorCodusu}{th: $eph_{h}$, codusu$_{h}$: \ent}{\ent}{
             \displaystyle\sum_{i=0}^{|th|-1}\IfThenElse{th[i][@hogcodusu] = codusu_h}{i}{0}
         }
-        $\comment{\tab}{indiceHogarPorCodusu asume codusu$_{h}$ existe en la tabla}$
-        
+       
     % === especificaciones === %
     \section{especificaciones}
 
@@ -108,30 +108,30 @@
                     \tab True\\
                 }
                 \post{\\
-                    \tab res = \True \Iff validarEncuesta(th,ti)\\
+                    \tab res = \True \Iff validarEncuesta(th,\ ti)\\
                 }
             \end{proc}
         
             \subsubsection{funciones auxiliares}
                 $\comment{}{tabla hogares}$
                 \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{
-                    (\exists j: \ent)(0 \leq j < |ti| \yLuego\\
+                    (\exists j: \ent)(0 \leq j < |ti| \ \yLuego\\
                     \tab th[i][@hogcodusu] = ti[j][@indcodusu]\\
                     ) \y\\
-                    \neg(\exists k: \ent)(0 \leq k < |th| \y k \neq i \yLuego \\
+                    \neg(\exists k: \ent)(0 \leq k < |th| \ \y \ k \neq i \ \yLuego \\
                     \tab th[i][@hogcodusu] = th[k][@hogcodusu]\\
                     )
                 }
                 $\newline$
                 \pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, i: \ent}{
-                    th[i][@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o] \\
+                    th[i][@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o] \ \y \
                     th[i][@hogtrimestre] = th[0][@hogtrimestre]
                 }
                 $\newline$
                 \pred{attEnRango$_{h}$}{th: $eph_{h}$, i: \ent}{
                     0 \leq th[i][@hogcodusu] \y\\
-                    -90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
-                    -180 \leq th[i][@hoglongitud] \leq 180 \y\\
+                    %-90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
+                    %-180 \leq th[i][@hoglongitud] \leq 180 \y\\
                     1 \leq th[i][@ii7] \leq 3 \y\\
                     1 \leq th[i][@region] \leq 6 \y\\
                     0 \leq th[i][@mas\_500] \leq 1 \y\\
@@ -144,14 +144,14 @@
                     (\exists j: \ent)(0 \leq j < |th| \yLuego \\
                     \tab ti[i][@indcodusu] = th[j][@hogcodusu]\\
                     ) \y\\
-                    \neg(\exists k: \ent)(0 \leq k < |ti| \y k \neq i \yLuego\\
-                    \tab ti[i][@indcodusu] = ti[k][@indcodusu] \y\\
-                    \tab ti[i][@componente] = ti[k][@componente]\\
+                    \neg(\exists k: \ent)(0 \leq k < |ti| \ \y \  k \neq i \yLuego\\
+                    \tab ti[i][@indcodusu] = ti[k][@indcodusu] \ \y \
+                    ti[i][@componente] = ti[k][@componente]\\
                     )
                 }
                 $\newline$
                 \pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$,ti: $eph_{i}$, i: \ent}{
-                    ti[i][@ind\tilde{n}o] = th[0][@hoga\tilde{n}o] \\
+                    ti[i][@inda\tilde{n}o] = th[0][@hoga\tilde{n}o] \ \y \
                     ti[i][@indtrimestre] = th[0][@hogtrimestre]
                 }
                 $\newline$
@@ -171,17 +171,17 @@
                     \comment{}{tabla hogares}
                     esTabla(th, itemHogar) \yLuego\\
                     (\forall i: \ent)(0 \leq i < |th| \implicaLuego\\
-                        \tab codigoValido_h(th, ti, i) \y\\
-                        \tab a\tilde{n}oyTrimestreCongruente_h(th, i) \y\\
-                        \tab attEnRango_h(th, i)\\
+                        \tab codigoValido_h(th,\ ti,\ i) \ \y \
+                        a\tilde{n}oyTrimestreCongruente_h(th,\ i) \ \y \
+                        attEnRango_h(th,\ i)\\
                     ) \y
                     \comment{}{tabla individuos}
                     esTabla(ti, ItemIndividuo) \yLuego\\
                     (\forall i: \ent)(0 \leq i < |ti| \implicaLuego\\
-                        \tab codigoValido_i(th, ti, i) \y\\
-                        \tab a\tilde{n}oyTrimestreCongruente_i(th, ti, i) \y\\
-                        \tab attEnRango_i(ti, i) \y\\
-                        \tab individuosEnHogar (ti, ti[i][@indcodusu]) \leq 20\\ 
+                        \tab codigoValido_i(th,\ ti,\ i) \ \y \
+                        a\tilde{n}oyTrimestreCongruente_i(th,\ ti,\ i) \ \y \\
+                        \tab attEnRango_i(ti,\ i) \ \y \
+                        individuosEnHogar (ti,\ ti[i][@indcodusu]) \leq 20\\ 
                     )
                 }
         
@@ -196,12 +196,13 @@
             \begin{proc}{creceElTeleworkingEnCiudadesGrandes}
                         {\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
                 \pre{\\
-                    \tab (validarEncuesta(t1h, \ t1i) \y validarEncuesta(t2h, \ t2i)) \yLuego\\
-                    \tab t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1 \y \\
+                    \tab (validarEncuesta(t1h, \ t1i) \ \y \ validarEncuesta(t2h, \ t2i)) \yLuego\\
+                    \tab t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1 \ \y \
                     % Esto seria si se acepta mas de un año de diferencia:
                     % \tab t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o] \y \\
-                    \tab t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre] \y \\
+                    t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre] \y \\
                     %\tab\comment{el universo no esta vacio}\\
+                    %CORREGIR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     \tab(\exists k: \ent)(0 \leq k < |t1i| \yLuego\\
                     \tab\tab esHogarValidoParaTeleworking(t1h, \ t1i[k])\\
                     \tab) \y\\
@@ -225,7 +226,7 @@
                 $\newline$
                 \pred{viveEnHogarValido}{th: $eph_{h}$, p: $individuo$}{
                     %Filtro de la gente en general que cumple las condiciones para teleworking
-                    esHogarValidoParaTeleworking(th, \ indiceHogarPorCodusu(th, \ p[@indcodusu]))
+                    esHogarValidoParaTeleworking(th, \ th[indiceHogarPorCodusu(th, \ p[@indcodusu])|)
                 }
                 $\newline$
                 \pred{haceTeleworking}{th: $eph_{h}$, p: $individuo$}{
@@ -246,10 +247,10 @@
             \begin{proc}{costoSubsidioMejora}{\In th: $eph_{i}$, \In ti: $eph_{i}$, \In monto: \ent, \Out res: \ent}{}
                 \pre{\\
                     %Encuestas y montos deben ser válidos    
-                    \tab validarEncuesta(th,ti) \y monto \geq 0\\
+                    \tab validarEncuesta(th,\ ti) \y monto \geq 0\\
                 } 
                 \post{ \\
-                    \tab res = monto * \displaystyle\sum_{j=0}^{|th|-1}(\IfThenElse{esHogarValidoParaSubsidio(ti,th[j])}{1}{0})\\
+                    \tab res = monto * \displaystyle\sum_{j=0}^{|th|-1}(\IfThenElse{esHogarValidoParaSubsidio(ti,\ th[j])}{1}{0})\\
                 }    
             \end{proc}
 
@@ -257,7 +258,7 @@
 
                 \pred{esHogarValidoParaSubsidio}{ti: $eph_{i}$, h: $hogar$}{
                 %Para no olvidarme, agregue que hogar tiene que ser una casa y la lista de individuos a la funcion auxiliar
-                h[@ii7] = 1 \ \y \ h[@iv1] = 1 \ \y \ individuosEnHogar(ti, h[@hogcodusu]) - 2 > h[@ii2]
+                h[@ii7] = 1 \ \y \ h[@iv1] = 1 \ \y \ individuosEnHogar(ti,\ h[@hogcodusu]) - 2 > h[@ii2]
 }
 
 
