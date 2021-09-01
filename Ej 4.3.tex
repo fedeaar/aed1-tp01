@@ -1,0 +1,33 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title {EJERCICIO 4.3}
+
+
+\begin{document}
+\maketitle
+
+\noindent proc laCasaEstaQuedandoChica(in th\;:eph_{h},in\; ti:eph_{i},out\;res\;:seq\left \langle \mathbb{Z} \right \rangle) \\
+
+Pre[validarEncuesta(th\;:eph_{h};\;ti\;:eph_{i}) ]\\
+
+Post[|res|=6\; \wedge_{L}\; (\forall i\;\in \mathbb{Z})(0\leq i\leq 5\;\wedge_{L}\;res[i]=@ProporcionCasasHacinadas(th,ti,i+1)]\\
+
+
+\section{Funciones auxiliares}\\
+
+\noindent Aux\; @CasasTotales(th,\;k\;:\mathbb{Z})\;:\;\mathbb{Z}\;=\\
+\sum_{j=1}^{|th|} s(j)(if\; (th[j].Ord(7)=k\;\wedge\;th[j].Ord(8)=0\;\wedge\;th[j].Ord(9)=1)\;then\;s(j)=1\;else\;0\;fi)\\
+
+\noindent Aux\;@CasasHacinadas(t_{h}\;:eph_{h},\;t_{i}\;:eph_{i},k\;:\mathbb{Z})\;:\;\mathbb{Z}\;=\\
+\sum_{j=1}^{|th|} s(j)(if\; (th[j].Ord(7)=k\;\wedge\;th[j].Ord(8)=0\;\wedge\;th[j].Ord(9)=1\;\wedge\; individuosEnHogar(ti,th[j][0])\;>\;3*th[j].Ord(10))\;then\;s(j)=1\;else\;0\;fi)\\
+
+\noindent Aux\; @ProporcionCasasHacinadas(th,\;ti,\;k\;:\mathbb{Z})\;:\mathbb{Z}=\\
+(\forall k\;\in\;\mathbb{Z})(if\;(1\leq k \leq 6\;\wedge_{L}\;@CasasTotales(th,\;k)>0)\;then\;\frac{@CasasHacinadas(th,\;ti,\;k)}{@CasasTotales(th,\;k)}\;else\;0\;fi)
+
+ 
+
+
+\section 
+
+\end{document}
