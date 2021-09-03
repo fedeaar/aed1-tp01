@@ -124,8 +124,13 @@ $\newline$
 }
 
 \newline\newline
-\noindent aux{CasasTotales}{th:$eph_{h}$,region:\ent}{\ent}{\\
-\noindent \sum_{j=1}^{|th|} s(j)(\IfThenElse {(th[j].Ord(7)=k\;\wedge\;th[j].Ord(8)=0\;\wedge\;th[j].Ord(9)=1)}{1}{0})\\
+\noindent \aux{CasasHacinadas}{th:$eph_{h}$,ti:$eph_{i}$,region:\ent}{\ent}{\\
+\noindent \sum_{j=0}^{|th|-1} s(j)(\IfThenElse {EsCasayEstaEnZona(th,region,j) \y (individuosEnHogar(ti,th[j][@hogcodusu]) > 3*th[j][@iv2])}{1}{0})\\
+}
+
+\newline\newline
+\noindent \aux{ProporcionCasasHacinadas}{th:$eph_{h}$,ti:$eph_{i}$,region:\ent}{\float}{\\
+\noindent (\forall region \in \ent)(\IfThenElse{1\leq region \leq 6 \yluego @CasasTotales(th, region)>0}{\frac{@CasasHacinadas(th,ti,region)}{@CasasTotales(th,region)}}{0})
 }
 
 \subsection{proc. creceElTeleworkingEnCiudadesGrandes}
