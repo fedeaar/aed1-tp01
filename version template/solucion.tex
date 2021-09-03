@@ -53,8 +53,8 @@
 \noindent\pred{validarEncuesta}{th: $eph_{h}$, ti: $eph_{i}$}{
     \comment{\tab}{tabla hogares}
     \tab (esTabla(th,\ largoItemHogar) \yLuego\\
-    \tab (\forall hogar: hogar)(hogar \in th \implicaLuego (\\
-    \tab\tab codigoValido_h(th,\ ti,\ hogar)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ hogar)\ \y\\ \tab\tab attEnRango_h(hogar)\\
+    \tab (\forall hog: hogar)(hog \in th \implicaLuego (\\
+    \tab\tab codigoValido_h(th,\ ti,\ hog)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ hog)\ \y\\ \tab\tab attEnRango_h(hog)\\
     \tab))) \y
     \comment{\tab}{tabla individuos}
     \tab (esTabla(ti,\ largoItemIndividuo) \yLuego\\
@@ -65,44 +65,44 @@
 % Deje el filtro de maximo 20 personas en attEnRangoi
 }
 $\newline$
-\pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, h: hogar}{\\
-    \tab(\exists i: individuo)(i \in ti\ \yLuego\\
-    \tab\tab h[@hogcodusu] = i[@indcodusu]\\
+\pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, hog: hogar}{\\
+    \tab(\exists ind: individuo)(ind \in ti\ \yLuego\\
+    \tab\tab hog[@hogcodusu] = ind[@indcodusu]\\
     \tab) \y\\
-    \tab\neg(\exists h$_{2}$: hogar)(h$_{2}$ \in th\ \y\ h$_{2}$ \neq h\ \yLuego\\ 
-    \tab\tab h[@hogcodusu] = h$_{2}$[@hogcodusu]\\
+    \tab\neg(\exists hog$_{2}$: hogar)(hog$_{2}$ \in th\ \y\ hog$_{2}$ \neq hog\ \yLuego\\ 
+    \tab\tab hog[@hogcodusu] = hog$_{2}$[@hogcodusu]\\
     \tab)\\
 }
 $\newline$
-\pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, h: hogar}{\\
-    \tab h[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ h[@hogtrimestre] = th[0][@hogtrimestre]\\
+\pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, hog: hogar}{\\
+    \tab hog[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ hog[@hogtrimestre] = th[0][@hogtrimestre]\\
 }
 $\newline$
-\pred{attEnRango$_{h}$}{h: hogar}{\\
+\pred{attEnRango$_{h}$}{hog: hogar}{\\
     %-90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
     %-180 \leq th[i][@hoglongitud] \leq 180 \y\\
-    \tab 0 \leq h[@hogcodusu]\ \y\ 1810 \leq h[@hoga\tilde{n}o]\ \y\ 1 \leq h[@hogtrimestre] \leq 4\ \y\\ 
-    \tab 1 \leq h[@ii7] \leq 3\ \y\ 1 \leq h[@region] \leq 6\ \y\ 0 \leq h[@mas\_500] \leq 1\ \y\\
-    \tab 1 \leq h[@iv1] \leq 5\ \y\ 0 < h[@ii2] \leq h[@iv2]\ \y \ 1 \leq h[@ii3] \leq 2\\
+    \tab 0 \leq hog[@hogcodusu]\ \y\ 1810 \leq hog[@hoga\tilde{n}o]\ \y\ 1 \leq hog[@hogtrimestre] \leq 4\ \y\\ 
+    \tab 1 \leq hog[@ii7] \leq 3\ \y\ 1 \leq hog[@region] \leq 6\ \y\ 0 \leq hog[@mas\_500] \leq 1\ \y\\
+    \tab 1 \leq hog[@iv1] \leq 5\ \y\ 0 < hog[@ii2] \leq hog[@iv2]\ \y \ 1 \leq hog[@ii3] \leq 2\\
 }
 $\newline$          
-\noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: individuo}{\\
-    \tab(\exists h: hogar)(h \in th \yLuego \\
-    \tab\tab i[@indcodusu] = h[@hogcodusu]\\
+\noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, ind: individuo}{\\
+    \tab(\exists hog: hogar)(hog \in th \yLuego \\
+    \tab\tab ind[@indcodusu] = hog[@hogcodusu]\\
     \tab) \y\\
-    \tab\neg(\exists i$_{2}$: individuo)(i$_{2}$ \in ti \ \y \  i$_{2}$ \neq i \yLuego (\\
-    \tab\tab i[@indcodusu] = i$_{2}$[@indcodusu]\ \y \ i[@componente] = i$_{2}$[@componente]\\
+    \tab\neg(\exists ind$_{2}$: individuo)(ind$_{2}$ \in ti\ \y \  ind$_{2}$ \neq ind \yLuego (\\
+    \tab\tab ind[@indcodusu] = ind$_{2}$[@indcodusu]\ \y \ ind[@componente] = ind$_{2}$[@componente]\\
     \tab))\\
 }
 $\newline$
-\pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, i: individuo}{\\
-    \tab i[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ i[@indtrimestre] = th[0][@hogtrimestre]\\
+\pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, ind: individuo}{\\
+    \tab ind[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ ind[@indtrimestre] = th[0][@hogtrimestre]\\
 }
 $\newline$
-\pred{attEnRango$_{i}$}{i: individuo}{\\
-    \tab 0 \leq i[@indcodusu]\ \y\ 0 \leq i[@componente] < 20\ \y\ 1 \leq i[@ch4] \leq 2\ \y\ 0 \leq i[@ch6]\ \y\\
-    \tab 0 \leq i[@nivel\_ed] \leq 1\ \y\ -1 \leq i[@estado] \leq 1\ \y\ 0 \leq i[@cat\_ocup] \leq 4\ \y\ -1 \leq i[@p47t] \y\\
-    \tab 1 \leq i[@ppo4g] \leq 10\\    
+\pred{attEnRango$_{i}$}{ind: individuo}{\\
+    \tab 0 \leq ind[@indcodusu]\ \y\ 0 \leq ind[@componente] < 20\ \y\ 1 \leq ind[@ch4] \leq 2\ \y\ 0 \leq ind[@ch6]\ \y\\
+    \tab 0 \leq ind[@nivel\_ed] \leq 1\ \y\ -1 \leq ind[@estado] \leq 1\ \y\ 0 \leq ind[@cat\_ocup] \leq 4\ \y\ -1 \leq ind[@p47t] \y\\
+    \tab 1 \leq ind[@ppo4g] \leq 10\\    
 }
 
 $\newline$
