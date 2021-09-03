@@ -53,57 +53,56 @@
 \noindent\pred{validarEncuesta}{th: $eph_{h}$, ti: $eph_{i}$}{
     \comment{\tab}{tabla hogares}
     \tab (esTabla(th,\ largoItemHogar) \yLuego\\
-    \tab (\forall i: \ent)(0 \leq i < |th| \implicaLuego (\\
-    \tab\tab codigoValido_h(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ i)\ \y\ attEnRango_h(th,\ i)\\
+    \tab (\forall hogar: hogar)(hogar \in th \implicaLuego (\\
+    \tab\tab codigoValido_h(th,\ ti,\ hogar)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ hogar)\ \y\\ \tab\tab attEnRango_h(hogar)\\
     \tab))) \y
     \comment{\tab}{tabla individuos}
     \tab (esTabla(ti,\ largoItemIndividuo) \yLuego\\
-    \tab(\forall i: \ent)(0 \leq i < |ti| \implicaLuego (\\
-    \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti,\ i)\ \y\ attEnRango_i(ti,\ i)\\
+    \tab(\forall ind: individuo)(ind \in ti \implicaLuego (\\
+    \tab\tab codigoValido_i(th,\ ti,\ ind)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ind)\ \y\\ \tab\tab attEnRango_i(ind)\\
     % \tab\tab individuosEnHogar (ti,\ ti[i][@indcodusu]) \leq 20\\
     \tab)))\\
 % Deje el filtro de maximo 20 personas en attEnRangoi
 }
 $\newline$
-\noindent\pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
-    \tab(\exists j: \ent)(0 \leq j < |ti|\ \yLuego\\
-    \tab\tab th[i][@hogcodusu] = ti[j][@indcodusu]\\
+\pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, h: hogar}{\\
+    \tab(\exists i: individuo)(i \in ti\ \yLuego\\
+    \tab\tab h[@hogcodusu] = i[@indcodusu]\\
     \tab) \y\\
-    \tab\neg(\exists k: \ent)(0 \leq k < |th|\ \y\ k \neq i\ \yLuego\\ 
-    \tab\tab th[i][@hogcodusu] = th[k][@hogcodusu]\\
+    \tab\neg(\exists h$_{2}$: hogar)(h$_{2}$ \in th\ \y\ h$_{2}$ \neq h\ \yLuego\\ 
+    \tab\tab h[@hogcodusu] = h$_{2}$[@hogcodusu]\\
     \tab)\\
 }
 $\newline$
-\noindent\pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, i: \ent}{\\
-    \tab th[i][@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ th[i][@hogtrimestre] = th[0][@hogtrimestre]\\
+\pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, h: hogar}{\\
+    \tab h[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ h[@hogtrimestre] = th[0][@hogtrimestre]\\
 }
 $\newline$
-\pred{attEnRango$_{h}$}{th: $eph_{h}$, i: \ent}{\\
+\pred{attEnRango$_{h}$}{h: hogar}{\\
     %-90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
     %-180 \leq th[i][@hoglongitud] \leq 180 \y\\
-    \tab 0 \leq th[i][@hogcodusu]\ \y\ 1810 \leq th[i][@hoga\tilde{n}o]\ \y\ 1 \leq th[i][@hogtrimestre] \leq 4\ \y\\ 
-    \tab 1 \leq th[i][@ii7] \leq 3\ \y\ 1 \leq th[i][@region] \leq 6\ \y\ 0 \leq th[i][@mas\_500] \leq 1\ \y\\
-    \tab 1 \leq th[i][@iv1] \leq 5\ \y\ 0 < th[i][@ii2] \leq th[i][@iv2]\ \y \ 1 \leq th[i][@ii3] \leq 2\\
+    \tab 0 \leq h[@hogcodusu]\ \y\ 1810 \leq h[@hoga\tilde{n}o]\ \y\ 1 \leq h[@hogtrimestre] \leq 4\ \y\\ 
+    \tab 1 \leq h[@ii7] \leq 3\ \y\ 1 \leq h[@region] \leq 6\ \y\ 0 \leq h[@mas\_500] \leq 1\ \y\\
+    \tab 1 \leq h[@iv1] \leq 5\ \y\ 0 < h[@ii2] \leq h[@iv2]\ \y \ 1 \leq h[@ii3] \leq 2\\
 }
-%Saqué un \noindent de attEnRangoh, me pareció que no agregaba nada
 $\newline$          
-\noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
-    \tab(\exists j: \ent)(0 \leq j < |th| \yLuego \\
-    \tab\tab ti[i][@indcodusu] = th[j][@hogcodusu]\\
+\noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: individuo}{\\
+    \tab(\exists h: hogar)(h \in th \yLuego \\
+    \tab\tab i[@indcodusu] = h[@hogcodusu]\\
     \tab) \y\\
-    \tab\neg(\exists k: \ent)(0 \leq k < |ti| \ \y \  k \neq i \yLuego (\\
-    \tab\tab ti[i][@indcodusu] = ti[k][@indcodusu]\ \y \ ti[i][@componente] = ti[k][@componente]\\
+    \tab\neg(\exists i$_{2}$: individuo)(i$_{2}$ \in ti \ \y \  i$_{2}$ \neq i \yLuego (\\
+    \tab\tab i[@indcodusu] = i$_{2}$[@indcodusu]\ \y \ i[@componente] = i$_{2}$[@componente]\\
     \tab))\\
 }
 $\newline$
-\pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$,ti: $eph_{i}$, i: \ent}{\\
-    \tab ti[i][@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ ti[i][@indtrimestre] = th[0][@hogtrimestre]\\
+\pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, i: individuo}{\\
+    \tab i[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ i[@indtrimestre] = th[0][@hogtrimestre]\\
 }
 $\newline$
-\pred{attEnRango$_{i}$}{ti: $eph_{i}$, i: \ent}{\\
-    \tab 0 \leq ti[i][@indcodusu]\ \y\ 0 \leq ti[i][@componente] < 20\ \y\ 1 \leq ti[i][@ch4] \leq 2\ \y\ 0 \leq ti[i][@ch6]\ \y\\
-    \tab 0 \leq ti[i][@nivel\_ed] \leq 1\ \y\ -1 \leq ti[i][@estado] \leq 1\ \y\ 0 \leq ti[i][@cat\_ocup] \leq 4\ \y\ -1 \leq ti[i][@p47t] \y\\
-    \tab 1 \leq ti[i][@ppo4g] \leq 10\\    
+\pred{attEnRango$_{i}$}{i: individuo}{\\
+    \tab 0 \leq i[@indcodusu]\ \y\ 0 \leq i[@componente] < 20\ \y\ 1 \leq i[@ch4] \leq 2\ \y\ 0 \leq i[@ch6]\ \y\\
+    \tab 0 \leq i[@nivel\_ed] \leq 1\ \y\ -1 \leq i[@estado] \leq 1\ \y\ 0 \leq i[@cat\_ocup] \leq 4\ \y\ -1 \leq i[@p47t] \y\\
+    \tab 1 \leq i[@ppo4g] \leq 10\\    
 }
 
 $\newline$
