@@ -59,9 +59,10 @@
     \comment{\tab}{tabla individuos}
     \tab (esTabla(ti,\ largoItemIndividuo) \yLuego\\
     \tab(\forall i: \ent)(0 \leq i < |ti| \implicaLuego (\\
-    \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti,\ i)\ \y\ attEnRango_i(ti,\ i)\ \y\\
-    \tab\tab individuosEnHogar (ti,\ ti[i][@indcodusu]) \leq 20\\ 
+    \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti,\ i)\ \y\ attEnRango_i(ti,\ i)\\
+    % \tab\tab individuosEnHogar (ti,\ ti[i][@indcodusu]) \leq 20\\
     \tab)))\\
+% Deje el filtro de maximo 20 personas en attEnRangoi
 }
 $\newline$
 \noindent\pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
@@ -77,12 +78,14 @@ $\newline$
     \tab th[i][@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ th[i][@hogtrimestre] = th[0][@hogtrimestre]\\
 }
 $\newline$
-\noindent\pred{attEnRango$_{h}$}{th: $eph_{h}$, i: \ent}{\\
+\pred{attEnRango$_{h}$}{th: $eph_{h}$, i: \ent}{\\
     %-90 \:\:\leq th[i][@hoglatitud] \leq 90 \y\\
     %-180 \leq th[i][@hoglongitud] \leq 180 \y\\
-    \tab 0 \leq th[i][@hogcodusu]\ \y\ 1 \leq th[i][@ii7] \leq 3\ \y\ 1 \leq th[i][@region] \leq 6\ \y\ 0 \leq th[i][@mas\_500] \leq 1\ \y\\
+    \tab 0 \leq th[i][@hogcodusu]\ \y\ 1810 \leq th[i][@hoga\tilde{n}o]\ \y\ 1 \leq th[i][@hogtrimestre] \leq 4\ \y\\ 
+    \tab 1 \leq th[i][@ii7] \leq 3\ \y\ 1 \leq th[i][@region] \leq 6\ \y\ 0 \leq th[i][@mas\_500] \leq 1\ \y\\
     \tab 1 \leq th[i][@iv1] \leq 5\ \y\ 0 < th[i][@ii2] \leq th[i][@iv2]\ \y \ 1 \leq th[i][@ii3] \leq 2\\
 }
+%Saqué un \noindent de attEnRangoh, me pareció que no agregaba nada
 $\newline$          
 \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
     \tab(\exists j: \ent)(0 \leq j < |th| \yLuego \\
