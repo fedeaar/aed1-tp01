@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title {EJERCICIO 4.2}
+
+
+\begin{document}
+\maketitle
+
+\noindent proc histHabitacional(in th\;:eph_{h},in\; ti:eph_{i},in\;k:\mathbb{z},out\;res:seq\left \langle \mathbb{Z} \right \rangle) \\
+
+\noindent Pre[validarEncuesta(th\;:eph_{h};\;ti\;:eph_{i}) ]\\
+
+\noindent Post[HayMaximoDeHabitaciones(th,k)\;\wedge_{L}\;(\forall i\:\in\;\mathbb{Z})(0\leq i < \mid res\mid\;\wedge_{L}\; res[i]=@HabitacionesPorCasa(th,k,i+1)])\\
+
+
+\section{Funciones y predicados auxiliares}\\
+
+\noindent pred \;HayMaximoDeHabitaciones(th:eph_{h},\;region\;:\mathbb{Z})\\
+(\exists\;k\;\in\;\mathbb{Z})(k=\mid res\mid\;\wedge\;k\;\in\;res \;\wedge\;(\forall\;j\;\in\;\mathbb{Z})(0\leq j<\mid res\mid\;\wedge\;k\geq res[j]))\\
+
+
+\noindent aux\; @HabitacionesPorCasa(th:eph_{h},region:\mathbb{Z},habitaciones: \mathbb{Z}):\mathbb{Z}\\
+\noindent \sum_{j=1}^{|th|} s(j)(if\; (th[j].Ord(7)=region\;\wedge\;th[j].Ord(10)=habitaciones)\;then\;s(j)=1\;else\;0\;fi)\\
+
+
+
+
+
+ 
+
+
+\section 
+
+\end{document}
