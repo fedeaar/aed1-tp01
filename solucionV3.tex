@@ -107,14 +107,26 @@ $\newline$
 \subsection{proc. histHabitacional}
 
 \subsection{proc. laCasaEstaQuedandoChica}
+
 \begin{proc}{laCasaEstaQuedandoChica}{\In th: $eph_{h}$,\In ti:$eph_{i}$,\Out res:\Tlista{\ent}}{} \\
    \{Pre}{validarEncuesta(th,ti)}\\
    \{Post}{\longitud res=6 \yluego (\forall i \in \ent)(0\leq i\leq 5\ \yluego res[i]=@ProporcionCasasHacinadas(th,ti,i+1)}\\
 \end{proc}
-\newline\newline
-\noindent aux{CasasTotales}{th:$eph_{h}$,region:\ent){\ent}{\\
-\sum_{j=1}^{|th|} s(j)(if\; (th[j].Ord(7)=k\;\wedge\;th[j].Ord(8)=0\;\wedge\;th[j].Ord(9)=1)\;then\;s(j)=1\;else\;0\;fi)\\
 
+\newline\newline
+\noindent \pred{EsCasayEstaEnZona}{th:$eph_{h}$,region:\ent, filadeTh:\ent}{\\
+\noindent (EsCasayEstaEnZona(th,region,filadeTh)=True \iff (th[j][@region]=region \y th[j][@mas500]=0 \y th[j][@iv1]=1))\\
+}
+
+\newline\newline
+\noindent \aux {@CasasTotales}{th:eph_{h},region:\ent}{\ent}{\\
+\noindent \sum_{j=0}^{|th|-1} s(j)(\IfThenElse {EsCasayEstaEnZona(th,region,j)}{1}{0}fi)\\
+}
+
+\newline\newline
+\noindent aux{CasasTotales}{th:$eph_{h}$,region:\ent}{\ent}{\\
+\noindent \sum_{j=1}^{|th|} s(j)(\IfThenElse {(th[j].Ord(7)=k\;\wedge\;th[j].Ord(8)=0\;\wedge\;th[j].Ord(9)=1)}{1}{0})\\
+}
 
 \subsection{proc. creceElTeleworkingEnCiudadesGrandes}
 \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
