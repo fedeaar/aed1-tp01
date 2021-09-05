@@ -105,30 +105,43 @@ $\newline$
 
 $\newline$
 \subsection{proc. histHabitacional}
+\begin{proc}{histHabitacional}{\In th:$eph_{h}$,\In ti:$eph_{i}$,\In region:{\ent},\Out res:\Tlista{\ent}}{} \\
+   \{Pre}{validarEncuesta(th,ti)}\\
+   \{Post}{\longitud res=0 \oluego (HayMaximoDeHabitaciones(res) \yluego (\forall i \in \ent)(0\leq i < \longitud res -1 \yluego res[i]=@HabitacionesPorCasa(th,k,i+1))}\\
+\end{proc}
+
+$\newline$
+\noindent \pred{HayMaximoDeHabitaciones}{res:\Tlista{\ent}{\\
+\noindent (\exists max \in\ \ent)(max=\longitud res \y res[max-1]>0)\\
+}
+
+\noindent \aux {@HabitacionesPorCasa}{th:$eph_{h}$,region:\ent,habitaciones: \ent}{\ent}}{\\
+\noindent \sum_{j=0}^{|th|-1} s(j){\IfThenElse {th[j][@region]=region \y th[j][@iv1]=1 \y th[j][@iv2]=habitaciones}{1}{0}}\\
+}
 
 \subsection{proc. laCasaEstaQuedandoChica}
 
 \begin{proc}{laCasaEstaQuedandoChica}{\In th: $eph_{h}$,\In ti:$eph_{i}$,\Out res:\Tlista{\ent}}{} \\
    \{Pre}{validarEncuesta(th,ti)}\\
-   \{Post}{\longitud res=6 \yluego (\forall i \in \ent)(0\leq i\leq 5\ \yluego res[i]=@ProporcionCasasHacinadas(th,ti,i+1)}\\
+   \{Post}{\longitud res=6 \yluego (\forall i \in \ent)(0\leq i \leq 5 \yluego res[i]=@ProporcionCasasHacinadas(th,ti,i+1)}\\
 \end{proc}
 
-\newline\newline
+$\newline$
 \noindent \pred{EsCasayEstaEnZona}{th:$eph_{h}$,region:\ent, filadeTh:\ent}{\\
 \noindent (EsCasayEstaEnZona(th,region,filadeTh)=True \iff (th[j][@region]=region \y th[j][@mas500]=0 \y th[j][@iv1]=1))\\
 }
 
-\newline\newline
+$\newline$
 \noindent \aux {@CasasTotales}{th:eph_{h},region:\ent}{\ent}{\\
 \noindent \sum_{j=0}^{|th|-1} s(j)(\IfThenElse {EsCasayEstaEnZona(th,region,j)}{1}{0}fi)\\
 }
 
-\newline\newline
+$\newline$
 \noindent \aux{CasasHacinadas}{th:$eph_{h}$,ti:$eph_{i}$,region:\ent}{\ent}{\\
-\noindent \sum_{j=0}^{|th|-1} s(j)(\IfThenElse {EsCasayEstaEnZona(th,region,j) \y (individuosEnHogar(ti,th[j][@hogcodusu]) > 3*th[j][@iv2])}{1}{0})\\
+\noindent \sum_{j=0}^{|th|-1} s(j){\IfThenElse {EsCasayEstaEnZona(th,region,j) \y (individuosEnHogar(ti,th[j][@hogcodusu]) > 3*th[j][@iv2])}{1}{0}}\\
 }
 
-\newline\newline
+$\newline$
 \noindent \aux{ProporcionCasasHacinadas}{th:$eph_{h}$,ti:$eph_{i}$,region:\ent}{\float}{\\
 \noindent (\forall region \in \ent)(\IfThenElse{1\leq region \leq 6 \yluego @CasasTotales(th, region)>0}{\frac{@CasasHacinadas(th,ti,region)}{@CasasTotales(th,region)}}{0})
 }
