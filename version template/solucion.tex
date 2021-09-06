@@ -123,14 +123,17 @@ $\newline$
 \end{proc}
 \newline
 \pred{esHogarValidoParaTeleworking}{h: $hogar$}{\\
+    \comment{\tab}{Hogar cumple con especificaciones}
     \tab h[@mas\_500] = 1\ \y\ (h[@iv1] = 1\ \vee\ h[@iv1] = 2)\\
 }
 $\newline$
 \pred{viveEnHogarValido}{th: $eph_{h}$, p: $individuo$}{\\
+    \comment{\tab}{Hogar del individuo cumple con especificaciones}
     \tab esHogarValidoParaTeleworking(th[indiceHogarPorCodusu(th,\ p[@indcodusu])])\\
 }
 $\newline$
 \pred{haceTeleworking}{th: $eph_{h}$, p: $individuo$}{\\
+    \comment{\tab}{Hogar e Individuo cumplen con especificaciones}
     \tab viveEnHogarValido(th, p)\ \y\ p[@ii3] = 1\ \y\ p[@ppo4g] = 6\\
 }
 $\newline$
