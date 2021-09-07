@@ -1,12 +1,5 @@
 % === TODO ===
-% poner en decisiones tomadas porque decidimos considerar el caso del universo vacio en el 4.;
-% aux con #
-% decisiones tomadas 1810
 % pred max habitaciones que tenga relacion a th
-% 1.4. declaratividad
-% aux general matriz declaratividad
-% indicehogarporcodusu poner las condiciones en el aux
-% pasar a decisiones tomadas lo de v3.
 
 \documentclass[a4paper]{article} 
 
@@ -25,7 +18,7 @@
 \newcommand{\enum}[2]{%
     {\normalfont\bfseries\ttfamily\noindent enum\ }%
     {\normalfont\ttfamily #1}
-    {\{\\\tab#2\\\}}%
+    {\{#2\}}%
 }
 \newcommand{\comment}[2]{%
     \\[0.5ex]
@@ -56,223 +49,281 @@
 % === esEncuestaValida === %
 \subsection{proc. esEncuestaValida}
 
-    \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
-        \pre{\True}
-        \post{res = \True \Iff validarEncuesta(th,\ ti)}
-    \end{proc}
+    \subsubsection{Especificaci\'on:}
+        \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
+            \pre{\True}
+            \post{res = \True \Iff validarEncuesta(th,\ ti)}
+        \end{proc}
 
-    $\newline$
-    \noindent\pred{validarEncuesta}{th: $eph_{h}$, ti: $eph_{i}$}{
-        \comment{\tab}{tabla hogares}
-        \tab (esTabla(th,\ @largoItemHogar)\ \yLuego\\
-        \tab (\forall h: hogar)(h \in th\ \implicaLuego\ (\\
-        \tab\tab codigoValido_h(th,\ ti,\ h)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ h)\ \y\ attEnRango_h(h)\\
-        \tab))) \y
-        \comment{\tab}{tabla individuos}
-        \tab (esTabla(ti,\ @largoItemIndividuo)\ \yLuego\\
-        \tab(\forall i: individuo)(i \in ti\ \implicaLuego\ (\\
-        \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ i)\ \y\ attEnRango_i(i)\ \y\\
-        \tab\tab validarComponente_i(ti,\ i)\\
-        \tab)))\\
-    }
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{validarEncuesta}{th: $eph_{h}$, ti: $eph_{i}$}{
+            \comment{\tab}{tabla hogares}
+            \tab (esTabla(th,\ @largoItemHogar)\ \yLuego\\
+            \tab (\forall h: hogar)(h \in th\ \implicaLuego\ (\\
+            \tab\tab codigoValido_h(th,\ ti,\ h)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ h)\ \y\ attEnRango_h(h)\\
+            \tab))) \y
+            \comment{\tab}{tabla individuos}
+            \tab (esTabla(ti,\ @largoItemIndividuo)\ \yLuego\\
+            \tab(\forall i: individuo)(i \in ti\ \implicaLuego\ (\\
+            \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ i)\ \y\ attEnRango_i(i)\ \y\\
+            \tab\tab validarComponente_i(ti,\ i)\\
+            \tab)))\\
+        }
+        $\newline$
+        \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, h: $hogar$}{\\
+            \tab(\exists i: individuo)(i \in ti\ \yLuego\\
+            \tab\tab h[@hogcodusu] = i[@indcodusu]\\
+            \tab) \y\\
+            \tab\neg(\exists h_2: hogar)((h_2 \in th\ \y\ h_2 \neq h)\ \yLuego\\ 
+            \tab\tab h[@hogcodusu] = h_2[@hogcodusu]\\
+            \tab)\\
+        }
+        $\newline$
+        \pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, h: $hogar$}{\\
+            \tab h[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ h[@hogtrimestre] = th[0][@hogtrimestre]\\
+        }
+        $\newline$
+        \pred{attEnRango$_{h}$}{h: $hogar$}{\\
+            \tab 0 \leq h[@hogcodusu]\ \y\\ 
+            \tab 1810 \leq h[@hoga\tilde{n}o]\ \y\\
+            \tab 1 \leq h[@hogtrimestre] \leq 4\ \y\\
+            \tab -90 \leq th[i][@hoglatitud] \leq 90\ \y\\
+            \tab -180 \leq th[i][@hoglongitud] \leq 180\ \y\\
+            \tab 1 \leq h[@ii7] \leq 3\ \y\\ 
+            \tab 1 \leq h[@region] \leq 6\ \y\\ 
+            \tab 0 \leq h[@mas\_500] \leq 1\ \y\\
+            \tab 1 \leq h[@iv1] \leq 5\ \y\\ 
+            \tab 0 < h[@ii2] \leq h[@iv2]\ \y\\
+            \tab 1 \leq h[@ii3] \leq 2\\
+        }
+        $\newline$          
+        \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: $individuo$}{\\
+            \tab(\exists h: hogar)(h \in th\ \yLuego \\
+            \tab\tab i[@indcodusu] = h[@hogcodusu]\\
+            \tab) \y\\
+            \tab\neg(\exists i_2: individuo)((i_2 \in ti\ \y\  i_2 \neq i)\ \yLuego\ (\\
+            \tab\tab i[@indcodusu] = i_2[@indcodusu]\ \y\ i[@componente] = i_2[@componente]\\
+            \tab))\\
+        }
+        $\newline$
+        \pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, i: $individuo$}{\\
+            \tab i[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y\ i[@indtrimestre] = th[0][@hogtrimestre]\\
+        }
+        $\newline$
+        \pred{attEnRango$_{i}$}{i: $individuo$}{\\
+            \tab 0 \leq i[@indcodusu]\ \y\\ 
+            \tab 1 \leq i[@componente] <= 20\ \y\\
+            \tab 1810 \leq h[@inda\tilde{n}o]\ \y\\
+            \tab 1 \leq h[@indtrimestre] \leq 4\ \y\\
+            \tab 1 \leq i[@ch4] \leq 2\ \y\\
+            \tab 0 \leq i[@ch6]\ \y\\
+            \tab 0 \leq i[@nivel\_ed] \leq 1\ \y\\ 
+            \tab -1 \leq i[@estado] \leq 1\ \y\\ 
+            \tab 0 \leq i[@cat\_ocup] \leq 4\ \y\\ 
+            \tab -1 \leq i[@p47t]\ \y\\
+            \tab 1 \leq i[@ppo4g] \leq 10\\    
+        }
+        $\newline$
+        \pred{validarComponente$_{i}$}{ti: $eph_{i}$, i: $individuo$}{\\
+            \tab i[@componente] = 1\ \vee (\exists i_2: individuo)(i_2 \in ti\ \yLuego\ i[@componente] - 1 = i_2[@componente])\\
+        }
 
-    $\newline$
-    \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, h: $hogar$}{\\
-        \tab(\exists i: individuo)(i \in ti\ \yLuego\\
-        \tab\tab h[@hogcodusu] = i[@indcodusu]\\
-        \tab) \y\\
-        \tab\neg(\exists h_2: hogar)((h_2 \in th\ \y\ h_2 \neq h)\ \yLuego\\ 
-        \tab\tab h[@hogcodusu] = h_2[@hogcodusu]\\
-        \tab)\\
-    }
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item la funci\'on auxiliar $esTabla$, definida en 2.1., verifica que th y ti sean matrices del largo correcto y 
+            con al menos una entrada.
+            \item los predicados $codigoValido$ verifican, de forma cruzada, que los hogares tengan individuos asociados y viceversa, 
+            y que no est\'en repetidos.    
+            \item los predicados $a\tilde{n}oyTrimestreCongruente$ contrastan con la primer entrada de la tabla de hogares para asegurar
+            la homogeneidad de los registros. 
+            \item el predicado $validarComponente_{i}$ junto a $codigoValido_{i}$, y aplicado a todo individuo de la tabla, verifica que los 
+            componentes ocurran de forma continua, es decir sin saltos mayores a 1, a partir del primero. 
+            En consecuencia, basta con verificar \'estos predicados, y que los componentes est\'en en el rango correcto para asegurar 
+            que no haya m\'as de 20 individuos por hogar. 
+            \item consideramos que: 
+                \begin{itemize}
+                    \item $@hogcodusu$ y $@indcodusu$ son estrictamente positivos.
+                    \item $@componente$ puede tomar valores entre 1 y 20 inclusive.
+                    \item $@hoga\tilde{n}o$ y $@inda\tilde{n}o$ comienzan con la revoluci\'on de mayo.
+                    \item $@hogtrimestre$ y $@indtrimestre$ toman valores entre 1 y 4 inclusive.
+                    \item $@hoglatitud$ representa la direcci\'on $sur$ con n\'umeros negativos y $norte$ con positivos.
+                    \item $@hoglongitud$ representa la direcci\'on $oeste$ con n\'umeros negativos y $este$ con positivos.
+                    \item $@ch6$, al representar la edad, es mayor o igual a 0.
+                    \item $@iv2$, la cantidad total de ambientes, es estrictamente mayor a 0.
+                \end{itemize}
+        \end{itemize}
 
-    $\newline$
-    \pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, h: $hogar$}{\\
-        \tab h[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ h[@hogtrimestre] = th[0][@hogtrimestre]\\
-    }
-
-    $\newline$
-    \pred{attEnRango$_{h}$}{h: $hogar$}{\\
-        \tab 0 \leq h[@hogcodusu]\ \y\\ 
-        \tab 1810 \leq h[@hoga\tilde{n}o]\ \y\\
-        \tab 1 \leq h[@hogtrimestre] \leq 4\ \y\\
-        \tab -90 \leq th[i][@hoglatitud] \leq 90\ \y\\
-        \tab -180 \leq th[i][@hoglongitud] \leq 180\ \y\\
-        \tab 1 \leq h[@ii7] \leq 3\ \y\\ 
-        \tab 1 \leq h[@region] \leq 6\ \y\\ 
-        \tab 0 \leq h[@mas\_500] \leq 1\ \y\\
-        \tab 1 \leq h[@iv1] \leq 5\ \y\\ 
-        \tab 0 < h[@ii2] \leq h[@iv2]\ \y\\
-        \tab 1 \leq h[@ii3] \leq 2\\
-    }
-
-    $\newline$          
-    \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: $individuo$}{\\
-        \tab(\exists h: hogar)(h \in th\ \yLuego \\
-        \tab\tab i[@indcodusu] = h[@hogcodusu]\\
-        \tab) \y\\
-        \tab\neg(\exists i_2: individuo)((i_2 \in ti\ \y\  i_2 \neq i)\ \yLuego\ (\\
-        \tab\tab i[@indcodusu] = i_2[@indcodusu]\ \y\ i[@componente] = i_2[@componente]\\
-        \tab))\\
-    }
-
-    $\newline$
-    \pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, i: $individuo$}{\\
-        \tab i[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y\ i[@indtrimestre] = th[0][@hogtrimestre]\\
-    }
-
-    $\newline$
-    \pred{attEnRango$_{i}$}{i: $individuo$}{\\
-        \tab 0 \leq i[@indcodusu]\ \y\\ 
-        \tab 1 \leq i[@componente] <= 20\ \y\\
-        \tab 1 \leq i[@ch4] \leq 2\ \y\\
-        \tab 0 \leq i[@ch6]\ \y\\
-        \tab 0 \leq i[@nivel\_ed] \leq 1\ \y\\ 
-        \tab -1 \leq i[@estado] \leq 1\ \y\\ 
-        \tab 0 \leq i[@cat\_ocup] \leq 4\ \y\\ 
-        \tab -1 \leq i[@p47t]\ \y\\
-        \tab 1 \leq i[@ppo4g] \leq 10\\    
-    }
-
-    $\newline$
-    \pred{validarComponente$_{i}$}{ti: $eph_{i}$, i: $individuo$}{\\
-        \tab i[@componente] = 1\ \vee (\exists i_2: individuo)(i_2 \in ti\ \yLuego\ i[@componente] - 1 = i_2[@componente])\\
-    }
-
-% === histHabitacional === %
-$\newline$   
+% === histHabitacional === %   
+\pagebreak
 \subsection{proc. histHabitacional}
 
-    \begin{proc}{histHabitacional}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \In region: \ent, \Out res: \TLista{\ent}}{}
-    \pre{validarEncuesta(th,\ ti)\ \y\ HayCasasEnLaRegion(th,\ region)}
-    % CORREGIR
-    \post{\textcolor{red}{HayMaximoDeHabitaciones(res)}\ \yLuego \\
-    \hspace*{0.5cm} (\forall i:\ent)(0\leq i < |res|\ \implicaLuego\ res[i] = \#casasPorNroDeHabitaciones(th,\ k,\ i + 1))\\
-    }
-    \end{proc}
+    \subsubsection{Especificaci\'on:}
+        \begin{proc}{histHabitacional}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \In region: $dato$, \Out res: \TLista{\ent}}{}
+        \pre{validarEncuesta(th,\ ti)\ \y\ hayCasasEnLaRegion(th,\ region)}
+        % CORREGIR
+        \post{\\
+            \textcolor{red}{HayMaximoDeHabitaciones(res)}\ \yLuego \\
+            (\forall i:\ent)(0\leq i < |res|\ \implicaLuego\\ 
+            \tab res[i] = \#casasPorNroDeHabitaciones(th,\ k,\ i + 1)\\
+        )}
+        \end{proc}
 
-    $\newline$
-    \noindent\pred{HayCasasEnLaRegion}{th: $eph_{h}$, region: \ent}{\\
-        \tab(\exists h: hogar)(h \in th\ \yLuego\ esHogarValidoParaHist(h,\ region))\\
-    }
-
-    $\newline$
-    \noindent\pred{esHogarValidoParaHist}{h: $hogar$, region: \ent}{\\
-        \tab h[@region] = region\ \y\ h[@iv1] = 1\\
-    }
-
-    $\newline$
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{hayCasasEnLaRegion}{th: $eph_{h}$, region: $dato$}{\\
+            \tab(\exists h: hogar)(h \in th\ \yLuego\ esHogarValido_{1{.}2}(h,\ region))\\
+        }
+        $\newline$
+        \noindent\pred{esHogarValido$_{1{.}2}$}{h: $hogar$, region: $dato$}{\\
+            \tab h[@region] = region\ \y\ h[@iv1] = 1\\
+        }
+        $\newline$
     % CORREGIR
     \textcolor{red}{
-    \noindent\pred{HayMaximoDeHabitaciones}{res: \TLista{\ent}}{\\
-        \tab(\exists max: \ent)(max = |res|\ \y\ res[max-1] > 0)\\
+        \noindent\pred{HayMaximoDeHabitaciones}{res: \TLista{\ent}}{\\
+            \tab(\exists max: \ent)(max = |res|\ \y\ res[max-1] > 0)\\
+        }
     }
-    }
+        $\newline$
+        \noindent\aux{$\#$casasPorNroDeHabitaciones}{th: $eph_{h}$, region: $dato$, habitaciones: \ent}{\ent}{\\[2ex]
+            \tab\displaystyle\sum_{h \in th}
+            {(\IfThenElse {esHogarValido_{1{.}2}(h,\ region)\ \y\ h[@iv2] = habitaciones}{1}{0})}
+        }
 
-    $\newline$
-    \noindent\aux{$\#$casasPorNroDeHabitaciones}{th: $eph_{h}$, region: \ent, habitaciones: \ent}{\ent}{\\[0.5ex]
-        \tab\displaystyle\sum_{h \in th}
-        {(\IfThenElse {esHogarValidoParaHist(h,\ region)\ \y\ h[@iv2] = habitaciones}{1}{0})}
-    }
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item se hace uso del predicado $validarEncuesta$ definido en 1.1.2.
+            \item consideramos, mediante el predicado $hayCasasEnLaRegion$, que no tiene sentido preguntarse sobre el 
+            histograma habitacional de una regi\'on si \'esta no tiene hogares.
+        \end{itemize}
 
-% === laCasaEstaQuedandoChica === %
-$\newline$   
+
+% === laCasaEstaQuedandoChica === % 
+\pagebreak
 \subsection{proc. laCasaEstaQuedandoChica}
 
-    \begin{proc}{laCasaEstaQuedandoChica}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \Out res: \TLista{\ent}}{}
-    \pre{validarEncuesta(th,\ ti)}
-    \post{|res| = 6\ \yLuego\ (\forall region: \ent)(1 \leq region \leq 6\ \implicaLuego\ res[region - 1] = \%hacinado(th,\ ti,\ region)}
-    \end{proc}
+    \subsubsection{Especificaci\'on:}
+        \begin{proc}{laCasaEstaQuedandoChica}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \Out res: \TLista{\float}}{}
+            \pre{validarEncuesta(th,\ ti)}
+            \post{|res| = 6\ \yLuego\ (\forall region: dato)(1 \leq region \leq 6\ \implicaLuego\ res[region - 1] = \%hacinado(th,\ ti,\ region))}
+        \end{proc}
 
-    $\newline$
-    \noindent\aux{$\%$hacinado}{th: $eph_{h}$, ti: $eph_{i}$, region: \ent}{\float}{\\
-        \tab\IfThenElse{{\Omega}hacinadosNoVacio(th,\ region)}{
-            \frac{\displaystyle\sum_{h \in th}{(\IfThenElse{casaHacinada(ti,\ h,\ region)}{1}{0})}}
-                 {\displaystyle\sum_{h \in th}{(\IfThenElse{esHogarValidoParasHacinamiento(h,\ region)}{1}{0})}}
-        }{0}
-    }
-    $\newline$
-    \noindent\pred{$\Omega$hacinadosNoVacio}{th: $eph_{h}$, region: \ent}{\\
-        \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValidoParaHacinamiento(h,\ region))\\
-    }
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{$\Omega$NoVacio$_{1{.}3}$}{th: $eph_{h}$, region: $dato$}{\\
+            \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValido_{1{.}3}(h,\ region))\\
+        }
+        $\newline$
+        \noindent\pred{esHogarValido$_{1{.}3}$}{h: $hogar$, region: $dato$}{\\
+            \tab h[@region] = region\ \y\ h[@mas500] = 0\ \y\ h[@iv1] = 1\\
+        }
+        $\newline$
+        \noindent\pred{casaHacinada}{ti: $eph_{i}$, h: $hogar$, region: $dato$}{\\
+            \tab esHogarValido_{1{.}3}(h, region)\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) > 3 * h[@iv2]\\
+        }
+        $\newline$
+        \noindent\aux{$\%$hacinado}{th: $eph_{h}$, ti: $eph_{i}$, region: $dato$}{\float}{\\[2ex]
+            \tab\IfThenElse{{\Omega}NoVacio_{1{.}3}(th,\ region)}{
+                \frac{\displaystyle\sum_{h \in th}{(\IfThenElse{casaHacinada(ti,\ h,\ region)}{1}{0})}}
+                    {\displaystyle\sum_{h \in th}{(\IfThenElse{esHogarValido_{1{.}3}(h,\ region)}{1}{0})}}
+            }{0}
+        }
+    
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item se hace uso del predicado $validarEncuesta$ definido en 1.1.2.
+            \item se hace uso de la funci\'on auxiliar ${\#}individuosEnHogar$ definida en 2.2.
+            \item la funci\'on auxiliar ${\%}hacinado$ considera como espacio de probabilidad ($\Omega$) a todos los hogares que cumplan 
+            con el predicado $esHogarValido_{1{.}3}$.
+        \end{itemize}
 
-    $\newline$
-    \noindent\pred{esHogarValidoParaHacinamiento}{h: $hogar$, region: \ent}{\\
-        \tab h[@region] = region\ \y\ h[@mas500] = 0\ \y\ h[@iv1] = 1\\
-    }
-
-    $\newline$
-    \noindent\pred{casaHacinada}{ti: $eph_{i}$, h: $hogar$, region: \ent}{\\
-        \tab esHogarValidoParaHacinamiento(h, region)\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) > 3 * h[@iv2]\\
-    }
 
 % === creceElTeleworkingEnCiudadesGrandes === %
-$\newline$   
+\pagebreak
 \subsection{proc. creceElTeleworkingEnCiudadesGrandes}
 
-    \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
-        \pre{\\
-            (validarEncuesta(t1h,\ t1i)\ \y\ validarEncuesta(t2h,\ t2i)) \yLuego\\
-            (t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1\ \y\
-            % \tab t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o] \y \\
-            t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre])\\
-        }
-        \post{res = \True \iff $\%$teleworking(t1h,\ t1i) < $\%$teleworking(t2h,\ t2i)}
-    \end{proc}
-
-    $\newline$
-    \aux{$\%$teleworking}{th: $eph_{h}$, ti: $eph_{i}$}{\float}{\\
-        \tab\IfThenElse{{\Omega}teleworkingNoVacio(th)}{
-            \frac{
-                \displaystyle\sum_{i \in ti}(\IfThenElse{haceTeleworking(th,\ i)}{1}{0})
-            }{
-                \displaystyle\sum_{i \in ti}(\IfThenElse{viveEnHogarValido(th,\ i)}{1}{0})
+    \subsubsection{Especificaci\'on:}
+        \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
+            \pre{
+                (validarEncuesta(t1h,\ t1i)\ \y\ validarEncuesta(t2h,\ t2i))\ \yLuego\ comparacionValida(t1h,\ t1i,\ t2h,\ t2i)
             }
-        }{0}
-    }
+            \post{res = \True \iff $\%$teleworking(t1h,\ t1i) < $\%$teleworking(t2h,\ t2i)}
+        \end{proc}
 
-    $\newline$
-    \pred{$\Omega$teleworkingNoVacio}{th: $eph_{h}$}{\\
-        \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValidoParaTeleworking(h))\\
-    }
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{comparacionValida}{t1h: $eph_{h}$, t1i: $eph_{i}$, t2h: $eph_{h}$, t2i: $eph_{i}$}{\\
+            \tab (t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1\ \y\ t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre])\\
+            % \tab t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o] \y \\    
+        }
+        $\newline$
+        \pred{$\Omega$NoVacio$_{1{.}4}$}{th: $eph_{h}$}{\\
+            \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValido_{1{.}4}(h))\\
+        }
+        $\newline$
+        \pred{esHogarValido$_{1{.}4}$}{h: $hogar$}{\\
+            %\comment{\tab}{Hogar cumple con especificaciones}
+            \tab h[@mas\_500] = 1\ \y\ (h[@iv1] = 1\ \vee\ h[@iv1] = 2)\\
+        }
+        $\newline$
+        \pred{haceTeleworking}{th: $eph_{h}$, i: $individuo$}{\\
+            %\comment{\tab}{Hogar e Individuo cumplen con especificaciones}
+            \tab viveEnHogarValido(th, i)\ \y\ i[@ii3] = 1\ \y\ i[@ppo4g] = 6\\
+        }
+        $\newline$
+        \pred{viveEnHogarValido}{th: $eph_{h}$, i: $individuo$}{\\
+            %\comment{\tab}{Hogar del individuo cumple con especificaciones}
+            \tab esHogarValido_{1{.}4}(th[indiceHogarPorCodusu(th,\ i[@indcodusu])])\\
+        }
+        $\newline$
+        \aux{$\%$teleworking}{th: $eph_{h}$, ti: $eph_{i}$}{\float}{\\[2ex]
+            \tab\IfThenElse{{\Omega}NoVacio_{1{.}4}(th)}{
+                \frac{
+                    \displaystyle\sum_{i \in ti}(\IfThenElse{haceTeleworking(th,\ i)}{1}{0})
+                }{
+                    \displaystyle\sum_{i \in ti}(\IfThenElse{viveEnHogarValido(th,\ i)}{1}{0})
+                }
+            }{0}
+        }
+            
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item se hace uso del predicado $validarEncuesta$ definido en 1.1.2.
+            \item se hace uso del predicado $indiceHogarPorCodusu$ definido en 2.2. bajo la presunci\'on de una encuesta v\'alida.
+            \item consideramos como comparaci\'on v\'alida a aquella realizada entre encuestas de años consecutivos.
+            \item la funci\'on auxiliar ${\%}teleworking$ considera como espacio de probabilidad ($\Omega$) a todos los individuos que cumplan 
+            con el predicado $viveEnHogarValido$.
+        \end{itemize}
 
-    $\newline$
-    \pred{esHogarValidoParaTeleworking}{h: $hogar$}{\\
-        \comment{\tab}{Hogar cumple con especificaciones}
-        \tab h[@mas\_500] = 1\ \y\ (h[@iv1] = 1\ \vee\ h[@iv1] = 2)\\
-    }
 
-    $\newline$
-    \pred{haceTeleworking}{th: $eph_{h}$, i: $individuo$}{\\
-        \comment{\tab}{Hogar e Individuo cumplen con especificaciones}
-        \tab viveEnHogarValido(th, i)\ \y\ i[@ii3] = 1\ \y\ i[@ppo4g] = 6\\
-    }
-
-    $\newline$
-    \pred{viveEnHogarValido}{th: $eph_{h}$, i: $individuo$}{\\
-        \comment{\tab}{Hogar del individuo cumple con especificaciones}
-        \tab esHogarValidoParaTeleworking(th[indiceHogarPorCodusu(th,\ i[@indcodusu])])\\
-    }
-
-% === costoSubsidioMejora === %
-$\newline$   
+% === costoSubsidioMejora === % 
+\pagebreak
 \subsection{proc. costoSubsidioMejora}
 
-    \begin{proc}{costoSubsidioMejora}{\In th: $eph_{i}$, \In ti: $eph_{i}$, \In monto: \ent, \Out res: \ent}{}
-        \pre{validarEncuesta(th,\ ti) \y monto > 0} 
-        \post{res = monto * \displaystyle\sum_{h \in th}(\IfThenElse{esHogarValidoParaSubsidio(ti,\ h)}{1}{0})}    
-    \end{proc}
+    \subsubsection{Especificaci\'on:}    
+        \begin{proc}{costoSubsidioMejora}{\In th: $eph_{i}$, \In ti: $eph_{i}$, \In monto: \ent, \Out res: \ent}{}
+            \pre{validarEncuesta(th,\ ti) \y monto > 0} 
+            \post{res = monto * \displaystyle\sum_{h \in th}(\IfThenElse{esHogarValido_{1{.}5}(ti,\ h)}{1}{0})}    
+        \end{proc}
 
-    $\newline$   
-    \pred{esHogarValidoParaSubsidio}{ti: $eph_{i}$, h: $hogar$}{\\
-        \tab h[@ii7] = 1\ \y\ h[@iv1] = 1\ \y\ individuosEnHogar(ti,\ h[@hogcodusu]) - 2 > h[@ii2]\\
-    }
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{esHogarValido$_{1{.}5}$}{ti: $eph_{i}$, h: $hogar$}{\\
+            \tab h[@ii7] = 1\ \y\ h[@iv1] = 1\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) - 2 > h[@ii2]\\
+        }
+
+    \subsubsection{observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item se hace uso del predicado $validarEncuesta$ definido en 1.1.2.
+        \end{itemize}
+
 
 % === generales === %
+\pagebreak
 \section{Predicados y Auxiliares generales}
                     
-\subsection{predicados generales}
-        
+\subsection{Predicados Generales}
     \noindent\pred{esMatriz}{s: \TLista{\TLista{T}}}{\\
         \tab(\forall fila: \TLista{T})(fila \in s\ \implicaLuego\ |fila| = |s[0]|)\\
     }
@@ -281,18 +332,16 @@ $\newline$
         \tab |m| > 0 \yLuego (|m[0]| = columnas \y esMatriz(m))\\
     }
 
-\subsection{auxiliares generales}     
-    
+\subsection{Auxiliares Generales}     
     \noindent\aux{$\#$individuosEnHogar}{ti: $eph_{i}$, codusu$_{h}$: \ent}{\ent}{
         \displaystyle\sum_{i \in ti}(\IfThenElse {i[@indcodusu] = codusu_h}{1}{0})
     }
-    
     $\comment{}{indiceHogarPorCodusu asume codusu$_{h}$ existe en la tabla y es único}$
     \noindent\aux{indiceHogarPorCodusu}{th: $eph_{h}$, codusu$_{h}$: \ent}{\ent}{
         \displaystyle\sum_{h \in th}\IfThenElse{h[@hogcodusu] = codusu_h}{i}{0}
     }
 
-\subsection{tipos y enumerados}
+\subsection{Tipos y Enumerados}
     \type {dato}{\ent}
     \type {individuo}{\TLista{dato}} 
     \type {hogar}{\TLista{dato}}
@@ -304,7 +353,7 @@ $\newline$
     \\
     \enum {ItemIndividuo}{indcodusu, componente, indaño, indtrimestre, ch4, ch6, nivel\_ed, cat\_ocup, p47t, ppo4g}
 
-\subsection{referencias}
+\subsection{Referencias}
     \noindent\aux{@hogcodusu}{}{\ent}{itemHogar.ord(hogcodusu)}
     \noindent\aux{@hogaño}{}{\ent}{itemHogar.ord(hoga\tilde{n}o)}
     \noindent\aux{@hogtrimestre}{}{\ent}{itemHogar.ord(hogtrimestre)}
@@ -331,10 +380,6 @@ $\newline$
     $\newline$
     \noindent\aux{@largoItemHogar}{}{\ent}{12}
     \noindent\aux{@largoitemIndividuo}{}{\ent}{10}
-
-\section{Decisiones tomadas}
-\subsection{Ejercicio 4.2. Igualdad res[i]=HabitacionesPorCasa(th,region,i+1) en Postcondicion}
-    \noindent {Se asume que de existir al menos una casa entonces la misma posee al menos una habitacion o un ambiente usado a tal fin. No hay casa con cero habitaciones}
 
 \end{document}
 
