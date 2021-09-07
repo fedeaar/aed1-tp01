@@ -163,7 +163,7 @@
         \pre{validarEncuesta(th,\ ti)\ \y\ hayCasasEnLaRegion(th,\ region)}
         % CORREGIR
         \post{\\
-            \textcolor{red}{HayMaximoDeHabitaciones(res)}\ \yLuego \\
+            \textcolor{green}{HayMaximoDeHabitaciones(th, res)}\ \y \\
             (\forall i:\ent)(0\leq i < |res|\ \implicaLuego\\ 
             \tab res[i] = \#casasPorNroDeHabitaciones(th,\ k,\ i + 1)\\
         )}
@@ -179,6 +179,11 @@
         }
         $\newline$
     % CORREGIR
+    \textcolor{green}{
+        \noindent \pred{HayMaximoDeHabitaciones}{th : $eph_{h}$, res: \Tlista{\ent}}{\\
+            \tab(\exists h \in hogar)(h \in th \y (\forall i \in \ent)(0 \leq i \leq \longitud th -1 \y h[@iv2] \geq th[i][@iv2]) \y h[@iv2]=\longitud res}\\
+        }
+    }
     \textcolor{red}{
         \noindent\pred{HayMaximoDeHabitaciones}{res: \TLista{\ent}}{\\
             \tab(\exists max: \ent)(max = |res|\ \y\ res[max-1] > 0)\\
