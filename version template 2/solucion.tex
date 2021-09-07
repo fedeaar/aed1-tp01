@@ -52,7 +52,7 @@
     \subsubsection{Especificaci\'on:}
         \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
             \pre{\True}
-            \post{res = \True \Iff validarEncuesta(th,\ ti)}
+            \post{result = \True \Iff validarEncuesta(th,\ ti)}
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
@@ -160,35 +160,29 @@
 
     \subsubsection{Especificaci\'on:}
         \begin{proc}{histHabitacional}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \In region: $dato$, \Out res: \TLista{\ent}}{}
-        \pre{validarEncuesta(th,\ ti)\ \y\ hayCasasEnLaRegion(th,\ region)}
+        \pre{validarEncuesta(th,\ ti)\ \y\ (\exists h: hogar)(casaEnLaRegion(th,\ h,\ region))}
         % CORREGIR
         \post{\\
-            \textcolor{green}{HayMaximoDeHabitaciones(th, res)}\ \y \\
+            maximoDeHabitaciones(th,\ region, res)\ \y \\
             (\forall i:\ent)(0\leq i < |res|\ \implicaLuego\\ 
             \tab res[i] = \#casasPorNroDeHabitaciones(th,\ k,\ i + 1)\\
         )}
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{hayCasasEnLaRegion}{th: $eph_{h}$, region: $dato$}{\\
-            \tab(\exists h: hogar)(h \in th\ \yLuego\ esHogarValido_{1{.}2}(h,\ region))\\
+        \noindent\pred{casaEnLaRegion}{th: $eph_{h}$, h: $hogar$, region: $dato$}{\\
+            \tab h \in th\ \yLuego\ esHogarValido_{1{.}2}(h,\ region)\\
         }
         $\newline$
         \noindent\pred{esHogarValido$_{1{.}2}$}{h: $hogar$, region: $dato$}{\\
             \tab h[@region] = region\ \y\ h[@iv1] = 1\\
         }
         $\newline$
-    % CORREGIR
-    \textcolor{green}{
-        \noindent \pred{HayMaximoDeHabitaciones}{th : $eph_{h}$, res: \Tlista{\ent}}{\\
-            \tab(\exists h \in hogar)(h \in th \y (\forall i \in \ent)(0 \leq i \leq \longitud th -1 \y h[@iv2] \geq th[i][@iv2]) \y h[@iv2]=\longitud res}\\
+        \noindent \pred{maximoDeHabitaciones}{th: $eph_{h}$, region: $dato$, res: \TLista{\ent}}{\\
+            \tab(\exists h : hogar)(casaEnLaRegion(th,\ h,\ region)\ \yLuego\ (\\
+            \tab\tab h[@iv2] = |res|\ \y\ (\forall h_2 : hogar)(casaEnLaRegion(th,\ h_2,\ region)\ \implicaLuego\ h[@iv2] \geq h_2[@iv2])\\
+            \tab)\\
         }
-    }
-    \textcolor{red}{
-        \noindent\pred{HayMaximoDeHabitaciones}{res: \TLista{\ent}}{\\
-            \tab(\exists max: \ent)(max = |res|\ \y\ res[max-1] > 0)\\
-        }
-    }
         $\newline$
         \noindent\aux{$\#$casasPorNroDeHabitaciones}{th: $eph_{h}$, region: $dato$, habitaciones: \ent}{\ent}{\\[2ex]
             \tab\displaystyle\sum_{h \in th}
@@ -198,8 +192,10 @@
     \subsubsection{Observaciones:}
         \begin{itemize}
             \item se hace uso del predicado $validarEncuesta$ definido en 1.1.2.
-            \item consideramos, mediante el predicado $hayCasasEnLaRegion$, que no tiene sentido preguntarse sobre el 
+            \item consideramos, mediante el predicado $casaEnLaRegion$ en la precondici\'on, que no tiene sentido preguntarse sobre el 
             histograma habitacional de una regi\'on si \'esta no tiene hogares.
+            \item el predicado $maximoDeHabitaciones$ verifica que el largo de la resolución corresponda con la cantidad 
+            máxima de habitaciones en la tabla de hogares.
         \end{itemize}
 
 
