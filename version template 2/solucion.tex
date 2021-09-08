@@ -334,7 +334,7 @@
     }
     $\comment{}{indiceHogarPorCodusu asume codusu$_{h}$ existe en la tabla y es único}$
     \noindent\aux{indiceHogarPorCodusu}{th: $eph_{h}$, codusu$_{h}$: $dato$}{\ent}{
-        \displaystyle\sum_{h \in th}\IfThenElse{h[@hogcodusu] = codusu_h}{i}{0}
+        \displaystyle\sum_{i = 0}^{|th| - 1}\IfThenElse{th[i][@hogcodusu] = codusu_h}{i}{0}
     }
 
 \subsection{Tipos y Enumerados}
