@@ -4,7 +4,7 @@
 \usepackage{graphicx}
 \usepackage[absolute]{textpos}
 \usepackage{amsmath, amscd, amssymb, amsthm, latexsym}
-% \usepackage[noload]{qtree}
+\usepackage[noload]{qtree}
 %\usepackage{xspace,rotating,calligra,dsfont,ifthen}
 \usepackage{xspace,rotating,dsfont,ifthen}
 \usepackage[spanish,activeacute]{babel}
@@ -16,25 +16,10 @@
 \usepackage{todonotes}
 \usepackage{url}
 \usepackage{float}
-\usepackage{framed,mdframed}
-\usepackage{cancel}
-
-\usepackage[strict]{changepage}
+\usepackage{framed}
 
 
 \makeatletter
-
-
-\newcommand\hfrac[2]{\genfrac{}{}{0pt}{}{#1}{#2}} %\hfrac{}{} es un \frac sin la linea del medio
-
-\newcommand\Wider[2][3em]{% \Wider[3em]{} reduce los m\'argenes
-\makebox[\linewidth][c]{%
-  \begin{minipage}{\dimexpr\textwidth+#1\relax}
-  \raggedright#2
-  \end{minipage}%
-  }%
-}
-
 
 \@ifclassloaded{beamer}{%
   \newcommand{\tocarEspacios}{%
@@ -46,8 +31,8 @@
   \usepackage[top=1cm,bottom=2cm,left=1cm,right=1cm]{geometry}%
   \usepackage{color}%
   \newcommand{\tocarEspacios}{%
-    \addtolength{\leftskip}{3em}%
-    \setlength{\parindent}{0em}%
+    \addtolength{\leftskip}{5em}%
+    \addtolength{\parindent}{-3em}%
   }%
 }
 
@@ -154,7 +139,7 @@
 \newcommand{\practica}[2]{%
     \title{Pr\'actica #1 \\ #2}
     \author{Algoritmos y Estructuras de Datos I}
-    \date{Segundo Cuatrimestre 2019}
+    \date{Primer Cuatrimestre 2019}
 
     \maketitlepractica{#1}{#2}
 }
@@ -164,7 +149,7 @@
 \begin{tabular}{r cr}
  \begin{tabular}{c}
 {\large\bf\textsf{\ Algoritmos y Estructuras de Datos I\ }}\\
-Primer Cuatrimestre 2021\\
+Primer Cuatrimestre 2019\\
 \title{\normalsize Gu\'ia Pr\'actica #1 \\ \textbf{#2}}\\
 \@title
 \end{tabular} &
@@ -183,7 +168,7 @@ Primer Cuatrimestre 2021\\
 }
 
 
-% Símbolos varios
+% Simbolos varios
 
 \newcommand{\nat}{\ensuremath{\mathds{N}}}
 \newcommand{\ent}{\ensuremath{\mathds{Z}}}
@@ -201,26 +186,8 @@ Primer Cuatrimestre 2021\\
 \newcommand{\yLuego}{\land _L}
 \newcommand{\oLuego}{\lor _L}
 \newcommand{\implicaLuego}{\implica _L}
-\newcommand{\cuantificador}[5]{%
-	\ensuremath{(#2 #3: #4)\ (%
-		\ifthenelse{\equal{#1}{unalinea}}{
-			#5
-		}{
-			$ % exiting math mode
-			\begin{adjustwidth}{+2em}{}
-			$#5$%
-			\end{adjustwidth}%
-			$ % entering math mode
-		}
-	)}
-}
-
-\newcommand{\existe}[4][]{%
-	\cuantificador{#1}{\exists}{#2}{#3}{#4}
-}
-\newcommand{\paraTodo}[4][]{%
-	\cuantificador{#1}{\forall}{#2}{#3}{#4}
-}
+\newcommand{\existe}[3]{\ensuremath{(\exists #1:\ent) \ #2 \leq #1 < #3 \ }}
+\newcommand{\paraTodo}[3]{\ensuremath{(\forall #1:\ent) \ #2 \leq #1 < #3 \ }}
 
 % Símbolo para marcar los ejercicios importantes (estrellita)
 \newcommand\importante{\raisebox{0.5pt}{\ensuremath{\bigstar}}}
@@ -284,9 +251,6 @@ Primer Cuatrimestre 2021\\
 \newcommand{\masmas}{\ensuremath{++}}
 \newcommand{\matriz}[1]{\TLista{\TLista{#1}}}
 
-\newcommand{\seqchar}{\TLista{\cha}}
-
-
 % Acumulador
 \newcommand{\acum}[1]{\ensuremath{\mathsf{acum}}(#1)}
 \newcommand{\acumselec}[3]{\ensuremath{\mathrm{acum}(#1 |  #2, #3)}}
@@ -296,19 +260,14 @@ Primer Cuatrimestre 2021\\
 \newcommand{\selec}{\ensuremath{\leftarrow}}
 
 \newcommand{\pred}[3]{%
-    {\normalfont\bfseries\ttfamily\noindent pred }%
+    {\normalfont\bfseries\ttfamily pred }%
     {\normalfont\ttfamily #1}%
     \ifthenelse{\equal{#2}{}}{}{\ (#2) }%
-    \{%
-    \begin{adjustwidth}{+2em}{}
-      \ensuremath{#3}
-    \end{adjustwidth}
-    \}%
+    \{\ensuremath{#3}\}%
     {\normalfont\bfseries\,\par}%
-}
+  }
 
 \newenvironment{proc}[4][res]{%
-
   % El parametro 1 (opcional) es el nombre del resultado
   % El parametro 2 es el nombre del problema
   % El parametro 3 son los parametros
@@ -333,18 +292,6 @@ Primer Cuatrimestre 2021\\
     \ifthenelse{\equal{##2}{}}{}{\ (##2)}\ : ##3\, = \ensuremath{##4}%
     {\normalfont\bfseries\,;\par}%
   }
-  \renewcommand{\pred}[3]{%
-    {\normalfont\bfseries\ttfamily pred }%
-    {\normalfont\ttfamily ##1}%
-    \ifthenelse{\equal{##2}{}}{}{\ (##2) }%
-    \{%
-    \begin{adjustwidth}{+5em}{}
-      \ensuremath{##3}
-    \end{adjustwidth}
-    \}%
-    {\normalfont\bfseries\,\par}%
-  }
-
   \newcommand{\res}{#1}
   \vspace{1ex}
   \noindent
@@ -361,12 +308,12 @@ Primer Cuatrimestre 2021\\
 }
 
 
-\newcommand{\aux}[4]{%
-    {\normalfont\bfseries\ttfamily\noindent aux\ }%
+  \newcommand{\aux}[4]{%
+    {\normalfont\bfseries\ttfamily aux\ }%
     {\normalfont\ttfamily #1}%
     \ifthenelse{\equal{#2}{}}{}{\ (#2)}\ : #3\, = \ensuremath{#4}%
     {\normalfont\bfseries\,;\par}%
-}
+  }
 
 
 % \newcommand{\pre}[1]{\textsf{pre}\ensuremath{(#1)}}
@@ -416,7 +363,8 @@ Primer Cuatrimestre 2021\\
   \newcommand{\segundafila}{}
   \newcommand{\rayitas}{} % Esto va a guardar los \cline de los
                           % ejercicios con incisos, asi queda mas bonito
-  \newcommand{\anchodegrilla}{20} % Es para textpos
+  \newcommand{\anchode
+  }{20} % Es para textpos
   \newcommand{\izquierda}{7} % Estos dos le dicen a textpos donde colocar
   \newcommand{\abajo}{2}     % la grilla
   \newcommand{\anchodecasilla}{0.4cm}
@@ -540,22 +488,19 @@ Primer Cuatrimestre 2021\\
       \end{textblock}
     }
   }%
-  % \datosalumno
-}
-
-\newcommand{\datosalumno}{
   \vspace{0.4cm}
-  \textbf{Apellidos:}
-
-  \textbf{Nombres:}
+  \textbf{Nro. de orden:}
 
   \textbf{LU:}
 
-  \textbf{Correo electrónico:}
+  \textbf{Apellidos:}
 
-  \textbf{Nro. de carillas que adjunta:}
+  \textbf{Nombres:}
+  
+  \textbf{Nro. de hojas que adjunta:}
   \vspace{0.5cm}
 }
+
 
 
 % AMBIENTE CONSIGNAS
