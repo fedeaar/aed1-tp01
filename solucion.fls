@@ -1,6 +1,6 @@
-PWD c:\Users\faari\Desktop\algo1-TP1\version template 2
+PWD c:\Users\faari\Desktop\programacion\GIT\algo1-TP1
 INPUT C:\Users\faari\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\faari\Desktop\algo1-TP1\version template 2\solucion.tex
+INPUT c:\Users\faari\Desktop\programacion\GIT\algo1-TP1\solucion.tex
 OUTPUT solucion.log
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
@@ -827,7 +827,6 @@ INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\base\omscmr.fd
-INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\doublestroke\udsrom.fd
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\doublestroke\udsrom.fd
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\doublestroke\udsrom.fd
@@ -835,6 +834,7 @@ INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\tex\latex\doublestroke\udsrom
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\fonts\tfm\public\doublestroke\dsrom10.tfm
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\fonts\tfm\public\doublestroke\dsrom8.tfm
 INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\fonts\tfm\public\doublestroke\dsrom8.tfm
+INPUT C:\Users\faari\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT solucion.aux
 INPUT C:\Users\faari\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT C:\Users\faari\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
