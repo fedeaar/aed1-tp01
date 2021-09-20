@@ -1,0 +1,84 @@
+\documentclass[a4paper]{article} 
+
+\setlength{\parskip}{0.1em}
+\newcommand{\tab}[1][1.2cm]{\hspace*{#1}}
+\input{Algo1Macros}
+\usepackage{caratula} % Version modificada para usar las macros de algo1 de ~> https://github.com/bcardiff/dc-tex
+\usepackage{xcolor}
+
+% === macros === %
+\newcommand{\type}[2]{%
+    {\normalfont\bfseries\ttfamily\noindent type\ }%
+    {\normalfont\ttfamily #1}
+    {= #2\\}%
+}
+\newcommand{\enum}[2]{%
+    {\normalfont\bfseries\ttfamily\noindent enum\ }%
+    {\normalfont\ttfamily #1}
+    {\{#2\}}%
+}
+\newcommand{\comment}[2]{%
+    \\[0.5ex]
+    {#1\comentario{\text{#2}}}
+    \\[0.5ex]
+}
+
+% === documento === %
+\begin{document}
+
+
+% === caratula === %
+\titulo{TP de Especificaci\'on}
+\subtitulo{An\'alisis Habitacional Argentino}
+\fecha{8 de Septiembre de 2021}
+\materia{Algoritmos y Estructuras de Datos I}
+\grupo{Grupo 02, comisi\'on 11}
+\newcommand{\senial}{\textit{se\~nal}}
+
+\integrante{Lakowsky, Manuel}{511/21}{mlakowsky@gmail.com}
+\integrante{Lenardi, Juan Manuel}{56/14}{juanlenardi@gmail.com}
+\integrante{Arienti, Federico}{316/21}{fa.arienti@gmail.com}
+
+\maketitle
+
+
+% === problemas === %
+\section{Problemas}
+
+\input{1. esEncuestaValida.tex}  
+\pagebreak
+
+\input{2. histHabitacional.tex}  
+\pagebreak
+
+\input{3. laCasaEstaQuedandoChica.tex}
+\pagebreak
+
+\input{4. creceElTeleworkingEnCiudadesGrandes.tex}
+\pagebreak
+
+\input{5. costoSubsidioMejora.tex}
+\pagebreak
+
+\input{6. generarJoin.tex}
+\pagebreak
+
+\input{7. ordenarRegionYTipo.tex}
+\pagebreak
+
+\input{8. muestraHomogenea.tex}
+\pagebreak
+
+\input{9. corregirRegion.tex}
+\pagebreak
+
+\input{10. histogramaDeAnillosConcentricos.tex}
+\pagebreak
+
+\input{11. quitarIndividuos.tex}
+\pagebreak
+
+\input{0. generales.tex}
+
+\end{document}
+

@@ -1,0 +1,73 @@
+
+% === quitarIndividuos === %
+\subsection{proc. quitarIndividuos}
+    
+    \subsubsection{Especificaci\'on:}    
+        
+        \begin{proc}{quitarIndividuos}{\Inout th : $eph_{h}$, \Inout ti : $eph_{i}$, \In busqueda : \TLista{(ItemIndividuo,\ dato)}, \Out result : ($eph_{h}$,\ $eph_{i}$)}{}
+            \pre{
+                sonEncuestasValidas(th,\ ti)\ \y\ esBusquedaValida(busqueda)\ \y\ th = th_{0}\ \y\ ti = ti_{0}
+            }
+            \post{\\
+                (esParticion(th_{0},\ th,\ result_{0})\ \y\ esParticion(ti_{0},\ ti,\ result_{1}))\ \yLuego\\
+                (losIndividuosEstanFiltrados(ti_{0},\ ti,\ result_{1},\ busqueda)\ \y\\ 
+                losHogaresEstanFiltrados(th_{0},\ th,\ result_{0},\ ti_{0},\ busqueda))\\
+            }
+        \end{proc}
+
+    \subsubsection{Predicados y funciones auxiliares:}
+        
+        \noindent\pred{esBusquedaValida}{busqueda : \TLista{(ItemIndividuo,\ dato)}}{\\
+            % del mismo modo que no hace falta validar que un argumento se un entero, no hace falta validar que es un itemIndividuo
+            \tab(\forall i : \ent)(0 \leq i < |busqueda| \implicaLuego (\\
+            \tab\tab pideUnDatoValido(busqueda[i])\ \y\\
+            \tab\tab\neg(\exists j : \ent)((0 \leq i < |busqueda|\ \y\ i \neq j)\ \yLuego\ (busqueda[i])_{0} = (busqueda[j])_{0})\\
+            \tab))\\
+        }
+        $\newline$
+        \pred{pideUnDatoValido}{condicion : (ItemIndividuo,\ dato)}{\\
+            \tab (condicion_{0} = indcodusu\ \y\ 0 \leq condicion_{1})\ \vee\\
+            \tab (condicion_{0} = componente\ \y\ 1 \leq condicion_{1} \leq 20)\ \vee\\
+            \tab (condicion_{0} = inda\tilde{n}o\ \y\ 1810 \leq condicion_{1})\ \vee\\
+            \tab (condicion_{0} = indtrimestre\ \y\ 1 \leq condicion_{1} \leq 4)\ \vee\\
+            \tab (condicion_{0} = ch4\ \y\ 1 \leq condicion_{1} \leq 2)\ \vee\\
+            \tab (condicion_{0} = ch6\ \y\ 0 \leq condicion_{1})\ \vee\\
+            \tab (condicion_{0} = nive\_ed\ \y\ 0 \leq condicion_{1} \leq 1)\ \vee\\
+            \tab (condicion_{0} = estado\ \y\ -1 \leq condicion_{1} \leq 1)\ \vee\\
+            \tab (condicion_{0} = cat\_ocup\ \y\ 0 \leq condicion_{1} \leq 4)\ \vee\\
+            \tab (condicion_{0} = p47t\ \y\ -1 \leq condicion_{1})\ \vee\\
+            \tab (condicion_{0} = ppo4g\ \y\ 1 \leq condicion_{1} \leq 10)\\
+        }
+        $\newline$
+        \pred{esParticion}{original, sub$_{1}$, sub$_{2}$ : \TLista{T}}{\\
+            %\tab |original| \geq |sub_{1}|\ \y\ |sub_{2}| = |original| - |sub_{1}|\ \y\\
+            \tab(\forall i:T)(i \in sub_{1} ++\ sub_{2}\ \iff i \in original)\\ 
+            %\y\ \neg(\exists i : T)(i \in sub_{1}\ \y\ i \in sub_{2})\\ 
+        }
+        $\newline$
+        \pred{losIndividuosEstanFiltrados}{ti$_{0}$, ti, result$_{1}$, : $eph_{i}$, busqueda : \TLista{(ItemIndividuo,\ dato)}}{\\
+        \tab(\forall i : $individuo$)(i \in ti_{0}\ \implicaLuego\ (\\
+        \tab\tab (i \in result_{1}\ \y\ i \notin ti)\ \iff esBusquedaExitosa(i,\ busqueda)\\
+        \tab))\\
+        }
+        $\newline$
+        \pred{losHogaresEstanFiltrados}{th$_{0}$, th, result$_{0}$, : $eph_{h}$, ti$_{0}$ : $eph_{i}$,  busqueda : \TLista{(ItemIndividuo,\ dato)}}{\\
+        \tab(\forall h : $hogar$)(h \in th_0\ \implicaLuego\ (\\
+        \tab\tab (h \in result_{0}\ \y\ h \notin th)\ \iff\\
+        \tab\tab (\forall i : $individuo$)((i \in ti_0\ \y\ i[@indcodusu] = h[@hogcodusu])\ \implicaLuego\ (\\
+        \tab\tab\tab  esBusquedaExitosa(i,\ busqueda)\\
+        \tab\tab))\\
+        \tab))\\
+        }
+        $\newline$
+        \pred{esBusquedaExitosa}{i : $individuo$, busqueda : \TLista{(ItemIndividuo,\ dato)}}{\\
+            \tab (\forall\ condicion : (ItemIndividuo,\ dato))(condicion \in busqueda\ \implicaLuego\ (\\
+            \tab\tab i[itemIndividuo.ord(condicion_{0})] = condicion_{1}\\ 
+            \tab))\\
+        }    
+    
+    
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item
+        \end{itemize}

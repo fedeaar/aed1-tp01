@@ -1,0 +1,112 @@
+
+% === esEncuestaValida === %
+\subsection{proc. esEncuestaValida}
+    \subsubsection{Especificaci\'on:}
+        \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
+            \pre{\True}
+            \post{result = \True \Iff sonEncuestasValidas(th,\ ti)}
+        \end{proc}
+
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{sonEncuestasValidas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+            \tab esTablaDeHogaresValida(th)\ \y\ esTablaDeIndividuosValida(ti)\\
+        }
+        $\newline$
+        \noindent\pred{esTablaDeHogaresValida}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+            \tab esTabla(th,\ @largoItemHogar)\ \yLuego\\
+            \tab (\forall i: \ent)(0 \leq i < |th| \implicaLuego\ (\\
+            \tab\tab codigoValido_h(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ th[i])\ \y\ attEnRango_h(th[i])\\
+            \tab))\\
+        }
+        $\newline$
+        \noindent\pred{esTablaDeIndividuosValida}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+            \tab esTabla(ti,\ @largoItemIndividuo)\ \yLuego\\
+            \tab(\forall i: \ent)(0 \leq i < |ti|\ \implicaLuego\ (\\
+            \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti[i])\ \y\ attEnRango_i(ti[i])\ \y\\
+            \tab\tab validarComponente_i(ti,\ ti[i])\\
+            \tab))\\
+        }
+        $\newline$
+        \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
+            \tab(\exists j: individuo)(j \in ti\ \yLuego\\
+            \tab\tab th[i][@hogcodusu] = j[@indcodusu]\\
+            \tab) \y\\
+            \tab\neg(\exists j: \ent)((0 \leq j < |th| \y\ i \neq j)\ \yLuego\\ 
+            \tab\tab th[i][@hogcodusu] = th[j][@hogcodusu]\\
+            \tab)\\
+        }
+        $\newline$
+        \pred{añoyTrimestreCongruente$_{h}$}{th: $eph_{h}$, h: $hogar$}{\\
+            \tab h[@hoga\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y \ h[@hogtrimestre] = th[0][@hogtrimestre]\\
+        }
+        $\newline$
+        \pred{attEnRango$_{h}$}{h: $hogar$}{\\
+            \tab 0 \leq h[@hogcodusu]\ \y\\ 
+            \tab 1810 \leq h[@hoga\tilde{n}o]\ \y\\
+            \tab 1 \leq h[@hogtrimestre] \leq 4\ \y\\
+            \tab -90 \leq h[@hoglatitud] \leq 90\ \y\\
+            \tab -180 \leq h[@hoglongitud] \leq 180\ \y\\
+            \tab 1 \leq h[@ii7] \leq 3\ \y\\ 
+            \tab 1 \leq h[@region] \leq 6\ \y\\ 
+            \tab 0 \leq h[@mas\_500] \leq 1\ \y\\
+            \tab 1 \leq h[@iv1] \leq 5\ \y\\ 
+            \tab 0 < h[@ii2] \leq h[@iv2]\ \y\\
+            \tab 1 \leq h[@ii3] \leq 2\\
+        }
+        $\newline$          
+        \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
+            \tab(\exists h: hogar)(h \in th\ \yLuego \\
+            \tab\tab ti[i][@indcodusu] = h[@hogcodusu]\\
+            \tab) \y\\
+            \tab\neg(\exists j: \ent)((0 \leq j < |th|\ \y\  i \neq j)\ \yLuego\ (\\
+            \tab\tab ti[i][@indcodusu] = ti[j][@indcodusu]\ \y\ ti[i][@componente] = ti[j][@componente]\\
+            \tab))\\
+        }
+        $\newline$
+        \pred{añoyTrimestreCongruente$_{i}$}{th: $eph_{h}$, i: $individuo$}{\\
+            \tab i[@inda\tilde{n}o] = th[0][@hoga\tilde{n}o]\ \y\ i[@indtrimestre] = th[0][@hogtrimestre]\\
+        }
+        $\newline$
+        \pred{attEnRango$_{i}$}{i: $individuo$}{\\
+            \tab 0 \leq i[@indcodusu]\ \y\\ 
+            \tab 1 \leq i[@componente] \leq 20\ \y\\
+            \tab 1810 \leq i[@inda\tilde{n}o]\ \y\\
+            \tab 1 \leq i[@indtrimestre] \leq 4\ \y\\
+            \tab 1 \leq i[@ch4] \leq 2\ \y\\
+            \tab 0 \leq i[@ch6]\ \y\\
+            \tab 0 \leq i[@nivel\_ed] \leq 1\ \y\\ 
+            \tab -1 \leq i[@estado] \leq 1\ \y\\ 
+            \tab 0 \leq i[@cat\_ocup] \leq 4\ \y\\ 
+            \tab -1 \leq i[@p47t]\ \y\\
+            \tab 1 \leq i[@ppo4g] \leq 10\\    
+        }
+        $\newline$
+        \pred{validarComponente$_{i}$}{ti: $eph_{i}$, i: $individuo$}{\\
+            \tab i[@componente] = 1\ \vee (\exists i_2: individuo)(i_2 \in ti\ \yLuego\ i[@componente] - 1 = i_2[@componente])\\
+        }
+
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
+            \item la funci\'on auxiliar $esTabla$, definida en 2.1., verifica que th y ti sean matrices del largo correcto y 
+            con al menos una entrada.
+            \item los predicados $codigoValido$ verifican, de forma cruzada, que los hogares tengan individuos asociados y viceversa, 
+            y que no est\'en repetidos.    
+            \item los predicados $a\tilde{n}oyTrimestreCongruente$ contrastan con la primer entrada de la tabla de hogares para asegurar
+            la homogeneidad de los registros. 
+            \item el predicado $validarComponente_{i}$ junto a $codigoValido_{i}$, y aplicado a todo individuo de la tabla, verifica que los 
+            componentes ocurran de forma continua, es decir sin saltos mayores a 1, a partir del primero. 
+            En consecuencia, basta con verificar \'estos predicados, y que los componentes est\'en en el rango correcto para asegurar 
+            que no haya m\'as de 20 individuos por hogar. 
+            \item consideramos que: 
+                \begin{itemize}
+                    \item $@hogcodusu$ y $@indcodusu$ son estrictamente positivos.
+                    \item $@componente$ puede tomar valores entre 1 y 20 inclusive.
+                    \item $@hoga\tilde{n}o$ y $@inda\tilde{n}o$ no pueden ser anteriores a la revoluci\'on de mayo.
+                    \item $@hogtrimestre$ y $@indtrimestre$ toman valores entre 1 y 4 inclusive.
+                    \item $@hoglatitud$ representa la direcci\'on $sur$ con n\'umeros negativos y $norte$ con positivos.
+                    \item $@hoglongitud$ representa la direcci\'on $oeste$ con n\'umeros negativos y $este$ con positivos.
+                    \item $@ch6$, al representar la edad, es mayor o igual a 0.
+                    \item $@iv2$, la cantidad total de ambientes, es estrictamente mayor a 0.
+                \end{itemize}
+        \end{itemize}

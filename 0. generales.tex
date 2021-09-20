@@ -1,0 +1,61 @@
+
+% === generales === %
+\section{Predicados y Auxiliares generales}
+                    
+\subsection{Predicados Generales}
+    \noindent\pred{esMatriz}{s: \TLista{\TLista{T}}}{\\
+        \tab(\forall fila: \TLista{T})(fila \in s\ \implicaLuego\ |fila| = |s[0]|)\\
+    }
+    $\newline$
+    \noindent\pred{esTabla}{m: \TLista{\TLista{T}}, columnas: \ent}{\\
+        \tab |m| > 0 \yLuego (|m[0]| = columnas \y esMatriz(m))\\
+    }
+
+\subsection{Auxiliares Generales}     
+    \noindent\aux{$\#$individuosEnHogar}{ti: $eph_{i}$, codusu$_{h}$: $dato$}{\ent}{
+        \displaystyle\sum_{i \in ti}(\IfThenElse {i[@indcodusu] = codusu_h}{1}{0})
+    }
+    $\comment{}{indiceHogarPorCodusu asume codusu$_{h}$ existe en la tabla y es único}$
+    \noindent\aux{indiceHogarPorCodusu}{th: $eph_{h}$, codusu$_{h}$: $dato$}{\ent}{
+        \displaystyle\sum_{i = 0}^{|th| - 1}\IfThenElse{th[i][@hogcodusu] = codusu_h}{i}{0}
+    }
+
+\subsection{Tipos y Enumerados}
+    \type {dato}{\ent}
+    \type {individuo}{\TLista{dato}} 
+    \type {hogar}{\TLista{dato}}
+    \type {eph$_i$}{\TLista{individuo}}
+    \type {eph$_h$}{\TLista{hogar}}
+    \type {joinHI}{\TLista{hogar \times individuo}}
+
+    \enum {ItemHogar}{hogcodusu, hogaño, hogtrimestre, hoglatitud, hoglongitud, ii7, region, mas\_500, iv1, iv2, ii2, ii3} 
+    \\
+    \enum {ItemIndividuo}{indcodusu, componente, indaño, indtrimestre, ch4, ch6, nivel\_ed, cat\_ocup, p47t, ppo4g}
+
+\subsection{Referencias}
+    \noindent\aux{@hogcodusu}{}{\ent}{itemHogar.ord(hogcodusu)}
+    \noindent\aux{@hogaño}{}{\ent}{itemHogar.ord(hoga\tilde{n}o)}
+    \noindent\aux{@hogtrimestre}{}{\ent}{itemHogar.ord(hogtrimestre)}
+    \noindent\aux{@hoglatitud}{}{\ent}{itemHogar.ord(hoglatitud)}
+    \noindent\aux{@hoglongitud}{}{\ent}{itemHogar.ord(hoglongitud)}
+    \noindent\aux{@ii7}{}{\ent}{itemHogar.ord(ii7)}
+    \noindent\aux{@region}{}{\ent}{itemHogar.ord(region)}
+    \noindent\aux{@mas\_500}{}{\ent}{itemHogar.ord(mas\_500)}
+    \noindent\aux{@iv1}{}{\ent}{itemHogar.ord(iv1)}
+    \noindent\aux{@iv2}{}{\ent}{itemHogar.ord(iv2)}
+    \noindent\aux{@ii2}{}{\ent}{itemHogar.ord(ii2)}
+    \noindent\aux{@ii3}{}{\ent}{itemHogar.ord(ii3)}
+    $\newline$
+    \noindent\aux{@indcodusu}{}{\ent}{itemIndividuo.ord(indcodusu)}
+    \noindent\aux{@componente}{}{\ent}{itemIndividuo.ord(componente)}
+    \noindent\aux{@indaño}{}{\ent}{itemIndividuo.ord(inda\tilde{n}o)}
+    \noindent\aux{@indtrimestre}{}{\ent}{itemIndividuo.ord(indtrimestre)}
+    \noindent\aux{@ch4}{}{\ent}{itemIndividuo.ord(ch4)}
+    \noindent\aux{@ch6}{}{\ent}{itemIndividuo.ord(ch6)}
+    \noindent\aux{@nivel\_ed}{}{\ent}{itemIndividuo.ord(nivel\_ed)}
+    \noindent\aux{@cat\_ocup}{}{\ent}{itemIndividuo.ord(cat\_ocup)}
+    \noindent\aux{@p47t}{}{\ent}{itemIndividuo.ord(p47t)}
+    \noindent\aux{@ppo4g}{}{\ent}{itemIndividuo.ord(ppo4g)}
+    $\newline$
+    \noindent\aux{@largoItemHogar}{}{\ent}{12}
+    \noindent\aux{@largoitemIndividuo}{}{\ent}{10}

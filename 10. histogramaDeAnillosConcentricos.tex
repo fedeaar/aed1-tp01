@@ -1,0 +1,48 @@
+% === histogramaDeAnillosConcentricos === %
+\subsection{proc. histogramaDeAnillosConcentricos}
+    \subsubsection{Especificaci\'on:}    
+        \begin{proc}{histogramaDeAnillosConcentricos}{\In th: $eph_{h}$, \In centro: \ent$\times$\ent, \In distancias: \TLista{\ent}, \Out res: \TLista{\ent}}{}
+            \pre{esTablaDeHogaresValida(th)\ \y\ esCentroValido(centro)\ \y\ sonDistanciasValidas(distancias)} 
+            \post{\\
+            |result| = |distancias|\ \yLuego (\\
+            result[0] = \#HogaresEnAnillo(th,\ centro,\ 0,\ distancias[0])\ \y\\
+            (\forall i:\ent)(0 < i < |result|\ \implicaLuego\\ 
+                \tab result[i] = \#HogaresEnAnillo(th,\ centro,\ distancias[i - 1],\ distancias[i])\\
+            ))} 
+        \end{proc}
+    
+    \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{esCentroValido}{centro \ent$\times$\ent}{\\
+        \tab -90 \leq centro_{0} \leq 90\ \y\ -180 \leq centro_{1} \leq 180\\
+        }
+        $\newline$
+        \noindent\pred{sonDistanciasValidas}{distancias: \TLista{\ent}}{\\
+            \tab|distancias| > 0\ \yLuego\ (distancias[0] > 0\ \y\ (\forall i:\ent)(0 \leq i < |distancias| - 1\ \implicaLuego\ distancias[i] < distancias[i + 1]))\\
+        }
+        $\newline$
+        \aux{$\#$HogaresEnAnillo}{th :  $eph_{h}$, centro: \ent$\times$\ent, desde: \ent, hasta: \ent}{\ent}{\\[2ex]
+            \tab\displaystyle\sum_{h \in th}\IfThenElse{cuadrado(desde) \leq distancia(h,\ centro) < cuadrado(hasta)}{1}{0}
+        }
+        $\newline$
+        \aux{distancia}{h: $hogar$, centro: \ent$\times$\ent}{\float}{
+            cuadrado(h[@hoglatitud] - centro_{0}) + cuadrado(h[@hoglongitud] - centro_{1})
+        }
+        $\newline$
+        \aux{cuadrado}{n : \ent}{\ent}{n * n}
+
+    \subsubsection{Observaciones:}
+        \begin{itemize}
+            \item se hace uso del predicado $esTablaDeHogaresValida$ definido en 1.1.2.
+            \item Dado que la pertenencia de una distancia P = (x, y) a un anillo concéntrico definido en el intervalo (positivo) de radios [A, B) respecto al centro C = (x$_{0}$, y$_{0}$) se define como: 
+                \begin{equation}
+                    A\ \leq\ \sqrt{(x - x_{0})^{2} + (y - y_{0})^{2}}\ <\ B
+                \end{equation}
+                Por simple manipulación algebráica (elevando al cuadrado), la misma relación se mantiene para:
+                \begin{equation}
+                    A^{2}\ \leq\ (x - x_{0})^{2} + (y - y_{0})^{2}\ <\ B^{2}
+                \end{equation}
+                el predicado $\#HogaresEnAnillo$ hace uso de esta observaci\'on.
+                
+                % agregar que todo es nec positivo
+                % y otras obs
+        \end{itemize}
