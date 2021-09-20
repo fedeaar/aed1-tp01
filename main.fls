@@ -821,10 +821,10 @@ INPUT C:\root\MikTex\fonts\tfm\public\cm\cmss10.tfm
 INPUT C:\Users\faari\AppData\Local\MiKTeX\pdftex\config\pdftex.map
 INPUT C:\root\MikTex\fonts\tfm\public\cm\cmr12.tfm
 INPUT C:\root\MikTex\fonts\tfm\public\cm\cmbx12.tfm
-INPUT .\1. esEncuestaValida.tex
-INPUT 1. esEncuestaValida.tex
-INPUT .\1. esEncuestaValida.tex
-INPUT 1. esEncuestaValida.tex
+INPUT .\01. esEncuestaValida.tex
+INPUT 01. esEncuestaValida.tex
+INPUT .\01. esEncuestaValida.tex
+INPUT 01. esEncuestaValida.tex
 INPUT C:\root\MikTex\fonts\tfm\public\cm\cmss8.tfm
 INPUT C:\root\MikTex\fonts\tfm\public\cm\cmss8.tfm
 INPUT C:\root\MikTex\tex\latex\base\omscmr.fd
@@ -839,38 +839,38 @@ INPUT C:\root\MikTex\fonts\tfm\public\doublestroke\dsrom10.tfm
 INPUT C:\root\MikTex\fonts\tfm\public\doublestroke\dsrom8.tfm
 INPUT C:\root\MikTex\fonts\tfm\public\doublestroke\dsrom8.tfm
 INPUT C:\root\MikTex\fonts\tfm\jknappen\ec\tcrm1000.tfm
-INPUT .\2. histHabitacional.tex
-INPUT 2. histHabitacional.tex
-INPUT .\2. histHabitacional.tex
-INPUT 2. histHabitacional.tex
-INPUT .\3. laCasaEstaQuedandoChica.tex
-INPUT 3. laCasaEstaQuedandoChica.tex
-INPUT .\3. laCasaEstaQuedandoChica.tex
-INPUT 3. laCasaEstaQuedandoChica.tex
-INPUT .\4. creceElTeleworkingEnCiudadesGrandes.tex
-INPUT 4. creceElTeleworkingEnCiudadesGrandes.tex
-INPUT .\4. creceElTeleworkingEnCiudadesGrandes.tex
-INPUT 4. creceElTeleworkingEnCiudadesGrandes.tex
-INPUT .\5. costoSubsidioMejora.tex
-INPUT 5. costoSubsidioMejora.tex
-INPUT .\5. costoSubsidioMejora.tex
-INPUT 5. costoSubsidioMejora.tex
-INPUT .\6. generarJoin.tex
-INPUT 6. generarJoin.tex
-INPUT .\6. generarJoin.tex
-INPUT 6. generarJoin.tex
-INPUT .\7. ordenarRegionYTipo.tex
-INPUT 7. ordenarRegionYTipo.tex
-INPUT .\7. ordenarRegionYTipo.tex
-INPUT 7. ordenarRegionYTipo.tex
-INPUT .\8. muestraHomogenea.tex
-INPUT 8. muestraHomogenea.tex
-INPUT .\8. muestraHomogenea.tex
-INPUT 8. muestraHomogenea.tex
-INPUT .\9. corregirRegion.tex
-INPUT 9. corregirRegion.tex
-INPUT .\9. corregirRegion.tex
-INPUT 9. corregirRegion.tex
+INPUT .\02. histHabitacional.tex
+INPUT 02. histHabitacional.tex
+INPUT .\02. histHabitacional.tex
+INPUT 02. histHabitacional.tex
+INPUT .\03. laCasaEstaQuedandoChica.tex
+INPUT 03. laCasaEstaQuedandoChica.tex
+INPUT .\03. laCasaEstaQuedandoChica.tex
+INPUT 03. laCasaEstaQuedandoChica.tex
+INPUT .\04. creceElTeleworkingEnCiudadesGrandes.tex
+INPUT 04. creceElTeleworkingEnCiudadesGrandes.tex
+INPUT .\04. creceElTeleworkingEnCiudadesGrandes.tex
+INPUT 04. creceElTeleworkingEnCiudadesGrandes.tex
+INPUT .\05. costoSubsidioMejora.tex
+INPUT 05. costoSubsidioMejora.tex
+INPUT .\05. costoSubsidioMejora.tex
+INPUT 05. costoSubsidioMejora.tex
+INPUT .\06. generarJoin.tex
+INPUT 06. generarJoin.tex
+INPUT .\06. generarJoin.tex
+INPUT 06. generarJoin.tex
+INPUT .\07. ordenarRegionYTipo.tex
+INPUT 07. ordenarRegionYTipo.tex
+INPUT .\07. ordenarRegionYTipo.tex
+INPUT 07. ordenarRegionYTipo.tex
+INPUT .\08. muestraHomogenea.tex
+INPUT 08. muestraHomogenea.tex
+INPUT .\08. muestraHomogenea.tex
+INPUT 08. muestraHomogenea.tex
+INPUT .\09. corregirRegion.tex
+INPUT 09. corregirRegion.tex
+INPUT .\09. corregirRegion.tex
+INPUT 09. corregirRegion.tex
 INPUT .\10. histogramaDeAnillosConcentricos.tex
 INPUT 10. histogramaDeAnillosConcentricos.tex
 INPUT .\10. histogramaDeAnillosConcentricos.tex
@@ -879,10 +879,10 @@ INPUT .\11. quitarIndividuos.tex
 INPUT 11. quitarIndividuos.tex
 INPUT .\11. quitarIndividuos.tex
 INPUT 11. quitarIndividuos.tex
-INPUT .\0. generales.tex
-INPUT 0. generales.tex
-INPUT .\0. generales.tex
-INPUT 0. generales.tex
+INPUT .\00. generales.tex
+INPUT 00. generales.tex
+INPUT .\00. generales.tex
+INPUT 00. generales.tex
 INPUT main.aux
 INPUT C:\Users\faari\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT C:\Users\faari\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
