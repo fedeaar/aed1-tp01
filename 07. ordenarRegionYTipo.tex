@@ -3,8 +3,86 @@
 
 \subsection{proc. ordenarRegionYTipo}
     \subsubsection{Especificaci\'on:}    
+        begin{proc}{ordenarRegionYTipo}{\Inout th: $eph_{h}$, \Inout ti : $eph_{i}$}{}
+            \pre{sonEncuestasValidas(th,\ ti)\ \y\ th = th_{0}\ \y\ ti = ti_{0}}
+            \post{tablasNoCambian(th,\ th_{0},\ ti,\ ti_{0})\ \yLuego\ tablasOrdenadas(th,\ ti)}
+        \end{proc}
+        % === Requisitos === %
+        % === 1. Largo y elementos de th/ti == largo y elementos de th0/ti0
+        % === 2. La tabla de hogares esté ordenada
+        % === 2.1. Por código de región
+        % === 2.2. Dentro de cada región, por CODUSU en forma creciente. (datos en tabla son enteros)
+        % === 3. La tabla de individuos esté ordenada
+        % === 3.1. Por mismo orden de CODUSU que la tabla de hogares ordenada. (CODUSU por región, creciente).
+        % === 3.2. COMPONENTE de menor a mayor dentro de mismo hogar.
     \subsubsection{Predicados y funciones auxiliares:}
+        \noindent\pred{tablasNoCambian}{th: $eph_{h}$, $th_{0}$: $eph_{h}$, ti: $eph_{i}$, $ti_{0}$: $eph_{i}$}{\\
+            \tab tablaHogaresNoCambia(th,\ th_{0})\ \y\ tablaIndividuosNoCambia(ti,\ ti_{0})\\
+        }
+        $\newline$
+        %Revisar 
+        \pred{tablaHogaresNoCambia}{th: $eph_{h}$, $th_{0}$: $eph_{h}$}{\\
+            \tab|th| = |th_{0}|\ \y\\
+            \tab(\forall h: hogar)(h \in th_{0}\ \Iff\ h \in th)\\
+        }
+        $\newline$
+        %Revisar
+        \pred{tablaIndividuosNoCambia}{ti: $eph_{i}$, $ti_{0}$: $eph_{i}$}{\\
+            \tab|ti| = |ti_{0}|\ \y\\
+            \tab(\forall i: individuo)(i \in ti_{0}\ \Iff\ i \in ti)\\
+        }
+        $\newline$
+        \pred{tablasOrdenadas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+            \tab hogaresOrdenados(th)\ \yLuego\ individuosOrdenados(th,ti)\\
+        }
+        $\newline$
+        \pred{hogaresOrdenados}{th: $eph_{h}$}{\\
+            \tab regionCreciente(th)\ \yLuego\ codusuCreciente(th)\\
+        }
+        $\newline$
+        \pred{regionCreciente}{th: $eph_{h}$}{\\
+            \tab(\forall i: \ent)(0 \leq i < |th| - 1\ \implicaLuego\ th[i][@region] \leq th[i+1][@region])\\
+        }
+        $\newline$
+        \pred{codusuCreciente}{th: $eph_{h}$}{\\
+            \tab(\forall i: \ent)((0 \leq i < |th| - 1\ \yLuego\ th[i][@region] = th[i+1][@region])\ \implicaLuego\\
+            \tab\tab th[i][@hogcodusu] < th[i+1][@hogcodusu]\\
+            \tab)\\
+        }
+        $\newline$
+        \pred{individuosOrdenados}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+           \tab codusuComoHogares(th,\ ti)\ \yLuego\ componenteCreciente(ti)\\
+        }
+        $\newline$
+        \pred{codusuComoHogares}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+            \tab(\forall i: \ent)(0 \leq i < |th| - 1\ \implicaLuego\\ 
+            \tab\tab ordenadosDeADosCodusu(ti,\ th[i][@hogcodusu],\ th[i+1][@hogcodusu]\\
+            \tab))\\
+        }
+        \noindent\pred{ordenadosDeADosCodusu}{ti: $eph_{i}$, cod1: \ent, cod2: \ent}{\\
+            % === cod1 < cod2
+            \tab(\forall i,j: \ent)((0 \leq i, j < |ti|\ \yLuego\\
+            \tab\tab(ti[i][@indcodusu] = cod1\ \y 
+            ti[j][@indcodusu] = cod2))\ \implica\\
+            \tab\tab\tab i < j\\
+            \tab)\\
+        }
+        % === Acá es irrelevante expresar que i distinto de j; son indices de individuos con distintos codusu
+        $\newline$
+        \pred{componenteCreciente}{ti: $eph_{i}$}{\\
+            \tab(\forall i: \ent)(0 \leq i < |ti| - 1\ \yLuego\ ti[i][@indcodusu] = ti[i+1][@indcodusu])\ \implicaLuego\\
+            \tab\tab ti[i][@componente] < ti[i+1][componente]\\
+            \tab)\\
+        }
     \subsubsection{Observaciones:}
         \begin{itemize}
-            \item
+            \item el predicado $ordenadosDeADosCodusu$ considera dos CODUSU, con $cod1 < cod2$, y verifica que todo individuo en $ti$ con el $cod1$ tiene su indice menor al de
+            todos los individuos en $ti$ con el $cod2$.
+                \begin{itemize}
+                    \item no se puede dar el caso en el que $i = j$, ya que son \'indices de individuos con distintos CODUSU.
+                \end{itemize}
+            \item el predicado $codusuComoHogares$ comprueba si $ordenadosDeADosCodusu$ es verdadero o no para todos los CODUSU de pares de hogares consecutivos en $th$.
+            Considera la tabla de hogares ya ordenada por regi\'on y CODUSU creciente.
+            \item ambos predicados, $codusuComoHogares$ y $ordenadosDeADosCodusu$, funcionan en conjunto para verificar que, en la tabla de individuos ordenada, todos los
+            individuos est\'en agrupados por mismo CODUSU, y que estos sigan el orden que el de los HOGCODUSU de la tabla de hogares ya ordenada.
         \end{itemize}
