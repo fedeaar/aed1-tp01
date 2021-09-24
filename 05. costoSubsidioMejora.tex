@@ -3,7 +3,7 @@
 
     \subsubsection{Especificaci\'on:}    
         \begin{proc}{costoSubsidioMejora}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \In monto: \ent, \Out res: \ent}{}
-            \pre{sonEncuestasValidas(th,\ ti)\ \y\ monto > 0} 
+            \pre{sonTablasValidas(th,\ ti)\ \y\ monto > 0} 
             \post{res = monto * \displaystyle\sum_{h \in th}(\IfThenElse{esHogarValido_{1{.}5}(ti,\ h)}{1}{0})}    
         \end{proc}
 

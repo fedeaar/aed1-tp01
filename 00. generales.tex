@@ -10,6 +10,10 @@
     \noindent\pred{esTabla}{m: \TLista{\TLista{T}}, columnas: \ent}{\\
         \tab |m| > 0 \yLuego (|m[0]| = columnas \y esMatriz(m))\\
     }
+    $\newline$
+    \noindent\pred{mismosElementos}{s$_{1}$: \TLista{T},\ s$_{2}$: \TLista{T}}{\\
+        \tab(\forall i:T)(i \in s_{1} \iff i \in s_{2})\\ 
+    }
 
 \subsection{Auxiliares Generales}     
     \noindent\aux{$\#$individuosEnHogar}{ti: $eph_{i}$, codusu$_{h}$: $dato$}{\ent}{
@@ -28,9 +32,13 @@
     \type {eph$_h$}{\TLista{hogar}}
     \type {joinHI}{\TLista{hogar \times individuo}}
 
-    \enum {ItemHogar}{hogcodusu, hogaño, hogtrimestre, hoglatitud, hoglongitud, ii7, region, mas\_500, iv1, iv2, ii2, ii3} 
-    \\
-    \enum {ItemIndividuo}{indcodusu, componente, indaño, indtrimestre, ch4, ch6, nivel\_ed, cat\_ocup, p47t, ppo4g}
+    \enum {ItemHogar}{\\[1ex]
+        \tab hogcodusu, hogaño, hogtrimestre, hoglatitud, hoglongitud, ii7, region, mas\_500, iv1, iv2, ii2, ii3\\[1ex]
+    }\\
+    $\newline$
+    \enum {ItemIndividuo}{\\[1ex]
+        \tab indcodusu, componente, indaño, indtrimestre, ch4, ch6, nivel\_ed, cat\_ocup, p47t, ppo4g\\[1ex]
+    }
 
 \subsection{Referencias}
     \noindent\aux{@hogcodusu}{}{\ent}{itemHogar.ord(hogcodusu)}

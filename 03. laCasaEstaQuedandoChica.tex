@@ -3,7 +3,7 @@
 
     \subsubsection{Especificaci\'on:}
         \begin{proc}{laCasaEstaQuedandoChica}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \Out res: \TLista{\float}}{}
-            \pre{sonEncuestasValidas(th,\ ti)\ \y\ 1 \leq region \leq 6}
+            \pre{sonTablasValidas(th,\ ti)}
             \post{|res| = 6\ \yLuego\ (\forall region: dato)(1 \leq region \leq 6\ \implicaLuego\ res[region - 1] = \%hacinado(th,\ ti,\ region))}
         \end{proc}
 

@@ -1,9 +1,9 @@
 % === generarJoin === %
 \subsection{proc. generarJoin}
     \subsubsection{Especificaci\'on:}
-        \begin{proc}{generarJoin}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out junta: joinHI}{}
-            \pre{sonEncuestasValidas(th,\ ti)}
-            \post{|junta| = |ti|\ \yLuego\ duplasValidas(th,\ ti,\ junta)}
+        \begin{proc}{generarJoin}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out junta:  $joinHI$}{}
+            \pre{sonTablasValidas(th,\ ti)}
+            \post{|junta| = |ti|\ \yLuego\ sonDuplasValidas(th,\ ti,\ junta)}
         \end{proc}
         % === Requisitos === %
         % === 1. Junta debe tener el siguiente formato: <(<h>,<i>),(<h>,<i>),...>
@@ -12,15 +12,15 @@
         % === 4. Pueden haber hogares repetidos, pero no individuos.
         % === 5. Tamaño de Junta == Tamaño de tabla de individuos.
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{duplasValidas}{th: $eph_{h}$, ti: $eph_{i}$, junta: joinHI}{\\
-            \tab(hayDuplaParaTodoIndividuo(ti,\ junta)\ \y\\
+        \noindent\pred{sonDuplasValidas}{th: $eph_{h}$, ti: $eph_{i}$, junta: $joinHI$}{\\
+            \tab (hayDuplaParaTodoIndividuo(ti,\ junta)\ \y\\
             \tab hogaresEnDuplaValidos(th,\ junta))\ \yLuego\\
-            \tab codusuCoincide(junta))\\
+            \tab codusuCoincide(junta)\\
         }
         $\newline$
         % === Chequea tanto que no hayan repetidos, como que todos los ind. estén.
         % === Funciona porque antes se limita el largo de Junta
-        \pred{hayDuplaParaTodoIndividuo}{ti: $eph_{i}$, junta: joinHI}{\\
+        \pred{hayDuplaParaTodoIndividuo}{ti: $eph_{i}$, junta: $joinHI$}{\\
             \tab(\forall i: individuo)(i \in ti\ \implicaLuego\\
             \tab\tab(\exists j: \ent)(0 \leq j < |junta|\ \yLuego\ (junta[j])_{1} = i)\\
             \tab)\\
@@ -29,19 +29,19 @@
         % === Revisa que prim. elem. de dupla sea hogar de la lista y estén todos
         % === Arreglar codusuCoincide con hayDuplaParaTodoHogar
             % === Preguntar si mi nuevo pred funciona
-        \pred{hogaresEnDuplaValidos}{th: $eph_{h}$, junta: joinHI}{\\
+        \pred{hogaresEnDuplaValidos}{th: $eph_{h}$, junta: $joinHI$}{\\
             \tab(\forall i:\ent)(0 \leq i < |junta|\ \implicaLuego\\
             \tab\tab (\exists h: hogar)(h \in th\ \y\ (junta[i])_0 = h)\\ 
             \tab)\\
         }
         $\newline$
-        \pred{codusuCoincide}{junta: joinHI}{\\
+        \pred{codusuCoincide}{junta: $joinHI$}{\\
             \tab(\forall i: \ent)(0 \leq i < |junta|\ \implicaLuego\\
             \tab\tab(junta[i])_{0}[@hogcodusu] = (junta[i])_{1}[@indcodusu]\\ 
             \tab)\\
         }
     \subsubsection{Observaciones:}
         \begin{itemize}
-            \item el predicado $hayDuplaParaTodoIndividuo$ verifica tanto que est\'en todos los individuos de $ti$ en $junta$ como que no hayan repetidos. 
+            \item el predicado $hayDuplaParaTodoIndividuo$ verifica tanto que est\'en todos los individuos de $ti$ en la $junta$ como que no hayan repetidos. 
             Esto es as\'i porque previamente se comprueba que $|junta| = |ti|$.
         \end{itemize}

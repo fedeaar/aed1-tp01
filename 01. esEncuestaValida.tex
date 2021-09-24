@@ -4,11 +4,11 @@
     \subsubsection{Especificaci\'on:}
         \begin{proc}{esEncuestaValida}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out result: \bool}{}
             \pre{\True}
-            \post{result = \True \Iff sonEncuestasValidas(th,\ ti)}
+            \post{result = \True \Iff sonTablasValidas(th,\ ti)}
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{sonEncuestasValidas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
+        \noindent\pred{sonTablasValidas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
             \tab esTablaDeHogaresValida(th)\ \y\ esTablaDeIndividuosValida(ti)\\
         }
         $\newline$
@@ -53,7 +53,10 @@
             \tab 0 < h[@ii2] \leq h[@iv2]\ \y\\
             \tab 1 \leq h[@ii3] \leq 2\\
         }
+        $\newline$
         $\newline$          
+        $\newline$       
+        $\newline$              
         \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
             \tab(\exists h: hogar)(h \in th\ \yLuego \\
             \tab\tab ti[i][@indcodusu] = h[@hogcodusu]\\

@@ -4,7 +4,7 @@
     \subsubsection{Especificaci\'on:}
         \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
             \pre{
-                (sonEncuestasValidas(t1h,\ t1i)\ \y\ sonEncuestasValidas(t2h,\ t2i))\ \yLuego\ comparacionValida(t1h,\ t1i,\ t2h,\ t2i)
+                (sonTablasValidas(t1h,\ t1i)\ \y\ sonTablasValidas(t2h,\ t2i))\ \yLuego\ comparacionValida(t1h,\ t1i,\ t2h,\ t2i)
             }
             \post{res = \True \iff $\%$teleworking(t1h,\ t1i) < $\%$teleworking(t2h,\ t2i)}
         \end{proc}

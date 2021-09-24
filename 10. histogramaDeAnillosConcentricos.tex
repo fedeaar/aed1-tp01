@@ -4,45 +4,47 @@
         \begin{proc}{histogramaDeAnillosConcentricos}{\In th: $eph_{h}$, \In centro: \ent$\times$\ent, \In distancias: \TLista{\ent}, \Out res: \TLista{\ent}}{}
             \pre{esTablaDeHogaresValida(th)\ \y\ esCentroValido(centro)\ \y\ sonDistanciasValidas(distancias)} 
             \post{\\
-            |result| = |distancias|\ \yLuego (\\
-            result[0] = \#HogaresEnAnillo(th,\ centro,\ 0,\ distancias[0])\ \y\\
-            (\forall i:\ent)(0 < i < |result|\ \implicaLuego\\ 
-                \tab result[i] = \#HogaresEnAnillo(th,\ centro,\ distancias[i - 1],\ distancias[i])\\
-            ))} 
+            |res| = |distancias|\ \yLuego (\\
+            \tab res[0] = \#HogaresEnAnillo(th,\ centro,\ 0,\ distancias[0])\ \y\\
+            \tab (\forall i:\ent)(0 < i < |result|\ \implicaLuego\\ 
+                \tab\tab result[i] = \#HogaresEnAnillo(th,\ centro,\ distancias[i - 1],\ distancias[i])\\
+            \tab)\\
+            )} 
         \end{proc}
     
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{esCentroValido}{centro \ent$\times$\ent}{\\
+        \noindent\pred{esCentroValido}{centro : \ent$\times$\ent}{\\
         \tab -90 \leq centro_{0} \leq 90\ \y\ -180 \leq centro_{1} \leq 180\\
         }
         $\newline$
-        \noindent\pred{sonDistanciasValidas}{distancias: \TLista{\ent}}{\\
-            \tab|distancias| > 0\ \yLuego\ (distancias[0] > 0\ \y\ (\forall i:\ent)(0 \leq i < |distancias| - 1\ \implicaLuego\ distancias[i] < distancias[i + 1]))\\
+        \noindent\pred{sonDistanciasValidas}{s: \TLista{\ent}}{\\
+            \tab|s| > 0\ \yLuego\ (s[0] > 0\ \y\ (\forall i:\ent)(0 \leq i < |s| - 1\ \implicaLuego\ s[i] < s[i + 1]))\\
         }
         $\newline$
         \aux{$\#$HogaresEnAnillo}{th :  $eph_{h}$, centro: \ent$\times$\ent, desde: \ent, hasta: \ent}{\ent}{\\[2ex]
             \tab\displaystyle\sum_{h \in th}\IfThenElse{cuadrado(desde) \leq distancia(h,\ centro) < cuadrado(hasta)}{1}{0}
         }
-        $\newline$
-        \aux{distancia}{h: $hogar$, centro: \ent$\times$\ent}{\float}{
-            cuadrado(h[@hoglatitud] - centro_{0}) + cuadrado(h[@hoglongitud] - centro_{1})
-        }
+        \vspace*{1.5ex}
         $\newline$
         \aux{cuadrado}{n : \ent}{\ent}{n * n}
-
+        $\newline$
+        \aux{distancia}{h: $hogar$, centro: \ent$\times$\ent}{\ent}{\\[2ex]
+            \tab cuadrado(h[@hoglatitud] - centro_{0}) + cuadrado(h[@hoglongitud] - centro_{1})
+        }
+    \vspace*{1.5ex}
     \subsubsection{Observaciones:}
         \begin{itemize}
             \item se hace uso del predicado $esTablaDeHogaresValida$ definido en 1.1.2.
-            \item Dado que la pertenencia de una distancia P = (x, y) a un anillo concéntrico definido en el intervalo (positivo) de radios [A, B) respecto al centro C = (x$_{0}$, y$_{0}$) se define como: 
+            %\item el predicado $esCentroValido$ sigue con nuestra consideración de lo que constituyen una latitud y longitud válidas.
+            \item dado que la pertenencia de una punto P = (x, y) a un anillo concéntrico definido en el intervalo (positivo) de radios [A, B) respecto al centro C = (x$_{0}$, y$_{0}$) se define como: 
                 \begin{equation}
                     A\ \leq\ \sqrt{(x - x_{0})^{2} + (y - y_{0})^{2}}\ <\ B
                 \end{equation}
-                Por simple manipulación algebráica (elevando al cuadrado), la misma relación se mantiene para:
+                por simple manipulación algebráica (elevando al cuadrado), la misma relación se mantiene para:
                 \begin{equation}
                     A^{2}\ \leq\ (x - x_{0})^{2} + (y - y_{0})^{2}\ <\ B^{2}
                 \end{equation}
                 el predicado $\#HogaresEnAnillo$ hace uso de esta observaci\'on.
-                
-                % agregar que todo es nec positivo
-                % y otras obs
+            \item cabe aclarar que el predicado $distancia$ devuelve necesariamente un entero, ya que \ent\ es un cuerpo respecto a
+            la suma, resta y producto. 
         \end{itemize}

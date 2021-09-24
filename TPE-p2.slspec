@@ -1,0 +1,120 @@
+/* 
+10. proc histogramaDeAnillosConcentricos(
+    in th : ephₕ; 
+    in centro : Z x Z; 
+    in distancias : seq[Z]; 
+    out result : seq[Z])
+
+Dada una tabla de hogares, un punto central definido como un par (latitud, longitud) y una lista no vacia
+y estrictamente creciente de distancias no nulas al centro, devuelve otra lista que contiene la cantidad de hogares que
+se encuentran en los anillos concentricos determinados por las distancias con respecto al punto central.
+*/
+proc histogramaDeAnillosConcentricos(
+    in th: ephₕ, 
+    in centro: ℤ⨉ℤ,
+    in distancias: seq[ℤ], 
+    out result: seq[ℤ]
+) {
+    pre {
+        validarHogar(th) ∧ validarCentro(centro) ∧ validarDistancias(distancias)
+    }
+    post {
+        |result| = |distancias| ∧
+        (∀ i:ℤ)(0 ≤ i < |result| ⟹L
+            if i = 0 then
+                result[i] = qHogares(th, 0, distancias[i], centro)
+            else 
+                result[i] = qHogares(th, (distancias[i - 1], distancias[i]), centro)  
+            fi
+        )
+    }
+}; 
+// para pred validarHogar modificar punto 1
+// para pred validarCentro modificar punto 1 (que cada atributo tenga su propio pred)
+pred validarDistancias(s: seq[ℤ]) {  
+    (∀ i:ℤ)((0 ≤ i < |s| - 1 ∧L s[0] > 0) ⟹L s[i] < s[i + 1])
+}
+aux qHogares(th: eph_i, rango: ℤ⨉ℤ, centro: ℤ⨉ℤ):ℤ = 
+    /*si la distancia propiamente esta en rango, 
+    entonces elevar todo al cuadro no cambia la relacion */
+    ∑ (if rango[0]^2 ≤ distancia(h, centro) < rango[1]^2 then 1 else 0 fi) for h ∈ th;
+
+aux distancia(h: hogar, centro):ℝ = 
+    // definir aux potencia?
+    (h[@hoglatitud] - centro[0])^2 + (h[@hoglongitud] - centro[1])^2;
+
+aux cuadrado(n: ℤ | ℝ):ℝ = n * n;
+
+/* Dada una encuesta valida y una busqueda de individuos valida, se desea quitar los individuos que coinciden con todos
+los terminos de busqueda, y en base a este resultado se desea tambien quitar sus hogares correspondientes (comparando
+el CODUSU).
+Una busqueda se define como una lista de pares ordenados (item : ItemIndividuo, valor : dato), y para que sea valida
+debe ocurrir que el item sea un valor valido de ItemIndividuo, sin repetirse en la busqueda; y valor es el valor que se
+desea que el individuo tenga para su item asociado.
+Los individuos y hogares quitados deben ser devueltos en result.
+Ejemplo:
+quitarIndividuos(TH, TI, [(INDAÑO, 2020),(REGION,5)], result) debera devolver en result tablas de hogares e
+individuos que contengan solamente registros de 2020 de la region pampeana; mientras que TH y TI deberan contener
+el resto de los registros originales. */
+
+proc quitarIndividuos(
+    inout th : ephₕ,
+    inout ti : ephᵢ,
+    in busqueda : seq⟨ItemIndividuo ⨉ dato⟩,
+    out result : ephₕ ⨉ ephᵢ
+) {
+    pre {
+        validarEncuesta(th, ti) ∧ validarBusqueda_i(busqueda) ∧ th = th₀ ∧ ti = ti₀
+    }    
+    post {
+        // el largo es correcto 
+        // corregir |ti| >= |result|
+        |ti| = |ti0| - |result₁| ∧ esSubconjunto(ti, ti0) ∧ esSubconjunto(result[0], ti0) ∧
+        |th| = |th0| - |result₀| ∧ esSubconjunto(th, th0) ∧ esSubconjunto(result[1], th0) ∧
+        // largo result ti - ti0
+
+        /* todo individuo pertenece a result y no pertenece a ti 
+        solo si todos los items de busqueda corresponden */
+        (∀ i: individuo)(i ∈ ti0 ⟹L (
+            match(i, busqueda) ⟺ (i ∈ result[1] ∧ i ∉ ti)
+        )) ∧
+        /* todo hogar pertenece a result y no pertenece a th 
+        solo si para todos los individuos de ese hogar todos los items de busqueda corresponden */
+        // asumimos q el hogar desaparecer solo si se queda sin individuos
+        (∀ h: hogar)(h ∈ th0 ⟹L (
+            (∀ i individuo)((i ∈ ti0 ∧ i[@indcodusu] = h[@hogcodusu]) ⟹L (
+                match(i, busqueda)
+            ) ⟺ 
+            (h ∈ result[0] ∧ h ∉ th)
+        )
+    }
+}
+
+pred validarBusqueda_i(q: seq[(ItemIndividuo, dato)]) {
+    (∀ i : ℤ)(0 ≤ i < |q| ⟹L (
+        q[i][0] ∈ ItemIndividuo ∧L ( // hace falta si el arg lo pide?
+            (∄ j : ℤ)((0 ≤ j < |q| ∧ i ≠ j) ∧L
+                q[i][0] = q[j][0]
+            ) ∧ 
+            esDatoValido(q[i][0], q[i][1])
+        ) 
+}
+1 indcodusu
+pred esDatoValido(i : ItemIndividuo, d : dato){
+    (ItemIndividuo = indcodusu ∧ hogcodusuEnRango(d)) ∨ // cambiar punto 1 para que evalue cada atributo por separado
+    ... // todo el resto de las opciones
+}
+
+pred match(i : individuo, busqueda : seq[(ItemIndividuo, dato)]) {
+    (∀ i: ℤ)(0 ≤ i < |busqueda| ⟹L 
+        i[itemIndividuo.ord(busqueda[j][0])] = busqueda[j][1] 
+    )
+}
+
+
+pred esSubconjunto(subconjunto : seq[T], conjunto : seq[T]) {
+    (∀ i: T)(i ∈ subconjunto ⟹L
+        i ∈ conjunto
+    ) 
+}
+
