@@ -17,20 +17,18 @@
         % === 3.2. COMPONENTE de menor a mayor dentro de mismo hogar.
     \subsubsection{Predicados y funciones auxiliares:}
         \noindent\pred{lasTablasNoCambian}{th: $eph_{h}$,\ $th_{0}$: $eph_{h}$,\ ti: $eph_{i}$,\ $ti_{0}$: $eph_{i}$}{\\
-            \tab tablaHogaresNoCambia(th,\ th_{0})\ \y\ tablaIndividuosNoCambia(ti,\ ti_{0})\\
+            \tab mismosElementos(th,\ th_{0})\ \y\ mismosElementos(ti,\ ti_{0})\\
         }
-        $\newline$
-        %Revisar 
-        \pred{tablaHogaresNoCambia}{th: $eph_{h}$, $th_{0}$: $eph_{h}$}{\\
-            \tab|th| = |th_{0}|\ \y\\
-            \tab(\forall h: hogar)(h \in th_{0}\ \Iff\ h \in th)\\
-        }
-        $\newline$
-        %Revisar
-        \pred{tablaIndividuosNoCambia}{ti: $eph_{i}$, $ti_{0}$: $eph_{i}$}{\\
-            \tab|ti| = |ti_{0}|\ \y\\
-            \tab(\forall i: individuo)(i \in ti_{0}\ \Iff\ i \in ti)\\
-        }
+        %$\newline$
+        %\pred{tablaHogaresNoCambia}{th: $eph_{h}$, $th_{0}$: $eph_{h}$}{\\
+        %    \tab|th| = |th_{0}|\ \y\\
+        %    \tab(\forall h: hogar)(h \in th_{0}\ \Iff\ h \in th)\\
+        %}
+        %$\newline$
+        %\pred{tablaIndividuosNoCambia}{ti: $eph_{i}$, $ti_{0}$: $eph_{i}$}{\\
+        %    \tab|ti| = |ti_{0}|\ \y\\
+        %    \tab(\forall i: individuo)(i \in ti_{0}\ \Iff\ i \in ti)\\
+        %}
         $\newline$
         \pred{sonTablasOrdenadas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
             \tab hogaresOrdenados(th)\ \yLuego\ individuosOrdenados(th,ti)\\
