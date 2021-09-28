@@ -4,22 +4,22 @@
     \subsubsection{Especificaci\'on:}
         \begin{proc}{creceElTeleworkingEnCiudadesGrandes}{\In t1h: $eph_{h}$, \In t1i: $eph_{i}$, \In t2h: $eph_{h}$, \In t2i: $eph_{i}$, \Out res: \bool}{}
             \pre{
-                (sonTablasValidas(t1h,\ t1i)\ \y\ sonTablasValidas(t2h,\ t2i))\ \yLuego\ comparacionValida(t1h,\ t1i,\ t2h,\ t2i)
+                (sonTablasValidas(t1h,\ t1i)\ \y\ sonTablasValidas(t2h,\ t2i))\ \yLuego\ esComparacionValida(t1h,\ t1i,\ t2h,\ t2i)
             }
             \post{res = \True \iff $\%$teleworking(t1h,\ t1i) < $\%$teleworking(t2h,\ t2i)}
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{comparacionValida}{t1h: $eph_{h}$, t1i: $eph_{i}$, t2h: $eph_{h}$, t2i: $eph_{i}$}{\\
+        \noindent\pred{esComparacionValida}{t1h: $eph_{h}$, t1i: $eph_{i}$, t2h: $eph_{h}$, t2i: $eph_{i}$}{\\
             %\tab (t1h[0][@hoga\tilde{n}o] = t2h[0][@hoga\tilde{n}o] - 1\ \y\ 
             \tab t1h[0][@hogtrimestre] = t2h[0][@hogtrimestre])\ \y\ t1h[0][@hoga\tilde{n}o] < t2h[0][@hoga\tilde{n}o]\\
         }
         $\newline$
-        \pred{$\Omega$NoVacio$_{1{.}4}$}{th: $eph_{h}$}{\\
-            \tab(\exists h:\ $hogar$)(h \in th\ \yLuego\ esHogarValido_{1{.}4}(h))\\
+        \pred{$\Omega$NoVacioTeleworking}{th: $eph_{h}$}{\\
+            \tab(\exists h:\ $hogar$)(h \in th\ \yLuego\ esHogarValidoParaTeleworking(h))\\
         }
         $\newline$
-        \pred{esHogarValido$_{1{.}4}$}{h: $hogar$}{\\
+        \pred{esHogarValidoParaTeleworking}{h: $hogar$}{\\
             %\comment{\tab}{Hogar cumple con especificaciones}
             \tab h[@mas\_500] = 1\ \y\ (h[@iv1] = 1\ \vee\ h[@iv1] = 2)\\
         }
@@ -31,17 +31,17 @@
         $\newline$
         \pred{viveEnHogarValido}{th: $eph_{h}$, i: $individuo$}{\\
             %\comment{\tab}{Hogar del individuo cumple con especificaciones}
-            \tab esHogarValido_{1{.}4}(th[indiceHogarPorCodusu(th,\ i[@indcodusu])])\\
+            \tab esHogarValidoParaTeleworking(th[indiceHogarPorCodusu(th,\ i[@indcodusu])])\\
         }
         $\newline$
         \aux{$\%$teleworking}{th: $eph_{h}$, ti: $eph_{i}$}{\float}{\\[2ex]
-            \tab\IfThenElse{{\Omega}NoVacio_{1{.}4}(th)}{
-                \frac{
+            \tab\IfThenElse{{\Omega}NoVacioTeleworking(th)}{\\[2ex]
+                \tab\tab\tab\frac{
                     \displaystyle\sum_{i \in ti}(\IfThenElse{haceTeleworking(th,\ i)}{1}{0})
                 }{
                     \displaystyle\sum_{i \in ti}(\IfThenElse{viveEnHogarValido(th,\ i)}{1}{0})
                 }
-            }{0}
+                \\[2ex]\tab}{0}
         }
             
     \subsubsection{Observaciones:}

@@ -22,13 +22,13 @@
         }
         $\newline$
         \aux{$\#$HogaresEnAnillo}{th :  $eph_{h}$, centro: \ent$\times$\ent, desde: \ent, hasta: \ent}{\ent}{\\[2ex]
-            \tab\displaystyle\sum_{h \in th}\IfThenElse{cuadrado(desde) \leq distancia(h,\ centro) < cuadrado(hasta)}{1}{0}
+            \tab\displaystyle\sum_{h \in th}\IfThenElse{cuadrado(desde) \leq distancia^{2}(h,\ centro) < cuadrado(hasta)}{1}{0}
         }
         \vspace*{1.5ex}
         $\newline$
         \aux{cuadrado}{n : \ent}{\ent}{n * n}
         $\newline$
-        \aux{distancia}{h: $hogar$, centro: \ent$\times$\ent}{\ent}{\\[2ex]
+        \aux{distancia$^{2}$}{h: $hogar$, centro: \ent$\times$\ent}{\ent}{\\[2ex]
             \tab cuadrado(h[@hoglatitud] - centro_{0}) + cuadrado(h[@hoglongitud] - centro_{1})
         }
     \vspace*{1.5ex}
@@ -46,6 +46,6 @@
                     A^{2}\ \leq\ (x - x_{0})^{2} + (y - y_{0})^{2}\ <\ B^{2}
                 \end{equation}
                 el predicado $\#HogaresEnAnillo$ hace uso de esta observaci\'on.
-            \item cabe aclarar que el predicado $distancia$ devuelve necesariamente un entero, ya que \ent\ es un cuerpo respecto a
+            \item cabe aclarar que el predicado $distancia^{2}$ devuelve necesariamente un entero, ya que \ent\ es un cuerpo respecto a
             la suma, resta y producto. 
         \end{itemize}

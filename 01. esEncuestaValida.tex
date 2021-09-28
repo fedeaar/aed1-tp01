@@ -15,19 +15,19 @@
         \noindent\pred{esTablaDeHogaresValida}{th: $eph_{h}$, ti: $eph_{i}$}{\\
             \tab esTabla(th,\ @largoItemHogar)\ \yLuego\\
             \tab (\forall i: \ent)(0 \leq i < |th| \implicaLuego\ (\\
-            \tab\tab codigoValido_h(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ th[i])\ \y\ attEnRango_h(th[i])\\
+            \tab\tab codusuValido_h(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_h(th,\ th[i])\ \y\ attEnRango_h(th[i])\\
             \tab))\\
         }
         $\newline$
         \noindent\pred{esTablaDeIndividuosValida}{th: $eph_{h}$, ti: $eph_{i}$}{\\
             \tab esTabla(ti,\ @largoItemIndividuo)\ \yLuego\\
             \tab(\forall i: \ent)(0 \leq i < |ti|\ \implicaLuego\ (\\
-            \tab\tab codigoValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti[i])\ \y\ attEnRango_i(ti[i])\ \y\\
-            \tab\tab validarComponente_i(ti,\ ti[i])\\
+            \tab\tab codusuValido_i(th,\ ti,\ i)\ \y\ a\tilde{n}oyTrimestreCongruente_i(th,\ ti[i])\ \y\ attEnRango_i(ti[i])\ \y\\
+            \tab\tab esComponenteValido(ti,\ ti[i])\\
             \tab))\\
         }
         $\newline$
-        \pred{codigoValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
+        \pred{codusuValido$_{h}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
             \tab(\exists j: individuo)(j \in ti\ \yLuego\\
             \tab\tab th[i][@hogcodusu] = j[@indcodusu]\\
             \tab) \y\\
@@ -57,7 +57,7 @@
         $\newline$          
         $\newline$       
         $\newline$              
-        \noindent\pred{codigoValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
+        \noindent\pred{codusuValido$_{i}$}{th: $eph_{h}$, ti: $eph_{i}$, i: \ent}{\\
             \tab(\exists h: hogar)(h \in th\ \yLuego \\
             \tab\tab ti[i][@indcodusu] = h[@hogcodusu]\\
             \tab) \y\\
@@ -84,7 +84,7 @@
             \tab 1 \leq i[@ppo4g] \leq 10\\    
         }
         $\newline$
-        \pred{validarComponente$_{i}$}{ti: $eph_{i}$, i: $individuo$}{\\
+        \pred{esComponenteValido}{ti: $eph_{i}$, i: $individuo$}{\\
             \tab i[@componente] = 1\ \vee (\exists i_2: individuo)(i_2 \in ti\ \yLuego\ i[@componente] - 1 = i_2[@componente])\\
         }
 
@@ -93,11 +93,11 @@
             \item se hace uso de diversos tipos y referencias definidos en 2.3 y 2.4.
             \item la funci\'on auxiliar $esTabla$, definida en 2.1., verifica que th y ti sean matrices del largo correcto y 
             con al menos una entrada.
-            \item los predicados $codigoValido$ verifican, de forma cruzada, que los hogares tengan individuos asociados y viceversa, 
+            \item los predicados $codusuValido$ verifican, de forma cruzada, que los hogares tengan individuos asociados y viceversa, 
             y que no est\'en repetidos.    
             \item los predicados $a\tilde{n}oyTrimestreCongruente$ contrastan con la primer entrada de la tabla de hogares para asegurar
             la homogeneidad de los registros. 
-            \item el predicado $validarComponente_{i}$ junto a $codigoValido_{i}$, y aplicado a todo individuo de la tabla, verifica que los 
+            \item el predicado $esComponenteValido$ junto a $codusuValido_{i}$, y aplicado a todo individuo de la tabla, verifica que los 
             componentes ocurran de forma continua, es decir sin saltos mayores a 1, a partir del primero. 
             En consecuencia, basta con verificar \'estos predicados, y que los componentes est\'en en el rango correcto para asegurar 
             que no haya m\'as de 20 individuos por hogar. 

@@ -9,8 +9,8 @@
                 sonTablasValidas(th,\ ti)\ \y\ esBusquedaValida(busqueda)\ \y\ th = th_{0}\ \y\ ti = ti_{0}
             }
             \post{\\
-                (mismosElementos(th_{0},\ th ++\ result_{0})\ \y\\
-                \tab mismosElementos(ti_{0},\ ti ++\ result_{1}))\ \yLuego\\
+                (tienenLosMismosElementos(th_{0},\ th ++\ result_{0})\ \y\\
+                \tab tienenLosMismosElementos(ti_{0},\ ti ++\ result_{1}))\ \yLuego\\
                 (losIndividuosEstanFiltrados(ti_{0},\ ti,\ result_{1},\ busqueda)\ \y\\ 
                 \tab losHogaresEstanFiltrados(th_{0},\ th,\ result_{0},\ ti_{0},\ busqueda))\\
             }
@@ -19,7 +19,7 @@
     \subsubsection{Predicados y funciones auxiliares:}
         
         \noindent\pred{esBusquedaValida}{Q : \TLista{(ItemIndividuo,\ dato)}}{ 
-            \comment{\tab}{$Q$ := query}
+            \comment{\tab}{$Q$ = query}
             % del mismo modo que no hace falta validar que un argumento se un entero, no hace falta validar que es un itemIndividuo
             \tab(\forall i : \ent)(0 \leq i < |Q| \implicaLuego (\\
             \tab\tab pideUnDatoValido(Q[i])\ \y\
@@ -71,10 +71,10 @@
     
     \subsubsection{Observaciones:}
         \begin{itemize}
-            \item se hace uso del predicado $mismosElementos$ definido en 2.1.
+            \item se hace uso del predicado $tienenLosMismosElementos$ definido en 2.1.
             \item el predicado $losHogaresEstanFiltrados$ considera que un hogar debe ser filtrado sólo si todos los individuos
             que viven en él son filtrados.
-            \item decidimos incorporar el predicado $pideUnDatoValido$ en esta sección, en vez de modularizar los predicados
+            \item decidimos incorporar directamente el predicado $pideUnDatoValido$ en esta sección, en vez de modularizar los predicados
             $attEnRango$ definidos en 1.1.2., porque -para el alcance de este TPE- consideramos que complejizaría 
-            la lectura más de lo que le podría aportar.
+            la lectura de ambos procedimientos en mayor medida de lo que les podría aportar.
         \end{itemize}

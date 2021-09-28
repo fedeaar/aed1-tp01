@@ -4,11 +4,11 @@
     \subsubsection{Especificaci\'on:}    
         \begin{proc}{costoSubsidioMejora}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \In monto: \ent, \Out res: \ent}{}
             \pre{sonTablasValidas(th,\ ti)\ \y\ monto > 0} 
-            \post{res = monto * \displaystyle\sum_{h \in th}(\IfThenElse{esHogarValido_{1{.}5}(ti,\ h)}{1}{0})}    
+            \post{res = monto * \displaystyle\sum_{h \in th}(\IfThenElse{esHogarValidoParaSubsidio(ti,\ h)}{1}{0})}    
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{esHogarValido$_{1{.}5}$}{ti: $eph_{i}$, h: $hogar$}{\\
+        \noindent\pred{esHogarValidoParaSubsidio}{ti: $eph_{i}$, h: $hogar$}{\\
             \tab h[@ii7] = 1\ \y\ h[@iv1] = 1\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) - 2 > h[@ii2]\\
         }
 

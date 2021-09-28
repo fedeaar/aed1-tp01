@@ -8,29 +8,29 @@
         \end{proc}
 
     \subsubsection{Predicados y funciones auxiliares:}
-        \noindent\pred{$\Omega$NoVacio$_{1{.}3}$}{th: $eph_{h}$, region: $dato$}{\\
-            \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValido_{1{.}3}(h,\ region))\\
+        \noindent\pred{$\Omega$NoVacioHacinamiento}{th: $eph_{h}$, region: $dato$}{\\
+            \tab(\exists h: $hogar$)(h \in th\ \yLuego\ esHogarValidoParaHacinamiento(h,\ region))\\
         }
         $\newline$
-        \noindent\pred{esHogarValido$_{1{.}3}$}{h: $hogar$, region: $dato$}{\\
+        \noindent\pred{esHogarValidoParaHacinamiento}{h: $hogar$, region: $dato$}{\\
             \tab h[@region] = region\ \y\ h[@mas\_500] = 0\ \y\ h[@iv1] = 1\\
         }
         $\newline$
         \noindent\pred{casaHacinada}{ti: $eph_{i}$, h: $hogar$, region: $dato$}{\\
-            \tab esHogarValido_{1{.}3}(h, region)\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) > 3 * h[@iv2]\\
+            \tab esHogarValidoParaHacinamiento(h, region)\ \y\ \#individuosEnHogar(ti,\ h[@hogcodusu]) > 3 * h[@iv2]\\
         }
         $\newline$
         \noindent\aux{$\%$hacinado}{th: $eph_{h}$, ti: $eph_{i}$, region: $dato$}{\float}{\\[2ex]
-            \tab\IfThenElse{{\Omega}NoVacio_{1{.}3}(th,\ region)}{
-                \frac{\displaystyle\sum_{h \in th}{(\IfThenElse{casaHacinada(ti,\ h,\ region)}{1}{0})}}
-                    {\displaystyle\sum_{h \in th}{(\IfThenElse{esHogarValido_{1{.}3}(h,\ region)}{1}{0})}}
-            }{0}
+            \tab\IfThenElse{{\Omega}NoVacioHacinamiento(th,\ region)}{\\[2ex]
+            \tab\tab\tab\frac{\displaystyle\sum_{h \in th}{(\IfThenElse{casaHacinada(ti,\ h,\ region)}{1}{0})}}
+                    {\displaystyle\sum_{h \in th}{(\IfThenElse{esHogarValidoParaHacinamiento(h,\ region)}{1}{0})}}
+                    \\[2ex]\tab}{0}
         }
     
     \subsubsection{Observaciones:}
         \begin{itemize}
             \item se hace uso de la funci\'on auxiliar ${\#}individuosEnHogar$ definida en 2.2.
             \item la funci\'on auxiliar ${\%}hacinado$ considera como espacio de probabilidad ($\Omega$) a todos los hogares que cumplan 
-            con el predicado $esHogarValido_{1{.}3}$.
+            con el predicado $esHogarValidoParaHacinamiento$.
             \item en el predicado $\%hacinado$ consideramos que si no hay hogares v\'alidos en una región, entonces la proporción de hogares hacinados respecto a esa región es 0.
         \end{itemize}

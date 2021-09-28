@@ -17,7 +17,7 @@
         % === 3.2. COMPONENTE de menor a mayor dentro de mismo hogar.
     \subsubsection{Predicados y funciones auxiliares:}
         \noindent\pred{lasTablasNoCambian}{th: $eph_{h}$,\ $th_{0}$: $eph_{h}$,\ ti: $eph_{i}$,\ $ti_{0}$: $eph_{i}$}{\\
-            \tab mismosElementos(th,\ th_{0})\ \y\ mismosElementos(ti,\ ti_{0})\\
+            \tab tienenLosMismosElementos(th,\ th_{0})\ \y\ tienenLosMismosElementos(ti,\ ti_{0})\\
         }
         %$\newline$
         %\pred{tablaHogaresNoCambia}{th: $eph_{h}$, $th_{0}$: $eph_{h}$}{\\
@@ -68,8 +68,6 @@
         }
         % === Acá es irrelevante expresar que i distinto de j; son indices de individuos con distintos codusu
         $\newline$
-        $\newline$
-        $\newline$
         \pred{componenteCreciente}{ti: $eph_{i}$}{\\
             \tab(\forall i: \ent)(0 \leq i < |ti| - 1\ \yLuego\ ti[i][@indcodusu] = ti[i+1][@indcodusu])\ \implicaLuego\\
             \tab\tab ti[i][@componente] < ti[i+1][componente]\\
@@ -77,7 +75,7 @@
         }
     \subsubsection{Observaciones:}
         \begin{itemize}
-            \item se hace uso del predicado $mismosElementos$ definido en 2.1.
+            \item se hace uso del predicado $tienenLosMismosElementos$ definido en 2.1.
             
             \item el predicado $ordenadosDeADosCodusu$ considera que $cod1 < cod2$,  ya que se evalúa luego de corroborar 
             el predicado $hogaresOrdenados$. El mismo verifica que todo individuo en $ti$ con el $cod1$ tiene 
