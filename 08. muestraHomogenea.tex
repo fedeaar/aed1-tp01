@@ -1,40 +1,59 @@
 % === muestraHomogenea === %
 \subsection{proc. muestraHomogenea}
 \subsubsection{Especificaci\'on:}
-        \begin{proc}{muestraHomogenea}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \Out res: \TLista{hogar}}{}
-            \pre{sonTablasValidas(th, ti)}
-            \post{(EsLaSecuenciaMasLarga \y DiferenciaConstanteDeIngresos(th, ti, res)) \vee  res=\Tlista{}}
+        \begin{proc}{muestraHomogenea}{\In th : $eph_{h}$, \In ti : $eph_{i}$, \Out res : \TLista{hogar}}{}
+            \pre{sonTablasValidas(th,\ ti)}
+            \post{(esLaSecuenciaMasLarga\ \y\ diferenciaConstanteDeIngresos(th,\ ti,\ res)) \vee  res=\TLista{}}
+            % obs: no se si vale usar res = seq[], creo que más correcto sería decir |res| = 0
         \end{proc}
  
     \subsubsection{Predicados y funciones auxiliares:}
-    \aux{IngresoPorHogar}{ti,h : hogar}{\ent}{\\
-        \tab\displaystyle\sum_{ind \in ti}{(\IfThenElse{ind[@indcodusu]=h[@hogcodusu]}{ind[@p47T]}{0})}
+    % cosas de formato:
+    % aca propongo ordenar por orden de llamado: ej. empezar con esLaSecuenciaMasLarga, le sigue lo que se llame en ese pred, 
+    % y despues seguir con diferenciaConstanteDeIngresos.
+    % detalle de formato, cambio las mayusculas iniciales por minusculas, siguiendo el resto del tp. Es por una convención, se 
+    % suelen poner solo a las clases (un tipo de objeto que no vimos aun) con mayuscula inicial, para distinguirlas. 
+    % arreglo tambien, algunas cositas de espaciado.
+
+    \noindent\aux{ingresoPorHogar}{ti,\ h : $hogar$}{\ent}{\\[2ex]
+        % obs: aca tal vez le quedaria mejor un nombre como : sumaDeIngresosPorHogar 
+        \tab\displaystyle\sum_{i \in ti}{(\IfThenElse{i[@indcodusu] = h[@hogcodusu]}{i[@p47T]}{0})}
+        % cambio ind por i para homogeneizar 
     }
-    $newline$
-    \aux{Consecutivos}{ti,res,i : \ent}{\ent}{\\
-        \tab IngresoPorHogar(ti,res[i+1])-IngresoPorHogar(ti,res[i])
+    \vspace*{2ex}
+    \noindent\aux{consecutivos}{ti,\ res,\ i : \ent}{\ent}{\\[2ex]
+        % obs: aca tal vez un nombre mas declarativo sea diferenciaDeIngresos(EntreHogaresConsecutivos?) o ingresosConsecutivos
+        % o algo por el estilo
+        \tab ingresoPorHogar(ti,\ res[i + 1]) - ingresoPorHogar(ti,\ res[i])
     }
-    $newline$
-    \noindent\pred{EsHogar}{th, res}{\\
-        \tab (\forall i:\ent)(0 \leq i < |res| \y res[i] \in th)
+    $\newline$
+    % obs: faltan los tipos en los parametros de los pred
+    \noindent\pred{esHogar}{th,\ res}{\\
+        % obs: creo que habria que nombrarla distinto, ya que chequea que todos los hogares de res esten en th, no solo uno
+        % algo tal vez como: contieneHogaresValidos (?)
+        \tab (\forall i:\ent)(0 \leq i < |res|\ \y\ res[i] \in th)\\
     }
-    $newline$
-    \noindent\pred{OrdenCreciente}{ti, res}{\\
-        \tab (\forall i:\ent)(0 \leq i < |res|-1 \luego Consecutivos(ti,res,i) \geq 0)
+    $\newline$
+    \noindent\pred{ordenCreciente}{ti,\ res}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res| - 1\ \implica\ consecutivos(ti,\ res,\ i) \geq 0)\\
+        % obs: al decir que es >= 0, como sabes que entre pares consecutivos sigue habiendo orden creciente?
+        % por otro lado, el orden creciente creo que tiene que ser respecto al ingreso particular de cada hogar, no a la diferencia 
     }
-    $newline$
-    \noindent\pred{ConsecutivosIguales}{ti, res}{\\
-        \tab (\forall i:\ent)(0 \leq i < |res|-2 \luego Consecutivos(ti,res,i+1) = Consecutivos(ti,res,i) )
+    $\newline$
+    \noindent\pred{consecutivosIguales}{ti,\ res}{\\
+        % obs: otro nombre podria ser ingresosConsecutivosIguales (?)
+        \tab (\forall i:\ent)(0 \leq i < |res| - 2\ \implica\ consecutivos(ti,\ res,\ i + 1) = consecutivos(ti,\ res,\ i))\\
     }
-    $newline$
-    \noindent\pred{DiferenciaConstanteDeIngresos}{ti,th,res}{\\
-        \tab (EsHogar(th,res) \y OrdenCreciente(ti,res) \y ConsecutivosIguales(ti,res))
+    $\newline$
+    \noindent\pred{diferenciaConstanteDeIngresos}{ti,\ th,\ res}{\\
+        \tab (esHogar(th,\ res)\ \y\ ordenCreciente(ti,\ res)\ \y\ consecutivosIguales(ti,\ res))\\
     }
-    $newline$
-    \noindent\pred{EsLaSecuenciaMasLarga}{}{\\
+    $\newline$
+    \noindent\pred{esLaSecuenciaMasLarga}{}{\\
     }
     
     \subsubsection{Observaciones:}
         \begin{itemize}
+            % aca comentaria sobre la logica de los indices en ordenCreciente y consecutivosIguales
             \item
         \end{itemize}

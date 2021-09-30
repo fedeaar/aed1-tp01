@@ -1,22 +1,36 @@
 % === corregirRegion === %
 \subsection{proc. corregirRegion}
+
     \subsubsection{Especificaci\'on:}  
-    \begin{proc}{corregirRegion}{\Inout th: $eph_{h}$, \In ti: $eph_{i}$}{}
-            \pre{sonTablasValidas(th, ti) \y th=th$_{0}$}
-            \post{NoHayRegion1(th) \y CambioLaRegion(th, th$_{0}$)}
+
+    \begin{proc}{corregirRegion}{\Inout th : $eph_{h}$, \In ti : $eph_{i}$}{}
+            \pre{sonTablasValidas(th,\ ti)\ \y\ th = th_{0}}
+            \post{noHayRegion1(th)\ \y\ cambioLaRegion(th,\ th_{0})}
+            % creo que faltaria chequear que todos los elementos que no tienen region 1 son iguales a los de th0
+            % tambien algo del estilo |th| = |th0|
         \end{proc}
+    
     \subsubsection{Predicados y funciones auxiliares:}
-    \noindent\pred{EstaEnRegionPampeana}{th,th$_{0}$,i : \ent}{\\
-        \tab (\forall j:\ent)((0 \leq i < |th| \y j \neq @Region \luego th[i][j]=th$_{0}$[i][j]) \y th[i][@Region]=5)
+    % obs: como en el anterior, le falta el tipo a los argumentos de algunos pred
+    
+    \noindent\pred{estaEnRegionPampeana}{th,th$_{0}$,i : \ent}{\\
+        % corrijo: el implica en este caso tiene que ser implicaluego
+        % cambiaria pasarle el indice por pasarle el hogar y usar eso
+        \tab (\forall j:\ent)((0 \leq i < |th|\ \y\ j \neq @Region\ \implicaLuego\ th[i][j] = th_{0}[i][j])\ \y\ th[i][@Region] = 5)\\
     }
-    $newline$
-    \noindent\pred{CambioLaRegion}{th, th$_{0}$}{\\
-        \tab (\forall i:\ent)((0 \leq i < |th$_{0}$| \y th$_{0}$[i][@Region]=1) \luego EstaEnRegionPampeana(th,th$_{0}$,i))
+    $\newline$
+    \noindent\pred{cambioLaRegion}{th, th$_{0}$}{\\
+        % corrijo: el implica en este caso tiene que ser implicaluego
+        \tab (\forall i:\ent)((0 \leq i < |th_{0}|\ \y\ th_{0}[i][@Region] = 1)\ \implicaLuego\ estaEnRegionPampeana(th,\ th_{0},\ i))\\
     }
-    $newline$
-    \noindent\pred{NoHayRegion1}{th}{\\
-        \tab \neg(\exists i:\ent)(0 \leq i < |th$_{0}$| \luego th[i][@Region]=1)
+    $\newline$
+    \noindent\pred{noHayRegion1}{th}{\\
+        % corrijo: el existe va con yLuego
+        % obs: aca tal vez quede bien el nombre: noHayRegionGBA
+        % obs2: falta agregar de parametro a th_0. Aunque, creo que habria que usar el largo de th, no el de th0
+        \tab \neg(\exists i:\ent)(0 \leq i < |th_{0}|\ \yLuego\ th[i][@Region] = 1)\\
     }    
+
     \subsubsection{Observaciones:}
         \begin{itemize}
             \item
