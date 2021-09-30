@@ -3,8 +3,12 @@
 \subsubsection{Especificaci\'on:}
         \begin{proc}{muestraHomogenea}{\In th : $eph_{h}$, \In ti : $eph_{i}$, \Out res : \TLista{hogar}}{}
             \pre{sonTablasValidas(th,\ ti)}
-            \post{(esLaSecuenciaMasLarga\ \y\ diferenciaConstanteDeIngresos(th,\ ti,\ res)) \vee  res=\TLista{}}
+            \post{esLaSecuenciaMasLarga(th,\ ti,\ res) \vee |res| = 0 }
+            
             % obs: no se si vale usar res = seq[], creo que más correcto sería decir |res| = 0
+           
+            % CORREGIDO: En el post, eliminación de un predicado y replanteo del otro disjunto. 
+            
         \end{proc}
  
     \subsubsection{Predicados y funciones auxiliares:}
@@ -14,44 +18,58 @@
     % detalle de formato, cambio las mayusculas iniciales por minusculas, siguiendo el resto del tp. Es por una convención, se 
     % suelen poner solo a las clases (un tipo de objeto que no vimos aun) con mayuscula inicial, para distinguirlas. 
     % arreglo tambien, algunas cositas de espaciado.
-
-    \noindent\aux{ingresoPorHogar}{ti,\ h : $hogar$}{\ent}{\\[2ex]
-        % obs: aca tal vez le quedaria mejor un nombre como : sumaDeIngresosPorHogar 
-        \tab\displaystyle\sum_{i \in ti}{(\IfThenElse{i[@indcodusu] = h[@hogcodusu]}{i[@p47T]}{0})}
-        % cambio ind por i para homogeneizar 
-    }
-    \vspace*{2ex}
-    \noindent\aux{consecutivos}{ti,\ res,\ i : \ent}{\ent}{\\[2ex]
-        % obs: aca tal vez un nombre mas declarativo sea diferenciaDeIngresos(EntreHogaresConsecutivos?) o ingresosConsecutivos
-        % o algo por el estilo
-        \tab ingresoPorHogar(ti,\ res[i + 1]) - ingresoPorHogar(ti,\ res[i])
+    
+     
+    \noindent\pred{esLaSecuenciaMasLarga}{}{\\
     }
     $\newline$
+    \noindent\pred{seqConDiferenciaConstanteEntreIngresos}{ti,\ th,\ res}{\\
+        \tab (|res|\geq 3\ \y\ contieneHogaresValidos(th,\ res)\ \y\ ordenCrecienteEntreIngresos(ti,\ res)\ \y\ 
+        diferenciaConstanteEntreIngresosConsecutivos(ti,\ res))\\
+    }
+     $\newline$
     % obs: faltan los tipos en los parametros de los pred
-    \noindent\pred{esHogar}{th,\ res}{\\
+    \noindent\pred{contieneHogaresValidos}{th,\ res}{\\
         % obs: creo que habria que nombrarla distinto, ya que chequea que todos los hogares de res esten en th, no solo uno
         % algo tal vez como: contieneHogaresValidos (?)
+        % RESPUESTA: sugerencia tomada
         \tab (\forall i:\ent)(0 \leq i < |res|\ \y\ res[i] \in th)\\
     }
     $\newline$
-    \noindent\pred{ordenCreciente}{ti,\ res}{\\
-        \tab (\forall i:\ent)(0 \leq i < |res| - 1\ \implica\ consecutivos(ti,\ res,\ i) \geq 0)\\
+    \noindent\pred{ordenCrecienteEntreIngresos}{ti,\ res}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res| - 1\ \implica\ diferenciaEntreIngresosConsecutivos(ti,\ res,\ i) \geq 0)\\
         % obs: al decir que es >= 0, como sabes que entre pares consecutivos sigue habiendo orden creciente?
-        % por otro lado, el orden creciente creo que tiene que ser respecto al ingreso particular de cada hogar, no a la diferencia 
+        % por otro lado, el orden creciente creo que tiene que ser respecto al ingreso particular de cada hogar, no a la diferencia
+        % RESPUESTA: No se esta ordenando restos, la resta ordena los restando. Se cambio el nombre anterior, "ordenCreciente".
+    }
+    $newline$
+     \vspace*{2ex}
+    \noindent\aux{diferenciaEntreIngresosConsecutivos}{ti,\ res,\ i : \ent}{\ent}{\\[2ex]
+        % obs: aca tal vez un nombre mas declarativo sea diferenciaDeIngresos(EntreHogaresConsecutivos?) o ingresosConsecutivos
+        % o algo por el estilo
+        % RESPUESTA: Se cambio "consecutivos" por "diferenciaEntreIngresosConsecutivos"
+        \tab ingresoPorHogar(ti,\ res[i + 1]) - ingresoPorHogar(ti,\ res[i])
     }
     $\newline$
-    \noindent\pred{consecutivosIguales}{ti,\ res}{\\
+    \noindent\aux{ingresoPorHogar}{ti,\ h : $hogar$}{\ent}{\\[2ex]
+        % obs: aca tal vez le quedaria mejor un nombre como : sumaDeIngresosPorHogar 
+        % RESPUESTA: El ingreso por hogar es la suma de sus ingresos. No se desea hacer referencia a como se obtiene ese total.   
+        % Sugiero que conserve el nombre
+        \tab\displaystyle\sum_{i \in ti}{(\IfThenElse{i[@indcodusu] = h[@hogcodusu]}{i[@p47T]}{0})}
+        % cambio ind por i para homogeneizar 
+    }
+    $\newline$
+    \noindent\pred{diferenciaConstanteEntreIngresosConsecutivos}{ti,\ res}{\\
         % obs: otro nombre podria ser ingresosConsecutivosIguales (?)
-        \tab (\forall i:\ent)(0 \leq i < |res| - 2\ \implica\ consecutivos(ti,\ res,\ i + 1) = consecutivos(ti,\ res,\ i))\\
+        % RESPUESTA: se cambio nombre original, "consecutivosIguales"
+        \tab (\forall i:\ent)(0 \leq i < |res| - 2\ \implica\ diferenciaEntreIngresosConsecutivos(ti,\ res,\ i + 1) = diferenciaEntreIngresosConsecutivos(ti,\ res,\ i))\\
     }
-    $\newline$
-    \noindent\pred{diferenciaConstanteDeIngresos}{ti,\ th,\ res}{\\
-        \tab (esHogar(th,\ res)\ \y\ ordenCreciente(ti,\ res)\ \y\ consecutivosIguales(ti,\ res))\\
-    }
-    $\newline$
-    \noindent\pred{esLaSecuenciaMasLarga}{}{\\
-    }
+   
+   
+   
     
+    
+   
     \subsubsection{Observaciones:}
         \begin{itemize}
             % aca comentaria sobre la logica de los indices en ordenCreciente y consecutivosIguales
