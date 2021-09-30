@@ -5,7 +5,7 @@
 
     \begin{proc}{corregirRegion}{\Inout th : $eph_{h}$, \In ti : $eph_{i}$}{}
             \pre{sonTablasValidas(th,\ ti)\ \y\ th = th_{0}}
-            \post{|th| = |th0| \yluego\ fueraDeGBAPermaneceSinCambios(th,\th_{0})\ \y\ cambioLaRegion(th,\ th_{0})}
+            \post{|th| = |th_0|\ \yLuego\ (fueraDeGBAPermaneceSinCambios(th,\ th_{0})\ \y\ cambi$\'o$GBAaPampeana(th,\ th_{0}))}
             % creo que faltaria chequear que todos los elementos que no tienen region 1 son iguales a los de th0
             % tambien algo del estilo |th| = |th0|
             % RESPUESTA: hubo enroque de predicados "nohayregion1" por el "fueradegba..." Tambien incorporé la igualdad de largos.
@@ -15,23 +15,25 @@
     \subsubsection{Predicados y funciones auxiliares:}
     % obs: como en el anterior, le falta el tipo a los argumentos de algunos pred
     
-    \noindent\pred{estaEnRegionPampeana}{th,h : hogar,h_{0} : hogar}{\\
+    \noindent\pred{fueraDeGBAPermaneceSinCambios}{th, $th_{0}$ : $eph_{h}$}{\\
+        \tab (\forall i:\ent)((0 \leq i < |th|\ \y\ th_{0}[i][@Region] \neq 1)\ \implicaLuego\ th[i] = th_{0}[i])\\
+    }       
+    $\newline$
+    \noindent\pred{cambióGBAaPampeana}{th, th$_{0}$ : $eph_{h}$}{\\
+        % corrijo: el implica en este caso tiene que ser implicaluego
+        \tab (\forall i:\ent)((0 \leq i < |th|\ \y\ th_{0}[i][@Region] = 1)\ \implicaLuego\ estaEnRegionPampeana(th[i],\ th_{0}[i]))\\
+    }
+    $\newline$
+    \noindent\pred{estaEnRegionPampeana}{h , h$_{0}$ : $hogar$}{\\
         % corrijo: el implica en este caso tiene que ser implicaluego
         % cambiaria pasarle el indice por pasarle el hogar y usar eso
         % RESPUESTA: hecho tal cual se sugirió
-        \tab (\forall j:\ent)((0 \leq j < |th|\ \y\ j \neq @Region\ \implicaLuego\ h[j] = h_{0}[j])\ \y\ h[@Region] = 5)\\
+        \tab (\forall j:\ent)((0 \leq j < |h|\ \y\ j \neq @Region)\ \implicaLuego\ h[j] = h_{0}[j])\ \y\ h[@Region] = 5\\
     }
-    $\newline$
-    \noindent\pred{cambioLaRegion}{th, th_{0}}{\\
-        % corrijo: el implica en este caso tiene que ser implicaluego
-        \tab (\forall i:\ent)((0 \leq i < |th|\ \y\ th_{0}[i][@Region] = 1)\ \implicaLuego\ estaEnRegionPampeana(th,\ th[i],\ th_{0}[i]))\\
-    }
-    $\newline$
-    \noindent\pred{fueraDeGBAPermaneceSinCambios}{th,th_{0}}{\\
-        \tab (\forall i:\ent)((0 \leq i < |th| \y\ th_{0}[i][@Region] \neq 1) \implica th[i]=th_{0}[i])\\
-    }    
 
     \subsubsection{Observaciones:}
         \begin{itemize}
-            \item
+            \item las condiciones suficientes en los predicados $fueraDeGBAPermaneceSinCambios$ y $cambi$\'o$GBAaPampeana$
+            son complementarias, por lo que todo hogar que pertenece a th$_{0}$, pertenece a th (dada la salvedad que cambian las regiones).
+            Y, dado que tienen el mismo largo, no puede haber hogares nuevos.
         \end{itemize}

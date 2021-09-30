@@ -19,39 +19,42 @@
     % suelen poner solo a las clases (un tipo de objeto que no vimos aun) con mayuscula inicial, para distinguirlas. 
     % arreglo tambien, algunas cositas de espaciado.
      
-    \noindent\pred{esLaSecuenciaMasLarga}{th,ti,res}{\\
-      \tab esSecuenciaHomogenia(ti,th,res) \y\ \neg(\exists s \in \Tlista{hogar})(esSecuenciaHomogenia(ti,th,s) \y\ |s|\geq|res|)
+    \noindent\pred{esLaSecuenciaMasLarga}{th : $eph_{h}$,\ ti :  $eph_{i}$,\ res : \TLista{hogar}}{\\
+      \tab esSecuenciaHomogenea(th,\ ti,\ res)\ \y\\ 
+      \tab\neg(\exists s : \TLista{hogar})(esSecuenciaHomogenea(th,\ ti,\ s)\ \y\ |s| \geq |res|)\\
     }
     $\newline$
-    \noindent\pred{esSecuenciaHomogenia}{ti,\ th,\ res}{\\
-        \tab (|res|\geq 3\ \y\ contieneHogaresValidos(th,\ res)\ \y\ ordenCrecienteEntreIngresos(ti,\ res)\ \y\ 
-        diferenciaConstanteEntreIngresosConsecutivos(ti,\ res))\\
+    \noindent\pred{esSecuenciaHomogenea}{th : $eph_{h}$,\ ti :  $eph_{i}$,\ res : \TLista{hogar}}{\\
+        \tab |res| \geq 3\ \y\\ 
+        \tab contieneHogaresValidos(th,\ res)\ \y\\ 
+        \tab ordenCrecienteEntreIngresos(ti,\ res)\ \y\\ 
+        \tab diferenciaConstanteEntreIngresosConsecutivos(ti,\ res)\\
     }
      $\newline$
     % obs: faltan los tipos en los parametros de los pred
-    \noindent\pred{contieneHogaresValidos}{th,\ res}{\\
+    \noindent\pred{contieneHogaresValidos}{th : $eph_{h}$,\ res : \TLista{hogar}}{\\
         % obs: creo que habria que nombrarla distinto, ya que chequea que todos los hogares de res esten en th, no solo uno
         % algo tal vez como: contieneHogaresValidos (?)
         % RESPUESTA: sugerencia tomada
         \tab (\forall i:\ent)(0 \leq i < |res|\ \y\ res[i] \in th)\\
     }
     $\newline$
-    \noindent\pred{ordenCrecienteEntreIngresos}{ti,\ res}{\\
-        \tab (\forall i:\ent)(0 \leq i < |res| - 1\ \implica\ diferenciaEntreIngresosConsecutivos(ti,\ res,\ i) \geq 0)\\
+    \noindent\pred{ordenCrecienteEntreIngresos}{ti : $eph_{i}$,\ res : \TLista{hogar}}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res| - 1\ \implicaLuego\ diferenciaEntreIngresosConsecutivos(ti,\ res,\ i) \geq 0)\\
         % obs: al decir que es >= 0, como sabes que entre pares consecutivos sigue habiendo orden creciente?
         % por otro lado, el orden creciente creo que tiene que ser respecto al ingreso particular de cada hogar, no a la diferencia
         % RESPUESTA: No se esta ordenando restos, la resta ordena los restando. Se cambio el nombre anterior, "ordenCreciente".
     }
-    $newline$
+    $\newline$
      \vspace*{2ex}
-    \noindent\aux{diferenciaEntreIngresosConsecutivos}{ti,\ res,\ i : \ent}{\ent}{\\[2ex]
+    \noindent\aux{diferenciaEntreIngresosConsecutivos}{ti : $eph_{i}$,\ res : \TLista{hogar},\ i : \ent}{\ent}{\\[2ex]
         % obs: aca tal vez un nombre mas declarativo sea diferenciaDeIngresos(EntreHogaresConsecutivos?) o ingresosConsecutivos
         % o algo por el estilo
         % RESPUESTA: Se cambio "consecutivos" por "diferenciaEntreIngresosConsecutivos"
         \tab ingresoPorHogar(ti,\ res[i + 1]) - ingresoPorHogar(ti,\ res[i])
     }
     $\newline$
-    \noindent\aux{ingresoPorHogar}{ti,\ h : $hogar$}{\ent}{\\[2ex]
+    \noindent\aux{ingresoPorHogar}{ti : $eph_{i}$,\ h : $hogar$}{\ent}{\\[2ex]
         % obs: aca tal vez le quedaria mejor un nombre como : sumaDeIngresosPorHogar 
         % RESPUESTA: El ingreso por hogar es la suma de sus ingresos. No se desea hacer referencia a como se obtiene ese total.   
         % Sugiero que conserve el nombre
@@ -59,16 +62,14 @@
         % cambio ind por i para homogeneizar 
     }
     $\newline$
-    \noindent\pred{diferenciaConstanteEntreIngresosConsecutivos}{ti,\ res}{\\
+    \noindent\pred{diferenciaConstanteEntreIngresosConsecutivos}{ti : $eph_{i}$,\ res : \TLista{hogar}}{\\
         % obs: otro nombre podria ser ingresosConsecutivosIguales (?)
         % RESPUESTA: se cambio nombre original, "consecutivosIguales"
-        \tab (\forall i:\ent)(0 \leq i < |res| - 2\ \implica\ diferenciaEntreIngresosConsecutivos(ti,\ res,\ i + 1) = diferenciaEntreIngresosConsecutivos(ti,\ res,\ i))\\
+        \tab (\forall i:\ent)(0 \leq i < |res| - 2\ \implicaLuego\\ 
+        \tab\tab diferenciaEntreIngresosConsecutivos(ti,\ res,\ i) =\\
+        \tab\tab\tab diferenciaEntreIngresosConsecutivos(ti,\ res,\ i + 1)\\
+        \tab)\\
     }
-   
-   
-   
-    
-    
    
     \subsubsection{Observaciones:}
         \begin{itemize}
