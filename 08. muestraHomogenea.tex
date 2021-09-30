@@ -1,7 +1,39 @@
 % === muestraHomogenea === %
 \subsection{proc. muestraHomogenea}
-    \subsubsection{Especificaci\'on:}    
+\subsubsection{Especificaci\'on:}
+        \begin{proc}{muestraHomogenea}{\In th: $eph_{h}$, \In ti: $eph_{i}$, \Out res: \TLista{hogar}}{}
+            \pre{sonTablasValidas(th, ti)}
+            \post{(EsLaSecuenciaMasLarga \y DiferenciaConstanteDeIngresos(th, ti, res)) \vee  res=\Tlista{}}
+        \end{proc}
+ 
     \subsubsection{Predicados y funciones auxiliares:}
+    \aux{IngresoPorHogar}{ti,h : hogar}{\ent}{\\
+        \tab\displaystyle\sum_{ind \in ti}{(\IfThenElse{ind[@indcodusu]=h[@hogcodusu]}{ind[@p47T]}{0})}
+    }
+    $newline$
+    \aux{Consecutivos}{ti,res,i : \ent}{\ent}{\\
+        \tab IngresoPorHogar(ti,res[i+1])-IngresoPorHogar(ti,res[i])
+    }
+    $newline$
+    \noindent\pred{EsHogar}{th, res}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res| \y res[i] \in th)
+    }
+    $newline$
+    \noindent\pred{OrdenCreciente}{ti, res}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res|-1 \luego Consecutivos(ti,res,i) \geq 0)
+    }
+    $newline$
+    \noindent\pred{ConsecutivosIguales}{ti, res}{\\
+        \tab (\forall i:\ent)(0 \leq i < |res|-2 \luego Consecutivos(ti,res,i+1) = Consecutivos(ti,res,i) )
+    }
+    $newline$
+    \noindent\pred{DiferenciaConstanteDeIngresos}{ti,th,res}{\\
+        \tab (EsHogar(th,res) \y OrdenCreciente(ti,res) \y ConsecutivosIguales(ti,res))
+    }
+    $newline$
+    \noindent\pred{EsLaSecuenciaMasLarga}{}{\\
+    }
+    
     \subsubsection{Observaciones:}
         \begin{itemize}
             \item
