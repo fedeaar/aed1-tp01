@@ -26,7 +26,7 @@
      
     \noindent\pred{esLaSecuenciaMasLarga}{th : $eph_{h}$,\ ti :  $eph_{i}$,\ res : \TLista{hogar}}{\\
       \tab esSecuenciaHomogenea(th,\ ti,\ res)\ \y\\ 
-      \tab\neg(\exists s : \TLista{hogar})(esSecuenciaHomogenea(th,\ ti,\ s)\ \y\ |s| \geq |res|)\\
+      \tab\neg(\exists s : \TLista{hogar})(esSecuenciaHomogenea(th,\ ti,\ s)\ \y\ |s| > |res|)\\
     }
     $\newline$
     \noindent\pred{esSecuenciaHomogenea}{th : $eph_{h}$,\ ti :  $eph_{i}$,\ res : \TLista{hogar}}{\\
@@ -77,6 +77,15 @@
    
     \subsubsection{Observaciones:}
         \begin{itemize}
-            % aca comentaria sobre la logica de los indices en ordenCreciente y consecutivosIguales
-            \item
+            \item 
+            % posibles comentarios:
+            
+            %\item decidimos denotar el resultado de la secuencia vacía, en la postcondición, por medio de una de sus propiedades: 
+            %que su largo sea igual a cero.
+            %\item en el predicado $esLaSecuenciaMasLarga$ consideramos que, si fueran a haber dos, o más, secuencias del mismo largo 
+            %que cumplan con la especificación, esto no debería invalidar a ninguna de ellas de ser una respuesta válida.
+            %\item el predicado $ordenCrecienteEntreIngresos$ utiliza el hecho de que la $diferenciaEntreIngresosConsecutivos$ es 
+            %positiva solo si los ingresos del hogar $i + 1$ son mayores o iguales a los del hogar $i$.
+            %\item el predicado $laDiferenciaEsConstante$ evalúa hasta $|res| - 2$, ya que $diferenciaEntreIngresosConsecutivos$ 
+            %evalúa hasta un indice más de aquel con el que es llamado.
         \end{itemize}

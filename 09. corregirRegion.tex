@@ -16,12 +16,12 @@
     % obs: como en el anterior, le falta el tipo a los argumentos de algunos pred
     
     \noindent\pred{fueraDeGBAPermaneceSinCambios}{th, $th_{0}$ : $eph_{h}$}{\\
-        \tab (\forall i:\ent)((0 \leq i < |th|\ \y\ th_{0}[i][@Region] \neq 1)\ \implicaLuego\ th[i] = th_{0}[i])\\
+        \tab (\forall i:\ent)((0 \leq i < |th|\ \yLuego\ th_{0}[i][@Region] \neq 1)\ \implicaLuego\ th[i] = th_{0}[i])\\
     }       
     $\newline$
     \noindent\pred{cambióGBAaPampeana}{th, th$_{0}$ : $eph_{h}$}{\\
         % corrijo: el implica en este caso tiene que ser implicaluego
-        \tab (\forall i:\ent)((0 \leq i < |th|\ \y\ th_{0}[i][@Region] = 1)\ \implicaLuego\ estaEnRegionPampeana(th[i],\ th_{0}[i]))\\
+        \tab (\forall i:\ent)((0 \leq i < |th|\ \yLuego\ th_{0}[i][@Region] = 1)\ \implicaLuego\ estaEnRegionPampeana(th[i],\ th_{0}[i]))\\
     }
     $\newline$
     \noindent\pred{estaEnRegionPampeana}{h , h$_{0}$ : $hogar$}{\\
@@ -35,5 +35,5 @@
         \begin{itemize}
             \item las condiciones suficientes en los predicados $fueraDeGBAPermaneceSinCambios$ y $cambi$\'o$GBAaPampeana$
             son complementarias, por lo que todo hogar que pertenece a th$_{0}$, pertenece a th (dada la salvedad que cambian las regiones).
-            Y, dado que tienen el mismo largo, no puede haber hogares nuevos.
+            Dado esto, y el hecho que tienen el mismo largo, no puede haber hogares nuevos a los de th$_{0}$ en th.
         \end{itemize}
