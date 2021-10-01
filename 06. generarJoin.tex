@@ -3,7 +3,7 @@
     \subsubsection{Especificaci\'on:}
         \begin{proc}{generarJoin}{\In th: $eph_{h}$, \In ti : $eph_{i}$, \Out junta:  $joinHI$}{}
             \pre{sonTablasValidas(th,\ ti)}
-            \post{|junta| = |ti|\ \yLuego\ sonDuplasValidas(th,\ ti,\ junta)}
+            \post{|junta| = |ti|\ \y\ sonDuplasValidas(th,\ ti,\ junta)}
         \end{proc}
         % === Requisitos === %
         % === 1. Junta debe tener el siguiente formato: <(<h>,<i>),(<h>,<i>),...>
@@ -12,9 +12,10 @@
         % === 4. Pueden haber hogares repetidos, pero no individuos.
         % === 5. Tamaño de Junta == Tamaño de tabla de individuos.
     \subsubsection{Predicados y funciones auxiliares:}
+
         \noindent\pred{sonDuplasValidas}{th: $eph_{h}$, ti: $eph_{i}$, junta: $joinHI$}{\\
-            \tab (hayDuplaParaTodoIndividuo(ti,\ junta)\ \y\\
-            \tab hogaresEnDuplaValidos(th,\ junta))\ \yLuego\\
+            \tab hayDuplaParaTodoIndividuo(ti,\ junta)\ \y\\
+            \tab hogaresEnDuplaValidos(th,\ junta)\ \y\\
             \tab codusuCoincide(junta)\\
         }
         $\newline$

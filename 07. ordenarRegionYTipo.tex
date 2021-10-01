@@ -5,7 +5,7 @@
     \subsubsection{Especificaci\'on:}    
         \begin{proc}{ordenarRegionYTipo}{\Inout th: $eph_{h}$, \Inout ti : $eph_{i}$}{}
             \pre{sonTablasValidas(th,\ ti)\ \y\ th = th_{0}\ \y\ ti = ti_{0}}
-            \post{lasTablasNoCambian(th,\ th_{0},\ ti,\ ti_{0})\ \yLuego\ sonTablasOrdenadas(th,\ ti)}
+            \post{lasTablasNoCambian(th,\ th_{0},\ ti,\ ti_{0})\ \y\ sonTablasOrdenadas(th,\ ti)}
         \end{proc}
         % === Requisitos === %
         % === 1. Largo y elementos de th/ti == largo y elementos de th0/ti0
@@ -31,11 +31,11 @@
         %}
         $\newline$
         \pred{sonTablasOrdenadas}{th: $eph_{h}$, ti: $eph_{i}$}{\\
-            \tab hogaresOrdenados(th)\ \yLuego\ individuosOrdenados(th,ti)\\
+            \tab hogaresOrdenados(th)\ \y\ individuosOrdenados(th,ti)\\
         }
         $\newline$
         \pred{hogaresOrdenados}{th: $eph_{h}$}{\\
-            \tab regionCreciente(th)\ \yLuego\ codusuCreciente(th)\\
+            \tab regionCreciente(th)\ \y\ codusuCreciente(th)\\
         }
         $\newline$
         \pred{regionCreciente}{th: $eph_{h}$}{\\
@@ -49,7 +49,7 @@
         }
         $\newline$
         \pred{individuosOrdenados}{th: $eph_{h}$, ti: $eph_{i}$}{\\
-           \tab codusuComoHogares(th,\ ti)\ \yLuego\ componenteCreciente(ti)\\
+           \tab codusuComoHogares(th,\ ti)\ \y\ componenteCreciente(ti)\\
         }
         $\newline$
         \pred{codusuComoHogares}{th: $eph_{h}$, ti: $eph_{i}$}{\\

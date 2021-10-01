@@ -3,7 +3,11 @@
 \subsubsection{Especificaci\'on:}
         \begin{proc}{muestraHomogenea}{\In th : $eph_{h}$, \In ti : $eph_{i}$, \Out res : \TLista{hogar}}{}
             \pre{sonTablasValidas(th,\ ti)}
-            \post{\IfThenElse{(\exists s:\TLista{hogar})(esLaSecuenciaMasLarga(th,\ ti,\ s))}{res = s}{|res| = 0}}
+            \post{\\
+                ((\exists s:\TLista{hogar})(esLaSecuenciaMasLarga(th,\ ti,\ s)) \y res = s) \vee\\
+                (\neg(\exists s:\TLista{hogar})(esLaSecuenciaMasLarga(th,\ ti,\ s)) \y |res| = 0)\\ 
+            }
+            %\post{\IfThenElse{(\exists s:\TLista{hogar})(esLaSecuenciaMasLarga(th,\ ti,\ s))}{res = s}{|res| = 0}}
             %\post{esLaSecuenciaMasLarga(th,\ ti,\ res) \vee |res| = 0 }
             
             % obs: no se si vale usar res = seq[], creo que más correcto sería decir |res| = 0
