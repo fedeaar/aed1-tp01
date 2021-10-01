@@ -77,11 +77,15 @@
         \begin{itemize}
             \item se hace uso del predicado $tienenLosMismosElementos$ definido en 2.1.
             
-            \item el predicado $ordenadosDeADosCodusu$ considera que $cod1 < cod2$,  ya que se evalúa luego de corroborar 
-            el predicado $hogaresOrdenados$. El mismo verifica que todo individuo en $ti$ con el $cod1$ tiene 
-            su indice menor al de todos los individuos en $ti$ con el $cod2$.
+            \item el predicado $ordenadosDeADosCodusu$ está armado para evaluar correctamente los casos en que $cod1 < cod2$. Estos
+            casos se dan cuando el predicado $hogaresOrdenados$ es cierto.  
+            Consideramos que esta salvedad no afecta a la evaluación final,
+            ya que la verdad de $sonTablasOrdenadas$ depende de la conjunción de $hogaresOrdenados$ con $individuosOrdenados$. 
+            \item Obeservamos también, sobre el anterior predicado, que:
                 \begin{itemize}
-                    \item observamos que el caso $i = j$ resulta en el lado izquierdo de la implicación siendo falso. 
+                    \item el mismo verifica que todo individuo en $ti$ con el $cod1$ tiene 
+                    su indice menor al de todos los individuos en $ti$ con el $cod2$.
+                    \item En particular, el caso $i = j$ resulta en la condición suficiente de la implicación siendo falsa. 
                     Dado que, necesariamente, $cod1 \neq cod2$.
                 \end{itemize}
             %\item el predicado $ordenadosDeADosCodusu$ considera dos CODUSU, con $cod1 < cod2$, y verifica que 
