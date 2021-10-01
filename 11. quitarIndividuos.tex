@@ -9,10 +9,10 @@
                 sonTablasValidas(th,\ ti)\ \y\ esBusquedaValida(busqueda)\ \y\ th = th_{0}\ \y\ ti = ti_{0}
             }
             \post{\\
-                (tienenLosMismosElementos(th_{0},\ th ++\ result_{0})\ \y\\
-                \tab tienenLosMismosElementos(ti_{0},\ ti ++\ result_{1}))\ \yLuego\\
-                (losIndividuosEstanFiltrados(ti_{0},\ ti,\ result_{1},\ busqueda)\ \y\\ 
-                \tab losHogaresEstanFiltrados(th_{0},\ th,\ result_{0},\ ti_{0},\ busqueda))\\
+                tienenLosMismosElementos(th_{0},\ th ++\ result_{0})\ \y\\
+                tienenLosMismosElementos(ti_{0},\ ti ++\ result_{1})\ \y\\
+                losIndividuosEstanFiltrados(ti_{0},\ ti,\ result_{1},\ busqueda)\ \y\\ 
+                losHogaresEstanFiltrados(th_{0},\ th,\ result_{0},\ ti_{0},\ busqueda)\\
             }
         \end{proc}
 
@@ -28,17 +28,17 @@
         }
         $\newline$
         \pred{pideUnDatoValido}{filtro : $(ItemIndividuo,\ dato)$}{\\
-            \tab (filtro_{0} = indcodusu\ \y\ 0 \leq filtro_{1})\ \vee\\
-            \tab (filtro_{0} = componente\ \y\ 1 \leq filtro_{1} \leq 20)\ \vee\\
-            \tab (filtro_{0} = inda\tilde{n}o\ \y\ 1810 \leq filtro_{1})\ \vee\\
-            \tab (filtro_{0} = indtrimestre\ \y\ 1 \leq filtro_{1} \leq 4)\ \vee\\
-            \tab (filtro_{0} = ch4\ \y\ 1 \leq filtro_{1} \leq 2)\ \vee\\
-            \tab (filtro_{0} = ch6\ \y\ 0 \leq filtro_{1})\ \vee\\
-            \tab (filtro_{0} = nive\_ed\ \y\ 0 \leq filtro_{1} \leq 1)\ \vee\\
-            \tab (filtro_{0} = estado\ \y\ -1 \leq filtro_{1} \leq 1)\ \vee\\
-            \tab (filtro_{0} = cat\_ocup\ \y\ 0 \leq filtro_{1} \leq 4)\ \vee\\
-            \tab (filtro_{0} = p47t\ \y\ -1 \leq filtro_{1})\ \vee\\
-            \tab (filtro_{0} = ppo4g\ \y\ 1 \leq filtro_{1} \leq 10)\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @indcodusu\ \y\ 0 \leq filtro_{1})\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @componente\ \y\ 1 \leq filtro_{1} \leq 20)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @inda\tilde{n}o\ \y\ 1810 \leq filtro_{1})\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @indtrimestre\ \y\ 1 \leq filtro_{1} \leq 4)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @ch4\ \y\ 1 \leq filtro_{1} \leq 2)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @ch6\ \y\ 0 \leq filtro_{1})\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @nive\_ed\ \y\ 0 \leq filtro_{1} \leq 1)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @estado\ \y\ -1 \leq filtro_{1} \leq 1)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @cat\_ocup\ \y\ 0 \leq filtro_{1} \leq 4)\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @p47t\ \y\ -1 \leq filtro_{1})\ \vee\\
+            \tab (itemIndividuo.ord(filtro_{0}) = @ppo4g\ \y\ 1 \leq filtro_{1} \leq 10)\\
         }
         %$\newline$
         %\pred{esParticion}{original,\ s$_{1}$,\ s$_{2}$ : \TLista{T}}{\\
