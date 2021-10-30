@@ -1,0 +1,7 @@
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/CMakeFiles/tpi.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/lib/googletest-master/CMakeFiles/edit_cache.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/lib/googletest-master/CMakeFiles/rebuild_cache.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/lib/googletest-master/googlemock/CMakeFiles/edit_cache.dir
+D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/lib/googletest-master/googlemock/CMakeFiles/rebuild_cache.dir

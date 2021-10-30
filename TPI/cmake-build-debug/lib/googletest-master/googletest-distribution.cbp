@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="googletest-distribution"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="msvc8"/>
+		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\googletest-master\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="D:/desktop/programacion/GIT/algo1-TP1/TPI/cmake-build-debug/lib/googletest-master"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="nmake /NOLOGO /f D:\desktop\programacion\GIT\algo1-TP1\TPI\cmake-build-debug\lib\googletest-master\Makefile VERBOSE=1 all"/>
+					<CompileFile command="nmake /NOLOGO /f D:\desktop\programacion\GIT\algo1-TP1\TPI\cmake-build-debug\lib\googletest-master\Makefile VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="nmake /NOLOGO /f D:\desktop\programacion\GIT\algo1-TP1\TPI\cmake-build-debug\lib\googletest-master\Makefile VERBOSE=1 clean"/>
+					<DistClean command="nmake /NOLOGO /f D:\desktop\programacion\GIT\algo1-TP1\TPI\cmake-build-debug\lib\googletest-master\Makefile VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="D:/desktop/programacion/GIT/algo1-TP1/TPI/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="D:/desktop/programacion/GIT/algo1-TP1/TPI/lib/googletest-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\googletest-master\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
