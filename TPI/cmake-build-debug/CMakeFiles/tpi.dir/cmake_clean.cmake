@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
+  "../libtpi.dll.a"
   "../tpi.exe"
   "../tpi.exe.manifest"
-  "../tpi.lib"
   "../tpi.pdb"
   "CMakeFiles/tpi.dir/Funciones_TPI.obj"
   "CMakeFiles/tpi.dir/auxiliares.obj"
