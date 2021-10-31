@@ -3,5 +3,5 @@ main.fdb_latexmk
 main.fls
 main.log
 main.synctex.gz
-./TPI/cmake-build-debug/
-./.idea/
+/TPI/cmake-build-debug/
+/.idea/
