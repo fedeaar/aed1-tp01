@@ -9,6 +9,12 @@ include_directories(lib/googletest-master/googletest/include)
 
 file(GLOB DIR_TESTS_EN "test/*.cpp")
 
+if(MSVC)
+    add_compile_options(
+            $<$<CONFIG:Debug>:/MTd>
+    )
+endif()
+
 set(SOURCE_FILES main.cpp
         auxiliares.cpp
         ejercicios.cpp
