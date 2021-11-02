@@ -12,7 +12,7 @@
 #include "../auxiliares.h"
 
 bool _esEncuestaValida (eph_h th, eph_i ti);
-vector<int> _histHabitacional (eph_h th, eph_i ti, int region);
+vector<int> _histHabitacional (const eph_h &th, const eph_i &ti, int region);
 vector<pair<int, float>> _laCasaEstaQuedandoChica (eph_h th, eph_i ti);
 bool _creceElTeleworkingEnCiudadesGrandes (eph_h t1h, eph_i t1i, eph_h t2h, eph_i t2i);
 int _costoSubsidioMejora (eph_h th, eph_i ti, int monto);

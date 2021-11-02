@@ -1,6 +1,6 @@
 #include "ejercicios_individuales.h"
 
-int maxHabitaciones (eph_h th, dato region) {
+int maxHabitaciones (const eph_h &th, dato region) {
     // TODO: preguntar, esto no cumple con la especificación, pero si con los tests
     // el largo que pide la especificación es solo a max habitaciones en la region, no
     // considera si son casas o no.
@@ -11,7 +11,7 @@ int maxHabitaciones (eph_h th, dato region) {
     }
     return max;
 }
-vector<int> _histHabitacional (eph_h th, eph_i ti, int region) {
+vector<int> _histHabitacional (const eph_h &th, const eph_i &ti, int region) {
     // pre: encuesta válida y 0 ≤ region ≤ 6
     vector<int> resultado(maxHabitaciones(th, region), 0);
     for (int i = 0; i < th.size(); ++i) {

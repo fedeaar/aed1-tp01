@@ -139,38 +139,44 @@ bool tablasRelacionadas(const eph_h &th, const eph_i &ti) {
 
     bool res = maxTh == maxTi;
     vector<int> codigos(maxTh + 1, 0);
+    //[0, 2, 2, 0, 0, 2]
+    // check que cada individuo tenga un hogar asociado y viceversa.
     for (int i = 0; i < th.size() && res; ++i) {
+        // check trimestres y años correctos
         res = th[i][HOGTRIMESTRE] == th[0][HOGTRIMESTRE] &&
               th[i][HOGANIO] == th[0][HOGANIO];
         ++codigos[th[i][HOGCODUSU]];
+        if (codigos[th[i][HOGCODUSU]] > 1) // hay hogares repetidos
+            res = false;
     }
     for (int i = 0; i < ti.size() && res; ++i) {
+        // check trimestres y años correctos
         res = ti[i][INDTRIMESTRE] == th[0][HOGTRIMESTRE] &&
               ti[i][INDANIO] == th[0][HOGANIO];
         ++codigos[ti[i][INDCODUSU]];
-        if (codigos[ti[i][INDCODUSU]] != 2)
+        if (codigos[ti[i][INDCODUSU]] < 2 || codigos[ti[i][INDCODUSU]] > 21) // el indiv. no tiene hogar / hay mas de 20 indiv en el hogar.
             res = false;
     }
     return res;
 }
-
-bool menosDe21MiembrosPorHogar(const eph_h &th, const eph_i &ti) {
-    // pre: !hayIndividuosSinHogares(th, ti)
-    bool res = true;
-    vector<int> habitantes(maxElem(th, HOGCODUSU) + 1, 0);
-    for (int i = 0; i < ti.size() && res; ++i) {
-        ++habitantes[ti[i][INDCODUSU]];
-        if (habitantes[ti[i][INDCODUSU]] > 20)
-            res = false;
-    }
-    return res;
-}
-
-bool checkeoDeIndividuos(const eph_i &ti){
-    return  esTabla(ti, FILAS_INDIVIDUO) &&
-            noHayRepetidos(ti, &mismoIndividuo) &&
-            valoresEnRango(ti, &individuoEnRango);
-}
+//
+//bool menosDe21MiembrosPorHogar(const eph_h &th, const eph_i &ti) {
+//    // pre: !hayIndividuosSinHogares(th, ti)
+//    bool res = true;
+//    vector<int> habitantes(maxElem(th, HOGCODUSU) + 1, 0);
+//    for (int i = 0; i < ti.size() && res; ++i) {
+//        ++habitantes[ti[i][INDCODUSU]];
+//        if (habitantes[ti[i][INDCODUSU]] > 20)
+//            res = false;
+//    }
+//    return res;
+//}
+//
+//bool checkeoDeIndividuos(const eph_i &ti){
+//    return  esTabla(ti, FILAS_INDIVIDUO) &&
+//            noHayRepetidos(ti, &mismoIndividuo) &&
+//            valoresEnRango(ti, &individuoEnRango);
+//}
 
 bool _esEncuestaValida (eph_h th, eph_i ti) {
     bool resp = false;
