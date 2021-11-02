@@ -50,7 +50,7 @@ void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int,
     }
 }
 
-vector< pair < int, float > > laCasaEstaQuedandoChica ( eph_h th, eph_i ti ) {
+vector< pair < int, float > > _laCasaEstaQuedandoChica ( eph_h th, eph_i ti ) {
     vector<pair<int,float>> resp = {make_pair(1,-1.0),
                                     make_pair(40, -1.0),
                                     make_pair(41, -1.0),
