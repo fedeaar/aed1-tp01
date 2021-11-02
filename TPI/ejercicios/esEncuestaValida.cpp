@@ -1,39 +1,55 @@
 #include "ejercicios_individuales.h"
 
-// validar hogares:
 
-bool formatoCorrecto(const eph_h &th){
-    /*
-     * Devuelve true si: 1. No está vacía.
-     *                   2. Es matriz (todas las filas igual tamaño).
-     *                   3. Tiene cantidad correcta de columnas.
-     * */
+/* auxiliares */
 
-    if(th.size() == 0){//1
-        return false;
+template <typename T>
+bool esTabla(const vector<vector<T>>& tabla, int cantidadColumnas) {
+    //pre: cantidadColumnas > 0
+    bool res = tabla.size() > 0;
+    for (int i = 0; i < tabla.size() && res; ++i) {
+        res &= tabla[i].size() == cantidadColumnas;
     }
+    return res;
+}
 
-    for(int i = 0; i < th.size(); i++){//2,3
-        if(th[i].size() != FILAS_HOGAR){
-            return false;
+template <typename T, typename Function>
+bool noHayRepetidos(const vector<vector<T>>& tabla, Function estanRepetidas) {
+    // pre: esTabla(tabla, #cols_tabla)
+    // lambda estanRepetidas toma dos argumentos de tipo vector<T> (dos filas de la tabla)
+    bool res = true;
+    for(int i = 0; i < tabla.size() && res; ++i) {
+        for(int j = i + 1; j < tabla.size() && res; ++j) {
+            res &= !estanRepetidas(tabla[i], tabla[j]);
         }
     }
-
-    return true;
+    return res;
 }
 
-bool regionValida(const hogar &h){
-    return  h[REGION] == 1 ||
-            (h[REGION] >= 40 && h[REGION] <= 44);
+template <typename T, typename Function>
+bool valoresEnRango(const vector<vector<T>>& tabla, Function filaEnRango) {
+    // pre: esTabla(tabla, #cols_tabla)
+    // lambda filaEnRango toma un argumento de tipo vector<T> (una fila de la tabla)
+    bool res = true;
+    for (int i = 0; i < tabla.size() && res; ++i) {
+        res &= filaEnRango(tabla[i]);
+    }
+    return res;
 }
 
-bool valoresEnRangoH(const hogar &h){
 
+/* tabla hogares */
+
+bool mismoHogar(const hogar& hog1, const hogar& hog2) {
+    return  hog1[HOGCODUSU] == hog2[HOGCODUSU];
+}
+
+bool hogarEnRango(const hogar& h) {
     return  h[II2] <= h[IV2] &&
             h[HOGCODUSU] > 0 &&
             h[HOGTRIMESTRE] > 0 && h[HOGTRIMESTRE] <= 4 &&
             h[II7] > 0 && h[II7] <= 3 &&
-            regionValida(h) &&
+            (h[REGION] == 1 || (h[REGION] >= 40 && h[REGION] <= 44)) &&
             (h[MAS_500] == 0 || h[MAS_500] == 1) &&
             h[IV1] > 0 && h[IV1] <= 5 &&
             h[IV2] > 0 &&
@@ -41,65 +57,22 @@ bool valoresEnRangoH(const hogar &h){
             (h[II3] == 1 || h[II3] == 2);
 }
 
-bool datosCorrectos(const eph_h &th){
-    /*
-     * Devuelve true si: 1. No hay hogares repetidos.
-     *                   2. #habitaciones >= #dormitorios.
-     *                   3. Valores están en rango.
-     *
-     * Asume tabla con formato correcto.
-     * */
-
-    for(int i = 0; i < th.size(); i++){//1
-        for(int j = i+1; j < th.size(); j++){
-            if(th[i][HOGCODUSU] == th[j][HOGCODUSU]){
-                return false;
-            }
-        }
-    }
-
-    for(int i = 0; i < th.size(); i++){//2,3
-        if(!valoresEnRangoH(th[i])){
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool checkeoDeHogares(const eph_h &th){
-    return formatoCorrecto(th) && datosCorrectos(th);
-}
-
-// validar individuos:
-
-template <typename T>
-bool esTabla(const vector<vector<T>> &tabla, int cantidadColumnas) {
-    bool res = tabla.size() > 0;
-    for (int i = 0; i < tabla.size() && res; ++i) {
-        res = tabla[i].size() == cantidadColumnas;
-    }
+bool chequeoDeHogares(const eph_h& th) {
+    bool res =  esTabla(th, FILAS_HOGAR) &&
+                noHayRepetidos(th, mismoHogar) &&
+                valoresEnRango(th, hogarEnRango);
     return res;
 }
 
-bool mismoIndividuo(const individuo &ind1, const individuo &ind2) {
+
+/* tabla individuos */
+
+bool mismoIndividuo(const individuo& ind1, const individuo& ind2) {
     return  ind1[INDCODUSU] == ind2[INDCODUSU] &&
             ind1[COMPONENTE] == ind2[COMPONENTE];
 }
-template <typename T>
-bool noHayRepetidos(const vector<vector<T>> &tabla, bool (*func)(vector<T>, vector<T>)) {
-    // pre: esTabla(tabla)
-    bool res = true;
-    for(int i = 0; i < tabla.size() && res; ++i) {
-        for(int j = i + 1; j < tabla.size() && res; ++j) {
-            if (func(tabla[i], tabla[j]))
-                res = false;
-        }
-    }
-    return res;
-}
 
-bool individuoEnRango(const individuo &i) {
+bool individuoEnRango(const individuo& i) {
     return  i[INDCODUSU] > 0 &&
             i[COMPONENTE] > 0 &&
             (i[INDTRIMESTRE] > 0 && i[INDTRIMESTRE] <= 4) &&
@@ -111,54 +84,157 @@ bool individuoEnRango(const individuo &i) {
             i[p47T] >= -1 &&
             (i[PP04G] >= 0 && i[PP04G] <= 10);
 }
-template <typename T>
-bool valoresEnRango(const vector<vector<T>> &tabla, bool (*func)(vector<T>)) {
+
+bool chequeoDeIndividuos(const eph_i& ti){
+    bool res =  esTabla(ti, FILAS_INDIVIDUO) &&
+                noHayRepetidos(ti, mismoIndividuo) &&
+                valoresEnRango(ti, individuoEnRango);
+    return res;
+}
+
+
+/* chequeo cruzado */
+
+bool cantidadValidaDeIndividuosPorHogar(const eph_h& th, const eph_i& ti) {
     bool res = true;
-    for (int i = 0; i < tabla.size() && res; ++i) {
-        if (!func(tabla[i]))
-            res = false;
+    for (int i = 0; i < th.size() && res; ++i) {
+        int cantidad = 0;
+        for (int j = 0; j <ti.size(); ++j) {
+            if (th[i][HOGCODUSU] == ti[j][INDCODUSU])
+                ++cantidad;
+        }
+        res &= (cantidad > 0 && cantidad < 21);
     }
     return res;
 }
 
-template <typename T>
-int maxElem(const vector<vector<T>> &tabla, int col) {
-    //pre: esTabla(tabla, cols_tabla) && |tabla[0]| > col >= 0
-    int max = tabla[0][col];
-    for (int i = 0; i < tabla.size(); ++i) {
-        if (tabla[i][col] > max)
-            max = tabla[i][col];
+bool todoIndividuoTieneHogar(const eph_h& th, const eph_i& ti) {
+    bool res = true;
+    for (int j = 0; j < ti.size() && res; ++j) {
+        bool tieneHogar = false;
+        for (int i = 0; i < th.size() && !tieneHogar; ++i) {
+            tieneHogar = th[i][HOGCODUSU] == ti[j][INDCODUSU];
+        }
+        res &= tieneHogar;
     }
-    return max;
+    return res;
 }
 
-bool tablasRelacionadas(const eph_h &th, const eph_i &ti) {
-    //pre: esTabla(th, FILAS_HOGAR) && esTabla(ti, FILAS_INDIVIDUO)
-    int maxTh = maxElem(th, HOGCODUSU);
-    int maxTi = maxElem(th, INDCODUSU);
+bool tablasRelacionadas(const eph_h& th, const eph_i& ti) {
+    // pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th)
+    // obs: se opto por una versión O(n^2) ya que otra version O(max(HOGCODUSU))
+    // fue suceptible a errores de memoria.
+    bool res =  cantidadValidaDeIndividuosPorHogar(th, ti) &&
+                todoIndividuoTieneHogar(th, ti);
+    return res;
+}
 
-    bool res = maxTh == maxTi;
-    vector<int> codigos(maxTh + 1, 0);
-    //[0, 2, 2, 0, 0, 2]
-    // check que cada individuo tenga un hogar asociado y viceversa.
+bool encuestasCorrespondientes(const eph_h& th, const eph_i& ti) {
+    //pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th)
+    bool res = true;
     for (int i = 0; i < th.size() && res; ++i) {
-        // check trimestres y años correctos
-        res = th[i][HOGTRIMESTRE] == th[0][HOGTRIMESTRE] &&
-              th[i][HOGANIO] == th[0][HOGANIO];
-        ++codigos[th[i][HOGCODUSU]];
-        if (codigos[th[i][HOGCODUSU]] > 1) // hay hogares repetidos
-            res = false;
+        res &=  th[i][HOGTRIMESTRE] == th[0][HOGTRIMESTRE] &&
+                th[i][HOGANIO] == th[0][HOGANIO];
     }
     for (int i = 0; i < ti.size() && res; ++i) {
-        // check trimestres y años correctos
-        res = ti[i][INDTRIMESTRE] == th[0][HOGTRIMESTRE] &&
-              ti[i][INDANIO] == th[0][HOGANIO];
-        ++codigos[ti[i][INDCODUSU]];
-        if (codigos[ti[i][INDCODUSU]] < 2 || codigos[ti[i][INDCODUSU]] > 21) // el indiv. no tiene hogar / hay mas de 20 indiv en el hogar.
-            res = false;
+        res &=  ti[i][INDTRIMESTRE] == th[0][HOGTRIMESTRE] &&
+                ti[i][INDANIO] == th[0][HOGANIO];
     }
     return res;
 }
+
+bool chequeoCruzado(const eph_h& th, const eph_i& ti) {
+    bool res =  tablasRelacionadas(th, ti) &&
+                encuestasCorrespondientes(th, ti);
+    return res;
+}
+
+
+/* implementación */
+
+bool _esEncuestaValida(const eph_h& th, const eph_i& ti) {
+    bool res =  chequeoDeHogares(th) &&
+                chequeoDeIndividuos(ti) &&
+                chequeoCruzado(th, ti);
+    return res;
+}
+
+
+
+
+
+
+// validar hogares:
+//
+//bool formatoCorrecto(const eph_h &th){
+//    /*
+//     * Devuelve true si: 1. No está vacía.
+//     *                   2. Es matriz (todas las filas igual tamaño).
+//     *                   3. Tiene cantidad correcta de columnas.
+//     * */
+//
+//    if(th.size() == 0){//1
+//        return false;
+//    }
+//
+//    for(int i = 0; i < th.size(); i++){//2,3
+//        if(th[i].size() != FILAS_HOGAR){
+//            return false;
+//        }
+//    }
+//
+//    return true;
+//}
+//
+//bool regionValida(const hogar &h){
+//    return  h[REGION] == 1 ||
+//            (h[REGION] >= 40 && h[REGION] <= 44);
+//}
+//
+//bool valoresEnRangoH(const hogar &h){
+//
+//    return  h[II2] <= h[IV2] &&
+//            h[HOGCODUSU] > 0 &&
+//            h[HOGTRIMESTRE] > 0 && h[HOGTRIMESTRE] <= 4 &&
+//            h[II7] > 0 && h[II7] <= 3 &&
+//            regionValida(h) &&
+//            (h[MAS_500] == 0 || h[MAS_500] == 1) &&
+//            h[IV1] > 0 && h[IV1] <= 5 &&
+//            h[IV2] > 0 &&
+//            h[II2] >= 1 &&
+//            (h[II3] == 1 || h[II3] == 2);
+//}
+//
+//bool datosCorrectos(const eph_h &th){
+//    /*
+//     * Devuelve true si: 1. No hay hogares repetidos.
+//     *                   2. #habitaciones >= #dormitorios.
+//     *                   3. Valores están en rango.
+//     *
+//     * Asume tabla con formato correcto.
+//     * */
+//
+//    for(int i = 0; i < th.size(); i++){//1
+//        for(int j = i+1; j < th.size(); j++){
+//            if(th[i][HOGCODUSU] == th[j][HOGCODUSU]){
+//                return false;
+//            }
+//        }
+//    }
+//
+//    for(int i = 0; i < th.size(); i++){//2,3
+//        if(!valoresEnRangoH(th[i])){
+//            return false;
+//        }
+//    }
+//
+//    return true;
+//}
+//
+//bool chequeoDeHogares(const eph_h &th){
+//    return formatoCorrecto(th) && datosCorrectos(th);
+//}
+
 //
 //bool menosDe21MiembrosPorHogar(const eph_h &th, const eph_i &ti) {
 //    // pre: !hayIndividuosSinHogares(th, ti)
@@ -172,17 +248,41 @@ bool tablasRelacionadas(const eph_h &th, const eph_i &ti) {
 //    return res;
 //}
 //
-//bool checkeoDeIndividuos(const eph_i &ti){
-//    return  esTabla(ti, FILAS_INDIVIDUO) &&
-//            noHayRepetidos(ti, &mismoIndividuo) &&
-//            valoresEnRango(ti, &individuoEnRango);
-//}
 
-bool _esEncuestaValida (eph_h th, eph_i ti) {
-    bool resp = false;
 
-    // TODO
-
-    return resp;
+/*
+template <typename T>
+int maxElem(const vector<vector<T>>& tabla, int col) {
+    //pre: esTabla(tabla, #cols_tabla) && 0 <= col < |tabla[0]|
+    int max = tabla[0][col];
+    for (int i = 0; i < tabla.size(); ++i) {
+        if (tabla[i][col] > max)
+            max = tabla[i][col];
+    }
+    return max;
 }
+
+bool tablasRelacionadas(const eph_h& th, const eph_i& ti) {
+    //pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th)
+    int maxTh = maxElem(th, HOGCODUSU);
+    int maxTi = maxElem(th, INDCODUSU);
+    bool res = maxTh == maxTi;
+    vector<int> codigos(maxTh + 1, 0);
+    for (int i = 0; i < th.size() && res; ++i) {
+        ++codigos[th[i][HOGCODUSU]]; // pre: no hay hogares repetidos.
+    }
+    for (int i = 0; i < ti.size() && res; ++i) {
+        res &= codigos[ti[i][INDCODUSU]] > 0; // hay hogar
+        ++codigos[ti[i][INDCODUSU]];
+    }
+    for (int i = 0; i < codigos.size() && res; ++i) {
+        res &= !(codigos[i] == 1 || codigos[i] > 21);
+        // hay hogares sin individuos,
+        // o hay mas de 20 individuos en un hogar.
+    }
+    return res;
+}
+*/
+
+
 
