@@ -18,8 +18,19 @@ endif()
 set(SOURCE_FILES main.cpp
         auxiliares.cpp
         ejercicios.cpp
-        Funciones_TPI.cpp)
-
+        Funciones_TPI.cpp
+        ejercicios/corregirRegion.cpp
+        ejercicios/costoSubsidioMejora.cpp
+        ejercicios/creceElTeleworkingEnCiudadesGrandes.cpp
+        ejercicios/esEncuestaValida.cpp
+        ejercicios/generarJoin.cpp
+        ejercicios/histHabitacional.cpp
+        ejercicios/histogramaDeAnillosConcentricos.cpp
+        ejercicios/laCasaEstaQuedandoChica.cpp
+        ejercicios/muestraHomogenea.cpp
+        ejercicios/ordenarRegionYCODUSU.cpp
+        ejercicios/quitarIndividuos.cpp
+        )
 add_executable(tpi ${SOURCE_FILES}
         ${DIR_TESTS_EN}
         )
