@@ -1,6 +1,11 @@
 #include "ejercicios_individuales.h"
 
-bool _creceElTeleworkingEnCiudadesGrandes (eph_h t1h, eph_i t1i, eph_h t2h, eph_i t2i) {
+/* auxiliares */
+
+
+/* implementación */
+
+bool _creceElTeleworkingEnCiudadesGrandes (const eph_h& t1h, const eph_i& t1i, const eph_h& t2h, const eph_i& t2i) {
     bool resp = false;
 
     // TODO

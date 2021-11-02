@@ -1,6 +1,11 @@
 #include "ejercicios_individuales.h"
 
-int _costoSubsidioMejora(eph_h th, eph_i ti, int monto) {
+/* auxiliares */
+
+
+/* implementación */
+
+int _costoSubsidioMejora(const eph_h& th, const eph_i& ti, int monto) {
     int resp = -1;
 
     // TODO

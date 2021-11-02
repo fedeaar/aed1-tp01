@@ -1,6 +1,11 @@
 #include "ejercicios_individuales.h"
 
-vector<int> _histogramaDeAnillosConcentricos(eph_h th, eph_i ti, pair <int, int> centro, vector<int> distancias){
+/* auxiliares */
+
+
+/* implementación */
+
+vector<int> _histogramaDeAnillosConcentricos(const eph_h& th, const eph_i& ti, pair<int, int> centro, const vector<int>& distancias) {
     vector <int> resp = {};
 
     // TODO
