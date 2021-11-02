@@ -4,108 +4,56 @@
 
 using namespace std;
 // Implementacion Problema 1
-bool esEncuestaValida ( eph_h th, eph_i ti ) {
-	bool resp = false;
-	
-	// TODO
-	
-	return resp;
+bool esEncuestaValida (eph_h th, eph_i ti) {
+    return _esEncuestaValida(th, ti);
 }
 
 // Implementacion Problema 2
-vector < int > histHabitacional ( eph_h th, eph_i ti, int region ) {
-	vector < int > resultado = {-1, -1, -1, -1, -1, -1};
-	
-	// TODO
-	
-	return resultado;
+vector<int> histHabitacional (eph_h th, eph_i ti, int region) {
+    return _histHabitacional(th, ti, region);
 }
 
 // Implementacion Problema 3
-vector< pair < int, float > > laCasaEstaQuedandoChica ( eph_h th, eph_i ti ) {
-
-    vector<pair<int,float>> resp = {make_pair(1,-1.0),
-                                        make_pair(40, -1.0),
-                                        make_pair(41, -1.0),
-                                        make_pair(42,-1.0),
-                                        make_pair(43,-1.0),
-                                        make_pair(44,-1.0)};
-	// TODO
-	
-  return resp;
+vector<pair<int, float>> laCasaEstaQuedandoChica (eph_h th, eph_i ti) {
+    return _laCasaEstaQuedandoChica(th, ti);
 }
 
 // Implementacion Problema 4
-bool creceElTeleworkingEnCiudadesGrandes ( eph_h t1h, eph_i t1i, eph_h t2h, eph_i t2i ) {
-	bool resp = false;
-	
-	// TODO
-	
-  return  resp;
+bool creceElTeleworkingEnCiudadesGrandes (eph_h t1h, eph_i t1i, eph_h t2h, eph_i t2i) {
+	return _creceElTeleworkingEnCiudadesGrandes(t1h, t1i, t2h, t2i);
 }
 
 // Implementacion Problema 5
-int costoSubsidioMejora( eph_h th, eph_i ti, int monto ){
-	int resp = -1;
-	
-	// TODO
-	
-  return  resp;
+int costoSubsidioMejora(eph_h th, eph_i ti, int monto) {
+	return _costoSubsidioMejora(th, ti, monto);
 }
 
 // Implementacion Problema 6
-join_hi generarJoin( eph_h th, eph_i ti ){
-    hogar h = {};
-    individuo i = {};
-	join_hi resp = {make_pair(h,i)};
-	
-	// TODO
-	
-  return  resp;
+join_hi generarJoin(eph_h th, eph_i ti) {
+    return _generarJoin(th, ti);
 }
 
 // Implementacion Problema 7
-void ordenarRegionYCODUSU (eph_h & th, eph_i & ti) {
-	
-	// TODO
-	
-	return;
+void ordenarRegionYCODUSU (eph_h &th, eph_i &ti) {
+    _ordenarRegionYCODUSU(th, ti);
 }
 
 // Implementacion Problema 8
-vector < hogar > muestraHomogenea( eph_h & th, eph_i & ti ){
-    hogar h = {};
-    vector < hogar > resp = {h};
-
-    // TODO
-
-    return  resp;
+vector<hogar> muestraHomogenea(eph_h &th, eph_i &ti) {
+    return _muestraHomogenea(th, ti);
 }
 
 // Implementacion Problema 9
-void corregirRegion( eph_h & th, eph_i ti ) {
-	
-	// TODO
-	
-	return;
+void corregirRegion(eph_h &th, eph_i ti) {
+    _corregirRegion(th, ti);
 }
 
 // Implementacion Problema 10
-vector < int > histogramaDeAnillosConcentricos( eph_h th, eph_i ti, pair < int, int > centro, vector < int > distancias ){
-	vector < int > resp = {};
-	
-	// TODO
-	
-	return resp;
+vector<int> histogramaDeAnillosConcentricos(eph_h th, eph_i ti, pair <int, int> centro, vector<int> distancias) {
+	return _histogramaDeAnillosConcentricos(th, ti, centro, distancias);
 }
 
 // Implementacion Problema 11
-pair < eph_h, eph_i > quitarIndividuos(eph_i & ti, eph_h & th, vector < pair < int, dato > >  busqueda ){
-    eph_h rth = {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-    eph_i rti = {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-    pair < eph_h, eph_i > resp = make_pair(rth, rti);
-		
-	// TODO
-	
-	return resp;
+pair<eph_h, eph_i> quitarIndividuos(eph_i &ti, eph_h &th, vector<pair<int, dato>> busqueda) {
+    return _quitarIndividuos(ti, th, busqueda);
 }

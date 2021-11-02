@@ -7,6 +7,8 @@
 #include <tuple>
 #include "definiciones.h"
 
+#include "ejercicios/ejercicios_individuales.h"
+
 using namespace std;
 
 bool esEncuestaValida ( eph_h th, eph_i ti );
