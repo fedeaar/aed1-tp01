@@ -5,7 +5,7 @@
 #include <vector>
 #include <math.h>
 #include <tuple>
-#include "definiciones.h"
+#include "auxiliares.h"
 
 #include "ejercicios/ejercicios_individuales.h"
 

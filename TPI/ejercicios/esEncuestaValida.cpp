@@ -3,18 +3,10 @@
 
 /* auxiliares */
 
-template <typename T>
-bool esTabla(const vector<vector<T>>& tabla, int cantidadColumnas) {
-    //pre: cantidadColumnas > 0
-    bool res = tabla.size() > 0;
-    for (int i = 0; i < tabla.size() && res; ++i) {
-        res &= tabla[i].size() == cantidadColumnas;
-    }
-    return res;
-}
+// TODO: preguntar sobre el uso de funciones en parametros
 
 template <typename T, typename Function>
-bool noHayRepetidos(const vector<vector<T>>& tabla, Function estanRepetidas) {
+bool noHayRepetidos(const Tabla<T>& tabla, Function estanRepetidas) {
     // pre: esTabla(tabla, #cols_tabla)
     // lambda estanRepetidas toma dos argumentos de tipo vector<T> (dos filas de la tabla)
     bool res = true;
@@ -27,7 +19,7 @@ bool noHayRepetidos(const vector<vector<T>>& tabla, Function estanRepetidas) {
 }
 
 template <typename T, typename Function>
-bool valoresEnRango(const vector<vector<T>>& tabla, Function filaEnRango) {
+bool valoresEnRango(const Tabla<T>& tabla, Function filaEnRango) {
     // pre: esTabla(tabla, #cols_tabla)
     // lambda filaEnRango toma un argumento de tipo vector<T> (una fila de la tabla)
     bool res = true;
@@ -59,8 +51,8 @@ bool hogarEnRango(const hogar& h) {
 
 bool chequeoDeHogares(const eph_h& th) {
     bool res =  esTabla(th, FILAS_HOGAR) &&
-                noHayRepetidos(th, mismoHogar) &&
-                valoresEnRango(th, hogarEnRango);
+                noHayRepetidos(th, &mismoHogar) &&
+                valoresEnRango(th, &hogarEnRango);
     return res;
 }
 
@@ -87,8 +79,8 @@ bool individuoEnRango(const individuo& i) {
 
 bool chequeoDeIndividuos(const eph_i& ti){
     bool res =  esTabla(ti, FILAS_INDIVIDUO) &&
-                noHayRepetidos(ti, mismoIndividuo) &&
-                valoresEnRango(ti, individuoEnRango);
+                noHayRepetidos(ti, &mismoIndividuo) &&
+                valoresEnRango(ti, &individuoEnRango);
     return res;
 }
 
@@ -120,15 +112,6 @@ bool todoIndividuoTieneHogar(const eph_h& th, const eph_i& ti) {
     return res;
 }
 
-bool tablasRelacionadas(const eph_h& th, const eph_i& ti) {
-    // pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th)
-    // obs: se opto por una versión O(n^2) ya que otra version O(max(HOGCODUSU))
-    // fue suceptible a errores de memoria.
-    bool res =  cantidadValidaDeIndividuosPorHogar(th, ti) &&
-                todoIndividuoTieneHogar(th, ti);
-    return res;
-}
-
 bool encuestasCorrespondientes(const eph_h& th, const eph_i& ti) {
     //pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th)
     bool res = true;
@@ -144,7 +127,8 @@ bool encuestasCorrespondientes(const eph_h& th, const eph_i& ti) {
 }
 
 bool chequeoCruzado(const eph_h& th, const eph_i& ti) {
-    bool res =  tablasRelacionadas(th, ti) &&
+    bool res =  cantidadValidaDeIndividuosPorHogar(th, ti) &&
+                todoIndividuoTieneHogar(th, ti) &&
                 encuestasCorrespondientes(th, ti);
     return res;
 }
@@ -161,11 +145,6 @@ bool _esEncuestaValida(const eph_h& th, const eph_i& ti) {
 
 
 
-
-
-
-// validar hogares:
-//
 //bool formatoCorrecto(const eph_h &th){
 //    /*
 //     * Devuelve true si: 1. No está vacía.
@@ -234,20 +213,6 @@ bool _esEncuestaValida(const eph_h& th, const eph_i& ti) {
 //bool chequeoDeHogares(const eph_h &th){
 //    return formatoCorrecto(th) && datosCorrectos(th);
 //}
-
-//
-//bool menosDe21MiembrosPorHogar(const eph_h &th, const eph_i &ti) {
-//    // pre: !hayIndividuosSinHogares(th, ti)
-//    bool res = true;
-//    vector<int> habitantes(maxElem(th, HOGCODUSU) + 1, 0);
-//    for (int i = 0; i < ti.size() && res; ++i) {
-//        ++habitantes[ti[i][INDCODUSU]];
-//        if (habitantes[ti[i][INDCODUSU]] > 20)
-//            res = false;
-//    }
-//    return res;
-//}
-//
 
 
 /*

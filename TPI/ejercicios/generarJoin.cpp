@@ -1,16 +1,15 @@
 #include "ejercicios_individuales.h"
 
-/* auxiliares */
-
 
 /* implementación */
 
 join_hi _generarJoin(const eph_h& th, const eph_i& ti) {
-    hogar h = {};
-    individuo i = {};
-    join_hi resp = {make_pair(h,i)};
-
-    // TODO
-
-    return  resp;
+    // pre esEncuestaValida(th, ti)
+    join_hi res;
+    for (int i = 0; i < ti.size(); ++i) {
+        individuo ind = ti[i];
+        hogar hog = hogarCorrespondiente(ind, th);
+        res.push_back(make_pair(hog, ind));
+    }
+    return  res;
 }

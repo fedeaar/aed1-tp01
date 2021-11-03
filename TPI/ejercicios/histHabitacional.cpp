@@ -1,9 +1,10 @@
 #include "ejercicios_individuales.h"
 
+
 /* auxiliares */
 
 int maxHabitaciones (const eph_h& th, dato region) {
-    // TODO: preguntar, esto no cumple con la especificación, pero si con los tests
+    // TODO: Preguntar. esto no cumple con la especificación, pero si con los tests
     // el largo que pide la especificación es solo a max habitaciones en la region, no
     // considera si son casas o no.
     int max = 0;
