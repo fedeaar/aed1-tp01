@@ -3,6 +3,22 @@
 
 /* auxiliares */
 
+/*
+template <typename T> using Tabla = vector<vector<T>>;
+
+template <typename T, typename Function, typename Param>
+int acumuladoCondicional(const Tabla<T>& tabla, Function condicion, Param p) {
+    // pre: esTabla(tabla, #cols_tabla)
+    // lambda condicion -> bool toma parámetros (tabla[i], p);
+    int total = 0;
+    for (int i = 0; i < tabla.size(); ++i) {
+        if (condicion(tabla[i], p))
+            ++total;
+    }
+    return total;
+}
+ */
+
 bool trabaja(const individuo& i, const hogar& h) {
     return i[ESTADO] == 1 && h[MAS_500] == 1 && (h[IV1] == 1 || h[IV1] == 2);
 }

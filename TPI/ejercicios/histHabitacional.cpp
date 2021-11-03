@@ -1,12 +1,13 @@
 #include "ejercicios_individuales.h"
+// TODO: Preguntar. esto no cumple con la especificación, pero si con los tests
+// el largo que pide la especificación es solo a max habitaciones en la region, no
+// considera si son casas o no.
 
 
 /* auxiliares */
 
 int maxHabitaciones (const eph_h& th, dato region) {
-    // TODO: Preguntar. esto no cumple con la especificación, pero si con los tests
-    // el largo que pide la especificación es solo a max habitaciones en la region, no
-    // considera si son casas o no.
+    // pre: esEncuestaValida(th, ti) && 0 ≤ region ≤ 6
     int max = 0;
     for (int i = 0; i < th.size(); ++i) {
         if (th[i][REGION] == region && th[i][IV1] == 1 && th[i][IV2] > max)

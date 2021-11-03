@@ -1,9 +1,22 @@
 #include "ejercicios_individuales.h"
+// TODO: preguntar sobre el uso de funciones en parametros
 
 
 /* auxiliares */
 
-// TODO: preguntar sobre el uso de funciones en parametros
+/*
+template <typename T> using Tabla = vector<vector<T>>;
+
+template <typename T>
+bool esTabla(const Tabla<T>& tabla, int cantidadColumnas) {
+    //pre: cantidadColumnas > 0
+    bool res = tabla.size() > 0;
+    for (int i = 0; i < tabla.size() && res; ++i) {
+        res &= tabla[i].size() == cantidadColumnas;
+    }
+    return res;
+}
+*/
 
 template <typename T, typename Function>
 bool noHayRepetidos(const Tabla<T>& tabla, Function estanRepetidas) {
