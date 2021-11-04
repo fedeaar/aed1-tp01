@@ -24,4 +24,13 @@ hogar hogarCorrespondiente(const individuo& ind, const eph_h& th) {
     return th[i];
 }
 
+int cantIndividuosEnHogar(hogar h, const eph_i &ti){
+    int res = 0;
+    for(int i = 0; i < ti.size(); i++){
+        if(ti[i][INDCODUSU] == h[HOGCODUSU])
+            res++;
+    }
+    return res;
+}
+
 

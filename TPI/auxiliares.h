@@ -25,6 +25,7 @@ bool hogarEnTabla(const eph_h& th, dato hogcodusu);
 
 hogar hogarCorrespondiente(const individuo& ind, const eph_h& th);
 
+int cantIndividuosEnHogar(hogar h, const eph_i &ti);
 
 // sumatorias
 

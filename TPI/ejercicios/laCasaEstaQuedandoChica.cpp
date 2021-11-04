@@ -3,15 +3,6 @@
 
 /* auxiliares */
 
-int cantIndividuosEnHogar(hogar h, const eph_i &ti){
-    int res = 0;
-    for(int i = 0; i < ti.size(); i++){
-        if(ti[i][INDCODUSU] == h[HOGCODUSU])
-            res++;
-    }
-    return res;
-}
-
 void hogaresValidos(const eph_h &th, int region, vector<int> &ind, int &cant){
     for(int i = 0; i < th.size(); i++){
         if(th[i][IV1] == 1 && th[i][REGION] == region && th[i][MAS_500] == 0){
