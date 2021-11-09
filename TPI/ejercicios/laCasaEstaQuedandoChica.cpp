@@ -2,7 +2,8 @@
 
 
 /* auxiliares */
-
+/*
+//Contar hacinados dentro de esta funcion.
 void hogaresValidos(const eph_h &th, int region, vector<int> &ind, int &cant){
     for(int i = 0; i < th.size(); i++){
         if(th[i][IV1] == 1 && th[i][REGION] == region && th[i][MAS_500] == 0){
@@ -22,6 +23,7 @@ int hogaresHacinados(const eph_h &th, const eph_i &ti, const vector<int> &ind){
 }
 
 void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int, float> &region){
+ */
     /*
      * Un hogar es válido si: -Es de tipo casa
      *                        -Se encuentra en la región
@@ -30,7 +32,7 @@ void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int,
      * Además, es de hacinamiento crítico si la cantidad de individuos asociados al hogar
      * es mayor a 3 veces los dormitorios.
      * */
-
+/*
     //Calculo la cantidad de hogares válidos y sus índices en la tabla de hogares
     vector<int> indHogaresValidos;
     int cantHogaresValidos = 0;
@@ -39,11 +41,29 @@ void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int,
     if(cantHogaresValidos == 0){
         region.second = 0;
     }else{
-        int cantHogaresHacinados = hogaresHacinados(th,ti,indHogaresValidos);
+        int cantHogaresHacinados = hogaresHacinados(th, ti, indHogaresValidos);
         region.second = float(cantHogaresHacinados)/float(cantHogaresValidos);
     }
 }
+*/
 
+void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int, float> &region){
+    int hogaresValidos = 0;
+    int hogaresHacinados = 0;
+    for(int i = 0; i < th.size(); i++){
+        if(th[i][IV1] == 1 && th[i][REGION] == region.first && th[i][MAS_500] == 0){
+            hogaresValidos++;
+            if(cantIndividuosEnHogar(th[i],ti) > 3 * th[i][II2])
+                hogaresHacinados++;
+        }
+    }
+
+    if(hogaresValidos == 0){
+        region.second = 0;
+    }else{
+        region.second = float(hogaresHacinados)/float(hogaresValidos);
+    }
+}
 
 /* implementación */
 
