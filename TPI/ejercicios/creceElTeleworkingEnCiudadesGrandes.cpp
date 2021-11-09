@@ -25,7 +25,7 @@ bool trabaja(const individuo& i, const hogar& h) {
 
 bool teletrabaja(const individuo& i, const eph_h& th) {
     hogar h = hogarCorrespondiente(i, th);
-    return  trabaja(i, h) && i[PP04G] == 6 && h[II3] == 1;;
+    return  trabaja(i, h) && i[PP04G] == 6 && h[II3] == 1;
 }
 
 bool noTeletrabaja(const individuo& i, const eph_h& th) {

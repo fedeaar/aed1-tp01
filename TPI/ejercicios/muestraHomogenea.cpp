@@ -38,7 +38,7 @@ join_thxdato ingresosPorHogar(const eph_h& th, const eph_i& ti) {
 /* ordenar */
 
 void ordenarIngresosPorHogar(join_thxdato& th_ingresos) {
-    //insertion sort (creo)
+    //selection sort
     for (int i = 0; i < th_ingresos.size() - 1; ++i) {
         int min = i;
         for (int j = i + 1; j < th_ingresos.size(); ++j) {
@@ -48,7 +48,6 @@ void ordenarIngresosPorHogar(join_thxdato& th_ingresos) {
         swap(th_ingresos[i], th_ingresos[min]);
     }
 }
-
 
 /* evaluar subsecuencias de diferencia constante */
 
@@ -97,5 +96,6 @@ vector<hogar> _muestraHomogenea(const eph_h& th, const eph_i& ti){
     join_thxdato hi = ingresosPorHogar(th, ti);
     ordenarIngresosPorHogar(hi);
     vector<int> SML = maximizarSML(hi);
-    return seleccionarHogares(hi, SML);
+    vector<hogar> res = seleccionarHogares(hi, SML);
+    return res.size() < 3 ? vector<hogar>{} : res;
 }
