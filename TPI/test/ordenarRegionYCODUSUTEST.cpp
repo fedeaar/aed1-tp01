@@ -35,7 +35,6 @@ TEST(ordenarRegionYCODUSUTEST, regionesDistintas) {
         {334,  1, 2017, 1, 0, 1, 36, 1,  3, 16300, 1},
     };
 
-
     ordenarRegionYCODUSU(th, ti);
     EXPECT_EQ(th_esperado, th);
     EXPECT_EQ(ti_esperado, ti);

@@ -2,19 +2,8 @@
 
 /* auxiliares */
 
-void swapTH(eph_h &th, int ind1, int ind2){
-    hogar aux = th[ind1];
-    th[ind1] = th[ind2];
-    th[ind2] = aux;
-}
-
-void swapTI(eph_i &ti, int ind1, int ind2){
-    individuo aux = ti[ind1];
-    ti[ind1] = ti[ind2];
-    ti[ind2] = aux;
-}
-
-void ordenarPorRegion(eph_h &th, int region, const vector<int> &cantHogarPorRegion){
+/*
+void ordenarDentroDeRegion(eph_h &th, int region, const vector<int> &cantHogarPorRegion){
     //Calculo desde y hasta donde tengo que ordenar
     int comienzo = 0;
     for(int i = 0; i < region; i++){
@@ -25,7 +14,7 @@ void ordenarPorRegion(eph_h &th, int region, const vector<int> &cantHogarPorRegi
     for(int i = comienzo; i < final; i++){ //Selection sort
         int minimo = i;
         for(int j = i+1; j < final; j++){
-            if(th[j][REGION] < th[minimo][REGION]){
+            if(th[j][HOGCODUSU] < th[minimo][HOGCODUSU]){
                 minimo = j;
             }
         }
@@ -53,10 +42,21 @@ void ordenarHogaresRegionYCodusu(eph_h &th){
 
     //Con la cantidad de hogares por región contados, ordeno dentro de cada region por CODUSU
     for(int region = 0; region < CANTIDAD_DE_REGIONES; region++){
-        ordenarPorRegion(th, region, cantHogarPorRegion); //O(n^2)
+        ordenarDentroDeRegion(th, region, cantHogarPorRegion); //O(n^2)
     }
+}
+*/
 
+void swapTH(eph_h &th, int ind1, int ind2){
+    hogar aux = th[ind1];
+    th[ind1] = th[ind2];
+    th[ind2] = aux;
+}
 
+void swapTI(eph_i &ti, int ind1, int ind2){
+    individuo aux = ti[ind1];
+    ti[ind1] = ti[ind2];
+    ti[ind2] = aux;
 }
 
 void mandarAlFrente(eph_i &ti, int &posACambiar, vector<int> individuos){
@@ -80,7 +80,7 @@ void ordenarComponente(eph_i &ti, int inicio, int fin){
 void ordenarIndividuosPorCodusuDeHogarYComponente(const eph_h &th, eph_i &ti){
     /*
      * Primero ordeno según CODUSU de tabla hogares
-     * Alamcena los individuos pertenecientes a cada hogar en orden de la tabla de hogares.
+     * Almacena los individuos pertenecientes a cada hogar en orden de la tabla de hogares.
      * Luego, los envía a todos juntos al frente de la tabla todavía no ordenada.
      * Por último, los ordena entre sí por COMPONENTE.
      * */
@@ -101,6 +101,21 @@ void ordenarIndividuosPorCodusuDeHogarYComponente(const eph_h &th, eph_i &ti){
     }
 }
 
+void ordenarHogaresRegionYCodusu(eph_h &th){
+    for(int i = 0; i < th.size(); i++){ //Ordeno tabla por región - Selection sort
+        int minimo = i;
+        pair<int, int> parMin = make_pair(th[i][REGION], th[i][HOGCODUSU]);
+        for(int j = i+1; j < th.size(); j++){
+            pair<int, int> aComparar = make_pair(th[j][REGION], th[j][HOGCODUSU]);
+            if(aComparar < parMin){
+                minimo = j;
+                parMin = aComparar;
+            }
+        }
+        swapTH(th, minimo, i);
+    }
+}
+
 /* implementación */
 
 void _ordenarRegionYCODUSU (eph_h& th, eph_i& ti) {
@@ -111,3 +126,4 @@ void _ordenarRegionYCODUSU (eph_h& th, eph_i& ti) {
 
     return;
 }
+
