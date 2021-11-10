@@ -25,6 +25,8 @@ TEST(histogramaDeAnillosConcentricosTEST, primeroYUltimo) {
 
     vector<int> res = {2, 0, 0, 1};
 
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
     EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
 }
 
@@ -40,6 +42,7 @@ TEST(histogramaDeAnillosConcentricosTEST, cuatroCuadrantes) {
         {-11, 11},
         {11, -11}
     });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
 
     vector<int> res = {0, 4, 0, 0};
 

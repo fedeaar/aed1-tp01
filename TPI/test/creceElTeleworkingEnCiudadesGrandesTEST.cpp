@@ -88,7 +88,10 @@ TEST(creceElTeleworkingEnCiudadesGrandesTEST, nocrece) {
                  {31117, 2020,   5,  0,  3,  2,  15, -1,  0,  5000,   6}, // estado no informado
                  {22114, 2020,   1,  0,  3,  1,  18, 0,  0,  20000,  1}};
 
-    EXPECT_EQ( false, creceElTeleworkingEnCiudadesGrandes(t1h, t1i, t2h, t2i) );
+    EXPECT_TRUE(esEncuestaValida(t1h, t1i));
+    EXPECT_TRUE(esEncuestaValida(t2h, t2i));
+
+    EXPECT_FALSE(creceElTeleworkingEnCiudadesGrandes(t1h, t1i, t2h, t2i) );
 }
 
 TEST(creceElTeleworkingEnCiudadesGrandesTEST, eph2016a2018) {
@@ -100,7 +103,7 @@ TEST(creceElTeleworkingEnCiudadesGrandesTEST, eph2016a2018) {
     eph_i t2i;
     leerEncuesta ( "eph_3c_2020_1000", t2h, t2i );
 
-    EXPECT_EQ( true, creceElTeleworkingEnCiudadesGrandes(t1h, t1i, t2h, t2i) );
+    EXPECT_TRUE(creceElTeleworkingEnCiudadesGrandes(t1h, t1i, t2h, t2i) );
 }
 
 

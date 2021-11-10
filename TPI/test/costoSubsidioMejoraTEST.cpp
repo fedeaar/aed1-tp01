@@ -35,6 +35,9 @@ TEST(costoSubsidioMejoraTEST, noHayCasas) {
         {11867,2018,3,0,3,2,22,0,2,20000,10}
     };
 
+    ASSERT_TRUE(esEncuestaValida(th,ti));
+
+
     int monto = 10;
 
     int res = costoSubsidioMejora(th, ti, monto);
@@ -70,6 +73,8 @@ TEST(costoSubsidioMejoraTEST, casoFacil) {
         {14914,2018,3,1,3,2,24,1,3,17000,1},
         {14914,2018,4,0,3,2,17,0,0,0,10}
     };
+
+    ASSERT_TRUE(esEncuestaValida(th,ti));
 
     int monto = 8;
 
