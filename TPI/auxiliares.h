@@ -3,54 +3,56 @@
 
 #include "definiciones.h"
 
-// templates
+/* alias de tipo */
 
-template <typename T> using Tabla = vector<vector<T>>;
+template <typename T> using Fila = vector<T>;
+template <typename T> using Tabla = vector<Fila<T>>;
 
-typedef vector<pair<hogar, dato>> join_thxdato;
 
-// generales
-
-template <typename T>
-bool esTabla(const Tabla<T>& tabla, int cantidadColumnas) {
-    //pre: cantidadColumnas > 0
-    bool res = tabla.size() > 0;
-    for (int i = 0; i < tabla.size() && res; ++i) {
-        res &= tabla[i].size() == cantidadColumnas;
-    }
-    return res;
-}
+/* generales */
 
 bool hogarEnTabla(const eph_h& th, dato hogcodusu);
 
-hogar hogarCorrespondiente(const individuo& ind, const eph_h& th);
+int posCorrespondiente (const eph_h& th, dato hogcodusu);
 
-int cantIndividuosEnHogar(hogar h, const eph_i &ti);
+int cantIndividuosEnHogar(const hogar& h, const eph_i& ti);
 
-// sumatorias
 
-template <typename T, typename Function, typename Param>
-int sumaCondicional(const Tabla<T>& tabla, int col, Function condicion, Param p) {
-    // pre: esTabla(tabla, #cols_tabla) && 0 <= col <= #cols_tabla
-    // lambda condicion -> bool toma parámetros (tabla[i], p);
-    int total = 0;
-    for (int i = 0; i < tabla.size(); ++i) {
-        if (condicion(tabla[i], p))
-            total += tabla[i][col];
-    }
-    return total;
-}
+/* validación de tabla */
 
-template <typename T, typename Function, typename Param>
-int acumuladoCondicional(const Tabla<T>& tabla, Function condicion, Param p) {
-    // pre: esTabla(tabla, #cols_tabla)
-    // lambda condicion -> bool toma parámetros (tabla[i], p);
-    int total = 0;
-    for (int i = 0; i < tabla.size(); ++i) {
-        if (condicion(tabla[i], p))
-            ++total;
-    }
-    return total;
-}
+template <typename T>
+bool esTabla(const Tabla<T>& tabla, int cantidadColumnas);
+
+template <typename T, typename Lambda>
+bool noHayRepetidos(const Tabla<T>& tabla, const Lambda&& equivalen);
+
+template <typename T, typename Lambda>
+bool valoresEnRango(const Tabla<T>& tabla, const Lambda&& filaEnRango);
+
+
+/* estadística */
+
+template <typename T, typename Lambda>
+T maxCondicional (const Tabla<T>& tabla, int col, const Lambda&& cond);
+
+template <typename T, typename Lambda>
+T sumaCondicional(const Tabla<T>& tabla, int col, const Lambda&& cond);
+
+template <typename T, typename Lambda>
+int acumuladoCondicional(const Tabla<T>& tabla, const Lambda&& cond);
+
+template <typename T>
+double porcentaje(T a, T b);
+
+
+/* sort */
+
+template <typename T, typename Lambda>
+void selectSort(vector<T>& ordenar, const Lambda&& comp);
+template <typename T> // default
+void selectSort(vector<T>& ordenar);
+
+
+#include "auxiliares.tpp"
 
 #endif //SOLUCION_AUXILIARES_H

@@ -17,6 +17,7 @@ endif()
 
 set(SOURCE_FILES main.cpp
         auxiliares.cpp
+        auxiliares.tpp
         ejercicios.cpp
         Funciones_TPI.cpp
         ejercicios/corregirRegion.cpp

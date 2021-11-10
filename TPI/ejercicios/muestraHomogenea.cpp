@@ -1,74 +1,77 @@
 #include "ejercicios_individuales.h"
 
 
-/* ingresos */
+/* alias */
 
-/*
-template <typename T> using Tabla = vector<vector<T>>;
 typedef vector<pair<hogar, dato>> join_thxdato;
 
-template <typename T, typename Function, typename Param>
-int sumaCondicional(const Tabla<T>& tabla, int col, Function condicion, Param p) {
-    // pre: esTabla(tabla, #cols_tabla) && 0 <= col <= #cols_tabla
-    // lambda condicion -> bool toma parámetros (tabla[i], p);
-    int total = 0;
-    for (int i = 0; i < tabla.size(); ++i) {
-        if (condicion(tabla[i], p))
-            total += tabla[i][col];
-    }
-    return total;
-}
-*/
 
-bool sumaIngresos(const individuo& ind, dato hogcodusu) {
-    return ind[INDCODUSU] == hogcodusu && ind[p47T] > -1;
+/* auxiliares: calcular ingresos */
+
+auto sumaIngresos(dato hogcodusu) {
+    /* pre: hogcodusu > 0
+     * obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
+     * */
+    return [hogcodusu](const individuo& ind) {
+        /* pre: esIndividuoValido(ind) */
+        return ind[INDCODUSU] == hogcodusu && ind[p47T] > -1;
+    };
 }
 
-join_thxdato ingresosPorHogar(const eph_h& th, const eph_i& ti) {
-    //pre: esEncuestaValida(th, ti)
+join_thxdato THxIngresos(const eph_h& th, const eph_i& ti) {
+    /* pre: esEncuestaValida(th, ti) */
     join_thxdato res;
     for (int i = 0; i < th.size(); ++i) {
-        dato ingresoTotal = sumaCondicional(ti, p47T, &sumaIngresos, th[i][HOGCODUSU]);
+        int ingresoTotal = sumaCondicional(ti, p47T, sumaIngresos(th[i][HOGCODUSU])); //def. en auxiliares.tpp
         res.push_back(make_pair(th[i], ingresoTotal));
     }
     return res;
 }
 
 
-/* ordenar */
+/* auxiliares: ordenar */
 
-void ordenarIngresosPorHogar(join_thxdato& th_ingresos) {
-    //selection sort
-    for (int i = 0; i < th_ingresos.size() - 1; ++i) {
-        int min = i;
-        for (int j = i + 1; j < th_ingresos.size(); ++j) {
-            if (th_ingresos[j].second < th_ingresos[min].second)
-                min = j;
-        }
-        swap(th_ingresos[i], th_ingresos[min]);
-    }
+bool ingresoMenor(pair<hogar, dato>& a, pair<hogar, dato>& b) {
+    return a.second < b.second;
 }
 
-/* evaluar subsecuencias de diferencia constante */
 
-vector<int> subsecuenciaMasLarga(const join_thxdato& t, int i, int j) {
-    //pre: ordenada(t) && 0 <= i < j < |t| && dif > 0
-    vector<int> sml;
+/* auxiliares: eval. subsecuencias */
+
+vector<int> subsecuenciaMasLarga(const join_thxdato& t, int i, int j) { // *1
+    /* pre: ordenada(t) && 0 <= i < j < |t| */
+    vector<int> sml = {i, j};
     int dif = t[j].second - t[i].second;
-    if (dif > 0) {
-        sml = {i, j};
+    if (dif > 0)
         for (int k = j + 1; k < t.size(); ++k) {
             if (t[k].second - t[sml[sml.size() - 1]].second == dif)
                 sml.push_back(k);
         }
-    }
     return sml;
 }
 
+/* 1. idea del algoritmo:
+ *  i  j
+ * [2, 4, 6, 7, 8]
+ *      -> dif = 4 - 2 = 2
+ *  i  j  k
+ * [2, 4, 6, 7, 8]
+ *      -> dif = 6 - 4 = 2
+ *  i  j  k1 k
+ * [2, 4, 6, 7, 8]
+ *      -> dif = 7 - 6 = 1
+ *  i  j  k1    k
+ * [2, 4, 6, 7, 8]
+ *      -> dif = 8 - 6 = 2
+ *  i  j  k1    k2
+ * [2, 4, 6, 7, 8]
+ *      return [i, j, k1, k2]
+ * */
+
 vector<int> maximizarSML(const join_thxdato& t) {
-    //pre: ordenada(t)
+    /* pre: ordenada(t) */
     vector<int> max;
-    for (int i = 0; i < t.size(); ++i) { // O(N^3)
+    for (int i = 0; i < t.size(); ++i) {
         for (int j = i + 1; j < t.size(); ++j) {
             vector<int> tmp = subsecuenciaMasLarga(t, i, j);
             if (tmp.size() > max.size())
@@ -78,13 +81,13 @@ vector<int> maximizarSML(const join_thxdato& t) {
     return max;
 }
 
+/* auxiliares: combinar */
 
-/* combinar */
-
-vector<hogar> seleccionarHogares(const join_thxdato t, const vector<int> posiciones) {
-    vector<hogar> seleccion;
+vector<hogar> seleccionarHogares(const join_thxdato& t, const vector<int>& posiciones) {
+    /* (Ai:Z)(0 <= i < |posiciones| ->L 0 <= posiciones[i] < |t|) */
+    vector<hogar> seleccion(posiciones.size());
     for (int i = 0; i < posiciones.size(); ++i) {
-        seleccion.push_back(t[posiciones[i]].first);
+        seleccion[i] = t[posiciones[i]].first;
     }
     return seleccion;
 }
@@ -92,9 +95,10 @@ vector<hogar> seleccionarHogares(const join_thxdato t, const vector<int> posicio
 
 /* implementación */
 
-vector<hogar> _muestraHomogenea(const eph_h& th, const eph_i& ti){
-    join_thxdato hi = ingresosPorHogar(th, ti);
-    ordenarIngresosPorHogar(hi);
+vector<hogar> _muestraHomogenea(const eph_h& th, const eph_i& ti) {
+    /* pre: esEncuestaValida(th, ti) */
+    join_thxdato hi = THxIngresos(th, ti);
+    selectSort(hi, ingresoMenor); //def. en auxiliares.tpp
     vector<int> SML = maximizarSML(hi);
     vector<hogar> res = seleccionarHogares(hi, SML);
     return res.size() < 3 ? vector<hogar>{} : res;
