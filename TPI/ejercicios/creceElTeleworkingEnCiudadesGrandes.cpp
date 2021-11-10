@@ -8,30 +8,20 @@ bool trabaja(const individuo& i, const hogar& h) {
     return i[ESTADO] == 1 && h[MAS_500] == 1 && (h[IV1] == 1 || h[IV1] == 2);
 }
 
-auto teletrabaja = [](const eph_h& th) -> auto {
-    /* pre: esTablaDeHogaresValida(th)
-     * obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
-     * */
-    return [&th](const individuo& i) {
-        /* pre: esIndividuoValido(i) */
-        hogar h = th[posCorrespondiente(th, i[HOGCODUSU])];
-        return  trabaja(i, h) && i[PP04G] == 6 && h[II3] == 1;
-    };
-};
-
-auto noTeletrabaja = [](const eph_h& th) -> auto {
-    /* pre: esTablaDeHogaresValida(th) */
-    return [&th](const individuo& i) {
-        /* pre: esIndividuoValido(i) */
-        hogar h = th[posCorrespondiente(th, i[HOGCODUSU])];
-        return  trabaja(i, h);
-    };
-};
-
 double porcentajeTeleworking(const eph_h& th, const eph_i& ti) {
     /* pre: esEncuestaValida(th) */
-    int a = acumuladoCondicional(ti, teletrabaja(th)); // def. en auxiliares.tpp
-    int b = acumuladoCondicional(ti, noTeletrabaja(th));
+    auto teletrabaja = [&th](const individuo& i) {
+        /* obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
+         * */
+        hogar h = th[posCorrespondiente(th, i[HOGCODUSU])];
+        return trabaja(i, h) && i[PP04G] == 6 && h[II3] == 1;
+    };
+    auto noTeletrabaja = [&th](const individuo& i) {
+        hogar h = th[posCorrespondiente(th, i[HOGCODUSU])];
+        return trabaja(i, h);
+    };
+    int a = acumuladoCondicional(ti, teletrabaja); // def. en auxiliares.tpp
+    int b = acumuladoCondicional(ti, noTeletrabaja);
     return porcentaje(a, b); // def. en auxiliares.tpp
 }
 

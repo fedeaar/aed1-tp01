@@ -14,7 +14,7 @@ bool esTabla(const Tabla<T>& tabla, int cantidadColumnas) {
 }
 
 template <typename T, typename Lambda>
-bool noHayRepetidos(const Tabla<T>& tabla, const Lambda&& equivalen) {
+bool noHayRepetidos(const Tabla<T>& tabla, const Lambda& equivalen) {
     /* pre: esTabla(tabla, #cols_tabla) && equivalen corresponde a la tabla */
     bool res = true;
     for (int i = 0; i < tabla.size() && res; ++i) {
@@ -26,7 +26,7 @@ bool noHayRepetidos(const Tabla<T>& tabla, const Lambda&& equivalen) {
 }
 
 template <typename T, typename Lambda>
-bool valoresEnRango(const Tabla<T>& tabla, const Lambda&& filaEnRango) {
+bool valoresEnRango(const Tabla<T>& tabla, const Lambda& filaEnRango) {
     /* pre: esTabla(tabla, #cols_tabla) && filaEnRango corresponde a la tabla */
     bool res = true;
     for (int i = 0; i < tabla.size() && res; ++i) {
@@ -39,7 +39,7 @@ bool valoresEnRango(const Tabla<T>& tabla, const Lambda&& filaEnRango) {
 /* estadística */
 
 template <typename T, typename Lambda>
-T maxCondicional (const Tabla<T>& tabla, int col, const Lambda&& cond) {
+T maxCondicional (const Tabla<T>& tabla, int col, const Lambda& cond) {
     /* pre: esTabla(tabla, #cols_tabla) && 0 <= col <= #cols_tabla
      *      && T es comparable && cond corresponde a la tabla
      * */
@@ -52,7 +52,7 @@ T maxCondicional (const Tabla<T>& tabla, int col, const Lambda&& cond) {
 }
 
 template <typename T, typename Lambda>
-T sumaCondicional(const Tabla<T>& tabla, int col, const Lambda&& cond) {
+T sumaCondicional(const Tabla<T>& tabla, int col, const Lambda& cond) {
     /* pre: esTabla(tabla, #cols_tabla) && 0 <= col <= #cols_tabla
      *      && T es de tipo sumable && cond corresponde a la tabla
      * */
@@ -65,7 +65,7 @@ T sumaCondicional(const Tabla<T>& tabla, int col, const Lambda&& cond) {
 }
 
 template <typename T, typename Lambda>
-int acumuladoCondicional(const Tabla<T>& tabla, const Lambda&& cond) {
+int acumuladoCondicional(const Tabla<T>& tabla, const Lambda& cond) {
     /* pre: esTabla(tabla, #cols_tabla) && cond corresponde a la tabla */
     int total = 0;
     for (int i = 0; i < tabla.size(); ++i) {
@@ -89,7 +89,7 @@ double porcentaje(T a, T b) {
 /* sort */
 
 template <typename T, typename Lambda>
-void selectSort(vector<T>& ordenar, const Lambda&& comp) {
+void selectSort(vector<T>& ordenar, const Lambda& comp) {
     /* pre: comp(actual, candidato) corresponde a elementos de tipo T
      * default: comp considera que tipo T es comparable por '<'
      * */

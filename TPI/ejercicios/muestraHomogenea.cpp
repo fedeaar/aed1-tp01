@@ -8,21 +8,18 @@ typedef vector<pair<hogar, dato>> join_thxdato;
 
 /* auxiliares: calcular ingresos */
 
-auto sumaIngresos(dato hogcodusu) {
-    /* pre: hogcodusu > 0
-     * obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
-     * */
-    return [hogcodusu](const individuo& ind) {
-        /* pre: esIndividuoValido(ind) */
-        return ind[INDCODUSU] == hogcodusu && ind[p47T] > -1;
-    };
-}
-
 join_thxdato THxIngresos(const eph_h& th, const eph_i& ti) {
     /* pre: esEncuestaValida(th, ti) */
     join_thxdato res;
     for (int i = 0; i < th.size(); ++i) {
-        int ingresoTotal = sumaCondicional(ti, p47T, sumaIngresos(th[i][HOGCODUSU])); //def. en auxiliares.tpp
+        dato hogcodusu = th[i][HOGCODUSU];
+        auto sumaIngresos = [hogcodusu](const individuo& ind) {
+            /* pre: esIndividuoValido(ind)
+             * obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
+             * */
+            return ind[INDCODUSU] == hogcodusu && ind[p47T] > -1;
+        };
+        int ingresoTotal = sumaCondicional(ti, p47T, sumaIngresos); //def. en auxiliares.tpp
         res.push_back(make_pair(th[i], ingresoTotal));
     }
     return res;
