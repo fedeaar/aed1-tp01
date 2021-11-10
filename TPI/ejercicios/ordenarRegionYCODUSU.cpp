@@ -71,7 +71,7 @@ void ordenarComponente(eph_i &ti, int inicio, int fin){
         int minimo = j;
         for(int k = j + 1; k < fin; k++){
             if(ti[k][COMPONENTE] < ti[minimo][COMPONENTE])
-                minimo = j;
+                minimo = k;
         }
         swapTI(ti, j, minimo);
     }

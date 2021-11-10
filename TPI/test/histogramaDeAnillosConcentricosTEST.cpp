@@ -78,3 +78,43 @@ pair<eph_h, eph_i> encuesta_prueba(vector<pair<int, int>> pos) {
 
     return make_pair(th, ti);
 }
+
+//Tests adicionales
+
+TEST(histogramaDeAnillosConcentricosTEST, ningunaEntra) {
+
+    vector<int> distancias = {1, 2, 3};
+
+    pair<int, int> centro = {0, 0};
+
+    pair<eph_h, eph_i> p = encuesta_prueba({
+                                                   {11, 11},
+                                                   {-11, -11},
+                                                   {-11, 11},
+                                                   {11, -11}
+                                           });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
+    vector<int> res = {0, 0, 0};
+
+    EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
+}
+
+TEST(histogramaDeAnillosConcentricosTEST, centroNoCentrado) {
+
+    vector<int> distancias = {10, 20, 50};
+
+    pair<int, int> centro = {5, -2};
+
+    pair<eph_h, eph_i> p = encuesta_prueba({
+                                                   {1, 1},     // 5.00
+                                                   {3, 5},     // 7.28
+                                                   {53, 5},    // 48.50
+                                                   {101, 21},  // 98.71
+                                           });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
+    vector<int> res = {2, 0, 1};
+
+    EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
+}
