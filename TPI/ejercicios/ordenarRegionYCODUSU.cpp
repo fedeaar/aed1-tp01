@@ -70,7 +70,7 @@ void ordenarComponente(eph_i &ti, int inicio, int fin){
     for(int j = inicio; j < fin; j++){//Selection Sort
         int minimo = j;
         for(int k = j + 1; k < fin; k++){
-            if(ti[j][COMPONENTE] < ti[minimo][COMPONENTE])
+            if(ti[k][COMPONENTE] < ti[minimo][COMPONENTE])
                 minimo = j;
         }
         swapTI(ti, j, minimo);
