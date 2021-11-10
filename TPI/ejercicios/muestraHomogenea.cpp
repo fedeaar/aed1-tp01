@@ -14,8 +14,7 @@ join_thxdato THxIngresos(const eph_h& th, const eph_i& ti) {
     for (int i = 0; i < th.size(); ++i) {
         dato hogcodusu = th[i][HOGCODUSU];
         auto sumaIngresos = [hogcodusu](const individuo& ind) {
-            /* pre: esIndividuoValido(ind)
-             * obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
+            /* obs: en esEncuestaValida.cpp está explicada la razón para este tipo de función.
              * */
             return ind[INDCODUSU] == hogcodusu && ind[p47T] > -1;
         };
@@ -46,7 +45,6 @@ vector<int> subsecuenciaMasLarga(const join_thxdato& t, int i, int j) { // *1
         }
     return sml;
 }
-
 /* 1. idea del algoritmo:
  *  i  j
  * [2, 4, 6, 7, 8]
@@ -77,6 +75,7 @@ vector<int> maximizarSML(const join_thxdato& t) {
     }
     return max;
 }
+
 
 /* auxiliares: combinar */
 

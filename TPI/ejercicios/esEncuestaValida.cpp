@@ -66,11 +66,17 @@ bool cantidadValidaDeIndividuosPorHogar(const eph_h& th, const eph_i& ti) {
     /* pre: chequeoDeIndividuos(ti) && chequeoDeHogares(th) */
     bool res = true;
     for (int i = 0; i < th.size() && res; ++i) {
-        int cantidad = 0;
-        for (int j = 0; j < ti.size(); ++j) {
-            if (th[i][HOGCODUSU] == ti[j][INDCODUSU])
-                ++cantidad;
-        }
+        dato hogcodusu = th[i][HOGCODUSU];
+        auto mismoHogar = [hogcodusu](const individuo& ind) {
+            /* mismoHogar está pensado de este modo porque el hogcodusu es un meta-parámetro (así se dirá?)
+             * para acumuladoCondicional(). Es decir: acumuladoCondicional() evalúa el acumuluado
+             * de una tabla que satisface cierta condición. Pero ya que la condición
+             * está en sí parametrizada, se requiere construir la condición
+             * correcta antes de utilizarla.
+             * */
+            return hogcodusu == ind[INDCODUSU];
+        };
+        int cantidad = acumuladoCondicional(ti, mismoHogar); //def. en auxiliares.tpp
         res &= (cantidad > 0 && cantidad < 21);
     }
     return res;

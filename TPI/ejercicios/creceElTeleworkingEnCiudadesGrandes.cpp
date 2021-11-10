@@ -11,7 +11,7 @@ bool trabaja(const individuo& i, const hogar& h) {
 double porcentajeTeleworking(const eph_h& th, const eph_i& ti) {
     /* pre: esEncuestaValida(th) */
     auto teletrabaja = [&th](const individuo& i) {
-        /* obs: en histHabitacional.cpp está explicada la razón para este tipo de función.
+        /* obs: en esEncuestaValida.cpp está explicada la razón para este tipo de función.
          * */
         hogar h = th[posCorrespondiente(th, i[HOGCODUSU])];
         return trabaja(i, h) && i[PP04G] == 6 && h[II3] == 1;

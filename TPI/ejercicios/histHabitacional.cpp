@@ -5,15 +5,11 @@
 vector<int> _histHabitacional (const eph_h& th, const eph_i& ti, int region) {
     /* pre: esEncuestaValida(th, ti) && 0 ≤ region ≤ 6 */
     auto esHogarValido = [region](const individuo& i) {
-        /* esHogarValido está pensado de este modo porque la region es un meta-parámetro (así se dirá?)
-         * para maxCondicional(). Es decir: maxCondicional() evalúa el máximo
-         * de una columna que satisface cierta condición. Pero ya que la condición
-         * está en sí parametrizada, se requiere construir la condición
-         * correcta antes de utilizarla en maxCondicional().
+        /* obs: en esEncuestaValida.cpp está explicada la razón para este tipo de función.
          * */
         return i[REGION] == region;
     };
-    vector<int> resultado(maxCondicional(th, IV2, esHogarValido), 0); // *1
+    vector<int> resultado(maxCondicional(th, IV2, esHogarValido), 0); // def. en auxiliares.tpp, *1
     for (int i = 0; i < th.size(); ++i) {
         if (esHogarValido(th[i]) && th[i][IV1] == 1)
             ++resultado[th[i][IV2] - 1];
