@@ -108,3 +108,43 @@ void selectSort(vector<T>& ordenar) {
 }
 
 
+template <typename T, typename Lambda>
+vector<T>  merge(const vector<T>& v1, const vector<T>& v2, const Lambda& comp) {
+    /* pre: ordenado(v1) && ordenado(v2) */
+    vector<T> res;
+    int i = 0; int j = 0;
+    while (i < v1.size() || j < v2.size()) {
+        if (j == v2.size() || (i != v1.size() && comp(v1[i], v2[j]))) {
+            res.push_back(v1[i]);
+            ++i;
+        } else {
+            res.push_back(v2[j]);
+            ++j;
+        }
+    }
+    return res;
+}
+template <typename T, typename Lambda>
+vector<T> mergeSort(const vector<T>& ordenar, const Lambda& comp, int i, int j) {
+    if (j - i == 1)
+        return vector<T>{ordenar[i]};
+    int medio = (i + j) / 2;
+    vector<T> l = mergeSort(ordenar, comp, i, medio);
+    vector<T> r = mergeSort(ordenar, comp, medio, j);
+    return merge(l, r, comp);
+}
+template <typename T, typename Lambda> // interfaz
+void mergeSort(vector<T>& ordenar, const Lambda& comp) {
+    /* pre: comp(a, B) corresponde a elementos de tipo T
+     * default: comp considera que tipo T es comparable por '<'
+     * */
+    ordenar = mergeSort(ordenar, comp, 0, ordenar.size());
+}
+template <typename T> // default
+void mergeSort(vector<T>& ordenar) {
+    mergeSort(ordenar, [](const T& a, const T& b){return a < b;});
+}
+
+
+
+

@@ -27,7 +27,7 @@ join_thxdato THxIngresos(const eph_h& th, const eph_i& ti) {
 
 /* auxiliares: ordenar */
 
-bool ingresoMenor(pair<hogar, dato>& a, pair<hogar, dato>& b) {
+bool ingresoMenor(const pair<hogar, dato>& a, const pair<hogar, dato>& b) {
     return a.second < b.second;
 }
 
@@ -94,7 +94,7 @@ vector<hogar> seleccionarHogares(const join_thxdato& t, const vector<int>& posic
 vector<hogar> _muestraHomogenea(const eph_h& th, const eph_i& ti) {
     /* pre: esEncuestaValida(th, ti) */
     join_thxdato hi = THxIngresos(th, ti);
-    selectSort(hi, ingresoMenor); //def. en auxiliares.tpp
+    mergeSort(hi, ingresoMenor); //def. en auxiliares.tpp
     vector<int> SML = maximizarSML(hi);
     vector<hogar> res = seleccionarHogares(hi, SML);
     return res.size() < 3 ? vector<hogar>{} : res;
