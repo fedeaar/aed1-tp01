@@ -42,6 +42,8 @@ TEST(generarJoinTEST, casoFacil) {
                      {{22114, 2018,   3,  319611, 629088, 3,  41, 1,  1,  3,  1,  2},
                       {22114, 2018,   1,  0,  3,  1,  18, 0,  0,  20000,  1}}};
 
+    EXPECT_TRUE(esEncuestaValida(th, ti));
+
     join_hi obtenido = generarJoin(th, ti);
 
     sort(junta.begin(), junta.end());
