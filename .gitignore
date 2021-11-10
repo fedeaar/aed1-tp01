@@ -1,3 +1,9 @@
 /TPI/cmake-build-debug/
 /TPI/.idea/
 /TPI/lib/
+.idea/algo1-TP1.iml
+.idea/modules.xml
+.idea/vcs.xml
+TPI/tpi.exe
+TPI/tpi.ilk
+TPI/tpi.pdb
