@@ -4,6 +4,7 @@
 /* implementación */
 
 int _costoSubsidioMejora(const eph_h& th, const eph_i& ti, int monto) {
+    /* pre: esEncuestaValida(th, ti) && monto > 0 */
     int resp = 0;
 
     for(int i = 0; i < th.size(); i++){

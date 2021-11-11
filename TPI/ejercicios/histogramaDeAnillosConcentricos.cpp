@@ -20,6 +20,8 @@ void agregarAnilloCorrespondiente(vector<int> &res, const vector<int> &distancia
 /* implementación */
 
 vector<int> _histogramaDeAnillosConcentricos(const eph_h& th, const eph_i& ti, pair<int, int> centro, const vector<int>& distancias) {
+    /* pre: esEncuestaValida(th, ti) && |distancias| > 0 && estrictamenteCrecientes(distancias) */
+
     /*
      * Calculo la distancia euclidiana de cada hogar, y luego sumo 1 a la posición correspondiente de res.
      * */

@@ -25,6 +25,7 @@ void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int,
 /* implementación */
 
 vector<pair<int, float>> _laCasaEstaQuedandoChica (const eph_h& th, const eph_i& ti) {
+    /* pre: esEncuestaValida(th, ti) */
     vector<pair<int,float>> resp = {make_pair(1,-1.0),
                                     make_pair(40, -1.0),
                                     make_pair(41, -1.0),

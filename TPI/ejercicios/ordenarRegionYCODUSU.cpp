@@ -74,6 +74,8 @@ void ordenarHogaresRegionYCodusu(eph_h &th){
 /* implementación */
 
 void _ordenarRegionYCODUSU (eph_h& th, eph_i& ti) {
+    /* pre: esEncuestaValida(th, ti) */
+
     //Primero ordeno los hogares y luego los individuos
     ordenarHogaresRegionYCodusu(th);
     ordenarIndividuosPorCodusuDeHogarYComponente(th,ti);
