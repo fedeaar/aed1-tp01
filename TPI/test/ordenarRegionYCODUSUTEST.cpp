@@ -60,7 +60,8 @@ TEST(ordenarRegionYCODUSUTEST, regionesDistintas) {
 
 }
 
-//Tests adicionales
+
+/* tests nuevos */
 
 TEST(ordenarRegionYCODUSUTEST, regionesiguales) {
 

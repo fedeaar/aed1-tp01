@@ -108,7 +108,7 @@ TEST(muestraHomogeneaTEST, dosSolucionesDe3) {
 }
 
 
-// UDEF
+/* tests nuevos */
 
 TEST(muestraHomogeneaTEST, mejorSolucion) {
     eph_h th = {

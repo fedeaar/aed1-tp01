@@ -66,7 +66,8 @@ TEST(laCasaEstaQuedandoChicaTEST, hacinamientoCriticoTodosIgualAUno) {
     }
 }
 
-//Tests adicionales
+
+/* tests nuevos */
 
 TEST(laCasaEstaQuedandoChicaTEST, divisionCero) {
 

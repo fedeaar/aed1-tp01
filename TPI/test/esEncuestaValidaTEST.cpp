@@ -209,28 +209,7 @@ TEST(esEncuestaValidaTEST, validaeph2020_100) {
 }
 
 
-// UDEF
-
-TEST(esEncuestaValidaTEST, invalidaTHVacia) {
-    eph_h th = {};
-
-    eph_i ti = {{20957, 2020,   1,  1,  3,  1,  88, 0,  0,  90000,  10},
-                {20957, 2020,   2,  1,  3,  2,  82, 0,  0,  25000,  10},
-                {31117, 2020,   1,  0,  3,  1,  58, 1,  3,  22000,  1},
-                {31117, 2020,   2,  0,  3,  2,  54, 1,  1,  -1,     1},
-                {31117, 2020,   3,  0,  3,  2,  46, 1,  3,  17000,  1},
-                {31117, 2020,   4,  0,  3,  1,  20, 1,  3,  5000,   1},
-                {31117, 2020,   5,  0,  3,  2,  15, 0,  0,  5000,   10},
-                {31117, 2020,   6,  0,  3,  1,  7,  0,  0,  0,      10},
-                {31117, 2020,   8,  0,  3,  2,  11, 0,  0,  0,      10},
-                {31117, 2020,   9,  0,  3,  1,  50, 0,  2,  0,      10},
-                {31117, 2020,   10, 0,  3,  1,  28, 1,  3,  5000,   1},
-                {22866, 2020,   1,  0,  3,  1,  31, 1,  3,  59000,  10},
-                {22866, 2020,   2,  1,  3,  2,  28, 1,  3,  0,      6},
-                {22114, 2020,   1,  0,  3,  1,  18, 0,  0,  20000,  10}};
-
-    EXPECT_FALSE(esEncuestaValida(th, ti));
-}
+/* tests nuevos */
 
 TEST(esEncuestaValidaTEST, invalidaTIVacia) {
     eph_h th = {
@@ -247,9 +226,9 @@ TEST(esEncuestaValidaTEST, invalidaTIVacia) {
 TEST(esEncuestaValidaTEST, invalidaHogaresSinIndividuo) {
     eph_h th = {{22114, 2020,   3,  319611, 629088, 3,  41, 0,  1,  3,  1,  2},
                 {31117, 2020,   3,  332870, 642475, 3,  40, 0,  1,  6,  6,  2},
-                {22866, 2020,   3,  317157, 627217, 2,  42, 1,  1,  2,  2,  2},
-                {20957, 2020,   3,  313965, 623297, 1,  43, 0,  1,  3,  1,  2}};
-
+                {22866, 2020,   3,  317157, 627217, 2,  42, 1,  1,  2,  2,  2}, // <-
+                {20957, 2020,   3,  313965, 623297, 1,  43, 0,  1,  3,  1,  2}  // <-
+    };
     eph_i ti = {{31117, 2020,   1,  0,  3,  1,  58, 1,  3,  22000,  1},
                 {31117, 2020,   2,  0,  3,  2,  54, 1,  1,  -1,     1},
                 {31117, 2020,   3,  0,  3,  2,  46, 1,  3,  17000,  1},
@@ -268,7 +247,7 @@ TEST(esEncuestaValidaTEST, invalidaHogaresSinIndividuo) {
 TEST(esEncuestaValidaTEST, invalidaTrimestreDifHogares) {
     eph_h th = {{22114, 2020,   3,  319611, 629088, 3,  41, 0,  1,  3,  1,  2},
                 {31117, 2020,   3,  332870, 642475, 3,  40, 0,  1,  6,  6,  2},
-                {22866, 2020,   4,  317157, 627217, 2,  42, 1,  1,  2,  2,  2},
+                {22866, 2020,   4,  317157, 627217, 2,  42, 1,  1,  2,  2,  2}, // <-
                 {20957, 2020,   3,  313965, 623297, 1,  43, 0,  1,  3,  1,  2}};
 
     eph_i ti = {{20957, 2020,   1,  1,  3,  1,  88, 0,  0,  90000,  10},
@@ -290,25 +269,26 @@ TEST(esEncuestaValidaTEST, invalidaTrimestreDifHogares) {
 }
 
 TEST(esEncuestaValidaTEST, invalidaTrimestreDifIndividuosVsHogares) {
+    //                          v
     eph_h th = {{22114, 2020,   3,  319611, 629088, 3,  41, 0,  1,  3,  1,  2},
                 {31117, 2020,   3,  332870, 642475, 3,  40, 0,  1,  6,  6,  2},
                 {22866, 2020,   3,  317157, 627217, 2,  42, 1,  1,  2,  2,  2},
                 {20957, 2020,   3,  313965, 623297, 1,  43, 0,  1,  3,  1,  2}};
-
-    eph_i ti = {{20957, 2020,   1,  1,  3,  1,  88, 0,  0,  90000,  10},
-                {20957, 2020,   2,  1,  3,  2,  82, 0,  0,  25000,  10},
-                {31117, 2020,   1,  0,  3,  1,  58, 1,  3,  22000,  1},
-                {31117, 2020,   2,  0,  3,  2,  54, 1,  1,  -1,     1},
-                {31117, 2020,   3,  0,  3,  2,  46, 1,  3,  17000,  1},
+    //                                  v
+    eph_i ti = {{20957, 2020,   1,  1,  2,  1,  88, 0,  0,  90000,  10},
+                {20957, 2020,   2,  1,  2,  2,  82, 0,  0,  25000,  10},
+                {31117, 2020,   1,  0,  2,  1,  58, 1,  3,  22000,  1},
+                {31117, 2020,   2,  0,  2,  2,  54, 1,  1,  -1,     1},
+                {31117, 2020,   3,  0,  2,  2,  46, 1,  3,  17000,  1},
                 {31117, 2020,   4,  0,  2,  1,  20, 1,  3,  5000,   1},
-                {31117, 2020,   5,  0,  3,  2,  15, 0,  0,  5000,   10},
-                {31117, 2020,   6,  0,  3,  1,  7,  0,  0,  0,      10},
-                {31117, 2020,   8,  0,  3,  2,  11, 0,  0,  0,      10},
-                {31117, 2020,   9,  0,  3,  1,  50, 0,  2,  0,      10},
-                {31117, 2020,   10, 0,  3,  1,  28, 1,  3,  5000,   1},
-                {22866, 2020,   1,  0,  3,  1,  31, 1,  3,  59000,  10},
-                {22866, 2020,   2,  1,  3,  2,  28, 1,  3,  0,      6},
-                {22114, 2020,   1,  0,  3,  1,  18, 0,  0,  20000,  10}};
+                {31117, 2020,   5,  0,  2,  2,  15, 0,  0,  5000,   10},
+                {31117, 2020,   6,  0,  2,  1,  7,  0,  0,  0,      10},
+                {31117, 2020,   8,  0,  2,  2,  11, 0,  0,  0,      10},
+                {31117, 2020,   9,  0,  2,  1,  50, 0,  2,  0,      10},
+                {31117, 2020,   10, 0,  2,  1,  28, 1,  3,  5000,   1},
+                {22866, 2020,   1,  0,  2,  1,  31, 1,  3,  59000,  10},
+                {22866, 2020,   2,  1,  2,  2,  28, 1,  3,  0,      6},
+                {22114, 2020,   1,  0,  2,  1,  18, 0,  0,  20000,  10}};
 
     EXPECT_FALSE(esEncuestaValida(th, ti));
 }
@@ -323,7 +303,7 @@ TEST(esEncuestaValidaTEST, invalidaAnioDifIndividuos) {
                 {20957, 2020,   2,  1,  3,  2,  82, 0,  0,  25000,  10},
                 {31117, 2020,   1,  0,  3,  1,  58, 1,  3,  22000,  1},
                 {31117, 2020,   2,  0,  3,  2,  54, 1,  1,  -1,     1},
-                {31117, 2021,   3,  0,  3,  2,  46, 1,  3,  17000,  1},
+                {31117, 2021,   3,  0,  3,  2,  46, 1,  3,  17000,  1}, // <-
                 {31117, 2020,   4,  0,  3,  1,  20, 1,  3,  5000,   1},
                 {31117, 2020,   5,  0,  3,  2,  15, 0,  0,  5000,   10},
                 {31117, 2020,   6,  0,  3,  1,  7,  0,  0,  0,      10},
@@ -341,7 +321,8 @@ TEST(esEncuestaValidaTEST, invalidaMas21hogar) {
     eph_h th = {{22114, 2020,   3,  319611, 629088, 3,  41, 0,  1,  3,  1,  2}};
     eph_i ti;
 
-    for (int i = 1; i <= 22; i++) {
+    //                   v
+    for (int i = 1; i <= 21; ++i) {
         individuo individuo_actual = {22114, 2020,   1,  0,  3,  1,  18, 0,  0,  20000,  10};
         individuo_actual[COMPONENTE] = i;
         ti.push_back(individuo_actual);
@@ -357,36 +338,60 @@ TEST(esEncuestaValidaTEST, invalidaAtributosNoEnRangoTH) {
 
     // HOGCODUSU, HOGANO, HOGTRIMESTRE, HOGLATITUD, HOGLONGITUD, II7, REGION, MAS_500, IV1, IV2, II2, II3
 
-    // II7 invalido
+    // II7 invalido                       v
     th = {{1, 2020,   4,  319611, 629088, 4,  41, 0,  1,  3,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // II7 invalido BIS
+    // II7 invalido BIS                    v
     th = {{1, 2020,   4,  319611, 629088, -1,  41, 0,  1,  3,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // REGION invalido
+    // REGION invalido                         v
     th = {{1, 2020,   4,  319611, 629088, 3,  -1, 0,  1,  3,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // MAS500 invalido
+    // REGION invalido bis                    v
+    th = {{1, 2020,   4,  319611, 629088, 3,  2, 0,  1,  3,  1,  2}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // REGION invalido bis bis                 v
+    th = {{1, 2020,   4,  319611, 629088, 3,  39, 0,  1,  3,  1,  2}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // REGION invalido bis bis bis             v
+    th = {{1, 2020,   4,  319611, 629088, 3,  45, 0,  1,  3,  1,  2}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // MAS500 invalido                            v
     th = {{1, 2020,   4,  319611, 629088, 3,  1, -1,  1,  3,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // IV1 invalido
+    // MAS500 invalido bis                       v
+    th = {{1, 2020,   4,  319611, 629088, 3,  1, 2,  1,  3,  1,  2}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // IV1 invalido                                   v
     th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  -1,  3,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // IV2 invalido
+    // IV1 invalido bis                               v
+    th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,   6,  3,  1,  2}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // IV2 invalido                                       v
     th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  2,  -1,  1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // II2 invalido
+    // II2 invalido                                           v
     th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  2,  1,  -1,  2}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // II3 invalido
-    th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  2,  1,  1,  -2}};
+    // II3 invalido                                              v
+    th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  2,  1,  1,  0}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // II3 invalido bis                                          v
+    th = {{1, 2020,   4,  319611, 629088, 3,  1, 0,  2,  1,  1,  3}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 }
 
@@ -397,47 +402,51 @@ TEST(esEncuestaValidaTEST, invalidaAtributosNoEnRangoTI) {
 
     // INDCODUSU, INDANO, COMPONENTE, NIVEL_ED, TRIMESTRE, CH4, CH6, ESTADO, CAT_OCUP, P47T, PP04G
 
-    // CH4 invalido
+    // CH4 invalido               v
     ti = {{1, 2020,   1,  0,  3,  3,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // CH4 invalido bis
+    // CH4 invalido bis            v
     ti = {{1, 2020,   1,  0,  3,  -1,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // CH6 invalido
+    // CH6 invalido                    v
     ti = {{1, 2020,   1,  0,  3,  2,  -1, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // NIVEL_ED invalido
-    ti = {{1, 2020,   1,  3,  3,  2,  18, 0,  0,  20000,  10}};
+    // NIVEL_ED invalido  v
+    ti = {{1, 2020,   1,  2,  3,  2,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // ESTADO invalido
+    // NIVEL_ED invalido  v  bis
+    ti = {{1, 2020,   1,  -1,  3,  2,  18, 0,  0,  20000,  10}};
+    EXPECT_FALSE(esEncuestaValida(th, ti));
+
+    // ESTADO invalido                     v
     ti = {{1, 2020,   1,  3,  1,  2,  18, -2,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // ESTADO invalido bis
+    // ESTADO invalido bis                v
     ti = {{1, 2020,   1,  3,  1,  2,  18, 2,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // CAT_OCUP invalido
+    // CAT_OCUP invalido                      v
     ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  5,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // CAT_OCUP invalido bis
+    // CAT_OCUP invalido bis                   v
     ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  -1,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // INGRESOS invalido
-    ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  0,  -20000,  10}};
+    // INGRESOS invalido                           v
+    ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  0,  -2,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // PP04G invalido
+    // PP04G invalido                                      v
     ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  0,  20000,  11}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
-    // PP04G invalido bis
+    // PP04G invalido bis                                 v
     ti = {{1, 2020,   1,  3,  1,  2,  18, 1,  0,  20000, -1}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 }
@@ -448,17 +457,22 @@ TEST(esEncuestaValidaTEST, invalidaAtributosNoEnRangoCruzados) {
     EXPECT_TRUE(esEncuestaValida(th, ti));
 
     // HOGCODUSU / INDCODUSU invalido
+    //     v
     th = {{0, 2020,   3,  319611, 629088, 3,  41, 0,  1,  3,  1,  2}};
     ti = {{0, 2020,   1,  0,  3,  1,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
     // TRIMESTRE invalido
+    //                v
     th = {{1, 2020,   5,  319611, 629088, 3,  41, 0,  1,  3,  1,  2}};
+    //                        v
     ti = {{1, 2020,   1,  0,  5,  1,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 
     // TRIMESTRE invalido bis
+    //                v
     th = {{1, 2020,   0,  319611, 629088, 3,  41, 0,  1,  3,  1,  2}};
+    //                        v
     ti = {{1, 2020,   1,  0,  0,  1,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 }

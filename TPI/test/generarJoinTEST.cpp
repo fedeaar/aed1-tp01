@@ -53,7 +53,7 @@ TEST(generarJoinTEST, casoFacil) {
 }
 
 
-// UDEF
+/* tests nuevos */
 
 TEST(generarJoinTEST, unicoHogar) {
     eph_h th = {

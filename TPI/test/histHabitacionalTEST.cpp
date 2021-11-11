@@ -80,7 +80,7 @@ TEST(histHabitacionalTEST, eph2020_PATAGONIA) {
 }
 
 
-// UDEF
+/* tests nuevos */
 
 TEST (histHabitacionalTEST, sinCasasEnLaRegion) {
     eph_h th = {

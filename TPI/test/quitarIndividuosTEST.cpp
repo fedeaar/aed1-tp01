@@ -118,7 +118,7 @@ TEST(quitarIndividuosTEST, SacaTodosIndividuosYHogarVacio) {
 }
 
 
-// UDEF
+/* tests nuevos */
 
 TEST(quitarIndividuosTEST, SacaTodosMenosUno) {
     eph_h th = {

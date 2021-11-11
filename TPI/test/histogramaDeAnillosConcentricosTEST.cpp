@@ -79,7 +79,8 @@ pair<eph_h, eph_i> encuesta_prueba(vector<pair<int, int>> pos) {
     return make_pair(th, ti);
 }
 
-//Tests adicionales
+
+/* tests nuevos */
 
 TEST(histogramaDeAnillosConcentricosTEST, ningunaEntra) {
 

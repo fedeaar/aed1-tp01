@@ -2,6 +2,7 @@
 
 
 /* auxiliares */
+
 /*
 //Contar hacinados dentro de esta funcion.
 void hogaresValidos(const eph_h &th, int region, vector<int> &ind, int &cant){
@@ -64,6 +65,7 @@ void calcularProporcionHacinamiento(const eph_h &th, const eph_i &ti, pair <int,
         region.second = float(hogaresHacinados)/float(hogaresValidos);
     }
 }
+
 
 /* implementación */
 
