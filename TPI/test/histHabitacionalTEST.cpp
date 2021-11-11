@@ -110,6 +110,9 @@ TEST (histHabitacionalTEST, sinCasasEnLaRegion) {
 }
 
 TEST (histHabitacionalTEST, noEstaLaRegion) {
+    /* Este test es imposible. En histHabitacional.cpp explicamos por qué lo consideramos igual.
+     * */
+
     eph_h th = {
             //COD   AÑO   T  LAT     LONG   II7 REG H IV1-2 II2-3
             {6581,  2018, 3, 314485, 624432, 1, 41, 0, 1, 3, 1, 2},

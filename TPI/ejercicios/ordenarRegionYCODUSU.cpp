@@ -2,51 +2,6 @@
 
 /* auxiliares */
 
-/*
-void ordenarDentroDeRegion(eph_h &th, int region, const vector<int> &cantHogarPorRegion){
-    //Calculo desde y hasta donde tengo que ordenar
-    int comienzo = 0;
-    for(int i = 0; i < region; i++){
-        comienzo += cantHogarPorRegion[i];
-    }
-    int final = comienzo + cantHogarPorRegion[region];
-
-    for(int i = comienzo; i < final; i++){ //Selection sort
-        int minimo = i;
-        for(int j = i+1; j < final; j++){
-            if(th[j][HOGCODUSU] < th[minimo][HOGCODUSU]){
-                minimo = j;
-            }
-        }
-        swapTH(th, minimo, i);
-    }
-}
-
-void ordenarHogaresRegionYCodusu(eph_h &th){
-    vector<int> cantHogarPorRegion(CANTIDAD_DE_REGIONES,0);
-    for(int i = 0; i < th.size(); i++){ //Ordeno tabla por región - Selection sort
-        int minimo = i;
-        for(int j = i+1; j < th.size(); j++){
-            if(th[j][REGION] < th[minimo][REGION]){
-                minimo = j;
-            }
-        }
-        swapTH(th, minimo, i);
-        //Tengo que hacer esta distinción, ya que no están seguidos los valores posibles de REGION
-        if(th[minimo][REGION] == 1){
-            cantHogarPorRegion[0]++;
-        }else{
-            cantHogarPorRegion[th[minimo][REGION] - 39]++;
-        }
-    }
-
-    //Con la cantidad de hogares por región contados, ordeno dentro de cada region por CODUSU
-    for(int region = 0; region < CANTIDAD_DE_REGIONES; region++){
-        ordenarDentroDeRegion(th, region, cantHogarPorRegion); //O(n^2)
-    }
-}
-*/
-
 void swapTH(eph_h &th, int ind1, int ind2){
     hogar aux = th[ind1];
     th[ind1] = th[ind2];
@@ -102,7 +57,7 @@ void ordenarIndividuosPorCodusuDeHogarYComponente(const eph_h &th, eph_i &ti){
 }
 
 void ordenarHogaresRegionYCodusu(eph_h &th){
-    for(int i = 0; i < th.size(); i++){ //Ordeno tabla por región - Selection sort
+    for(int i = 0; i < th.size(); i++){ //Ordeno tabla por región y codusu - Selection sort
         int minimo = i;
         pair<int, int> parMin = make_pair(th[i][REGION], th[i][HOGCODUSU]);
         for(int j = i+1; j < th.size(); j++){
@@ -119,11 +74,8 @@ void ordenarHogaresRegionYCodusu(eph_h &th){
 /* implementación */
 
 void _ordenarRegionYCODUSU (eph_h& th, eph_i& ti) {
-
     //Primero ordeno los hogares y luego los individuos
     ordenarHogaresRegionYCodusu(th);
     ordenarIndividuosPorCodusuDeHogarYComponente(th,ti);
-
-    return;
 }
 

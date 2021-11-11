@@ -141,6 +141,8 @@ TEST(quitarIndividuosTEST, SacaTodosMenosUno) {
             {p47T, 15000}
     };
 
+    EXPECT_TRUE(esEncuestaValida(th,ti));
+
     eph_h th0 = th;
     eph_i ti0 = ti;
     pair<eph_h, eph_i> res = quitarIndividuos(ti, th, busqueda);
@@ -157,6 +159,9 @@ TEST(quitarIndividuosTEST, SacaTodosMenosUno) {
     };
     EXPECT_EQ(th, th0);
     EXPECT_EQ(ti, expect);
+
+    EXPECT_TRUE(esEncuestaValida(th,ti));
+    EXPECT_TRUE(esEncuestaValida(res.first, res.second));
 }
 
 TEST(quitarIndividuosTEST, vacia) {
@@ -180,6 +185,8 @@ TEST(quitarIndividuosTEST, vacia) {
             {p47T, 15000}
     };
 
+    EXPECT_TRUE(esEncuestaValida(th,ti));
+
     eph_h th0 = th;
     eph_i ti0 = ti;
     pair<eph_h, eph_i> res = quitarIndividuos(ti, th, busqueda);
@@ -192,6 +199,8 @@ TEST(quitarIndividuosTEST, vacia) {
 
     EXPECT_EQ(th0, res.first);
     EXPECT_EQ(ti0, res.second);
+
+    EXPECT_TRUE(esEncuestaValida(res.first, res.second));
 }
 
 TEST(quitarIndividuosTEST, noSacaNada) {
@@ -215,8 +224,11 @@ TEST(quitarIndividuosTEST, noSacaNada) {
             {p47T, 15020}
     };
 
+    EXPECT_TRUE(esEncuestaValida(th,ti));
+
     eph_h th0 = th;
     eph_i ti0 = ti;
+
     pair<eph_h, eph_i> res = quitarIndividuos(ti, th, busqueda);
 
     EXPECT_EQ(0, res.first.size());
@@ -227,4 +239,6 @@ TEST(quitarIndividuosTEST, noSacaNada) {
 
     EXPECT_EQ(th0, th);
     EXPECT_EQ(ti0, ti);
+
+    EXPECT_TRUE(esEncuestaValida(th,ti));
 }

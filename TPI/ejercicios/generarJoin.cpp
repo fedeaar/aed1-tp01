@@ -11,5 +11,5 @@ join_hi _generarJoin(const eph_h& th, const eph_i& ti) {
         hogar hog = th[posCorrespondiente(th, ind[HOGCODUSU])]; //def. en auxiliares.cpp
         res.push_back(make_pair(hog, ind));
     }
-    return  res;
+    return res;
 }

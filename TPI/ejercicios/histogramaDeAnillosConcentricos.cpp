@@ -7,7 +7,7 @@ float distanciaEuclidiana(const hogar &h, const pair<int, int> &centro){
 }
 
 void agregarAnilloCorrespondiente(vector<int> &res, const vector<int> &distancias, float distHogar){
-    if(distHogar <= float(distancias[0])){
+    if(distHogar <= float(distancias[0]) && distHogar != 0){
         res[0]++;
     }else{
         for(int i = 0; i < distancias.size() - 1; i++){

@@ -119,3 +119,60 @@ TEST(histogramaDeAnillosConcentricosTEST, centroNoCentrado) {
 
     EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
 }
+
+TEST(histogramaDeAnillosConcentricosTEST, hogarEnElCentro) {
+
+    vector<int> distancias = {1, 2, 3};
+
+    pair<int, int> centro = {0, 0};
+
+    pair<eph_h, eph_i> p = encuesta_prueba({
+        {0, 0},
+        {1, 1},
+        {2, 2},
+        {3, 2}
+    });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
+    vector<int> res = {0, 1, 1};
+
+    EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
+}
+
+TEST(histogramaDeAnillosConcentricosTEST, enElBorde) {
+
+    vector<int> distancias = {1, 2, 4};
+
+    pair<int, int> centro = {0, 0};
+
+    pair<eph_h, eph_i> p = encuesta_prueba({
+        {0, 0},
+        {1, 0},
+        {2, 0},
+        {4, 0}
+    });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
+    vector<int> res = {1, 1, 1};
+
+    EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
+}
+
+TEST(histogramaDeAnillosConcentricosTEST, enElCentroNoCentrado) {
+
+    vector<int> distancias = {1, 2, 3};
+
+    pair<int, int> centro = {-6, 9};
+
+    pair<eph_h, eph_i> p = encuesta_prueba({
+        {-6, 9},
+        {-6, 9},
+        {-6, 9},
+        {-6, 9}
+    });
+    EXPECT_TRUE(esEncuestaValida(p.first, p.second));
+
+    vector<int> res = {0, 0, 0};
+
+    EXPECT_EQ(res, histogramaDeAnillosConcentricos(p.first, p.second, centro, distancias));
+}

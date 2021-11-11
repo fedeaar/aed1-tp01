@@ -476,3 +476,4 @@ TEST(esEncuestaValidaTEST, invalidaAtributosNoEnRangoCruzados) {
     ti = {{1, 2020,   1,  0,  0,  1,  18, 0,  0,  20000,  10}};
     EXPECT_FALSE(esEncuestaValida(th, ti));
 }
+
