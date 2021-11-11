@@ -110,7 +110,8 @@ TEST (histHabitacionalTEST, sinCasasEnLaRegion) {
 }
 
 TEST (histHabitacionalTEST, noEstaLaRegion) {
-    /* Este test es imposible. En histHabitacional.cpp explicamos por qué lo consideramos igual.
+    /* Este test es imposible respecto a la especificación.
+     * En histHabitacional.cpp explicamos por qué consideramos el caso igual.
      * */
 
     eph_h th = {
