@@ -19,6 +19,6 @@ vector<int> _histHabitacional (const eph_h& th, const eph_i& ti, int region) {
 
 /* 1. obs: La especificación es imposible de satisfacer si no hay hogares en la region pedida,
  *         ya que LongitudIgualAMaximaCantidadDeHabitaciones devolverá false siempre.
- *         Consideramos una interpretación válida devolver el vector vacío en esta situación.
+ *         Consideramos una interpretación válida, en tal situación, devolver el vector vacío.
  * */
 
